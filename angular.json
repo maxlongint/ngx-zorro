@@ -1,39 +1,160 @@
 {
-  "$schema": "./node_modules/@angular/cli/lib/config/schema.json",
-  "version": 1,
-  "newProjectRoot": "projects",
-  "projects": {
-    "ngx-zorro": {
-      "projectType": "library",
-      "root": "projects/ngx-zorro",
-      "sourceRoot": "projects/ngx-zorro/src",
-      "prefix": "ngz",
-      "architect": {
-        "build": {
-          "builder": "@angular-devkit/build-angular:ng-packagr",
-          "options": {
-            "project": "projects/ngx-zorro/ng-package.json"
-          },
-          "configurations": {
-            "production": {
-              "tsConfig": "projects/ngx-zorro/tsconfig.lib.prod.json"
-            },
-            "development": {
-              "tsConfig": "projects/ngx-zorro/tsconfig.lib.json"
+    "$schema": "./node_modules/@angular/cli/lib/config/schema.json",
+    "version": 1,
+    "newProjectRoot": "projects",
+    "projects": {
+        "ngx-zorro": {
+            "projectType": "library",
+            "root": "projects/ngx-zorro",
+            "sourceRoot": "projects/ngx-zorro/src",
+            "prefix": "ngz",
+            "architect": {
+                "build": {
+                    "builder": "@angular-devkit/build-angular:ng-packagr",
+                    "options": {
+                        "project": "projects/ngx-zorro/ng-package.json"
+                    },
+                    "configurations": {
+                        "production": {
+                            "tsConfig": "projects/ngx-zorro/tsconfig.lib.prod.json"
+                        },
+                        "development": {
+                            "tsConfig": "projects/ngx-zorro/tsconfig.lib.json"
+                        }
+                    },
+                    "defaultConfiguration": "production"
+                },
+                "test": {
+                    "builder": "@angular-devkit/build-angular:karma",
+                    "options": {
+                        "main": "projects/ngx-zorro/src/test.ts",
+                        "tsConfig": "projects/ngx-zorro/tsconfig.spec.json",
+                        "karmaConfig": "projects/ngx-zorro/karma.conf.js"
+                    }
+                }
             }
-          },
-          "defaultConfiguration": "production"
         },
         "test": {
-          "builder": "@angular-devkit/build-angular:karma",
-          "options": {
-            "main": "projects/ngx-zorro/src/test.ts",
-            "tsConfig": "projects/ngx-zorro/tsconfig.spec.json",
-            "karmaConfig": "projects/ngx-zorro/karma.conf.js"
-          }
+            "projectType": "application",
+            "schematics": {
+                "@schematics/angular:component": {
+                    "style": "scss",
+                    "skipTests": true
+                },
+                "@schematics/angular:class": {
+                    "skipTests": true
+                },
+                "@schematics/angular:directive": {
+                    "skipTests": true
+                },
+                "@schematics/angular:guard": {
+                    "skipTests": true
+                },
+                "@schematics/angular:interceptor": {
+                    "skipTests": true
+                },
+                "@schematics/angular:pipe": {
+                    "skipTests": true
+                },
+                "@schematics/angular:service": {
+                    "skipTests": true
+                },
+                "@schematics/angular:application": {
+                    "strict": true
+                }
+            },
+            "root": "projects/test",
+            "sourceRoot": "projects/test/src",
+            "prefix": "app",
+            "architect": {
+                "build": {
+                    "builder": "@angular-devkit/build-angular:browser",
+                    "options": {
+                        "outputPath": "dist/test",
+                        "index": "projects/test/src/index.html",
+                        "main": "projects/test/src/main.ts",
+                        "polyfills": "projects/test/src/polyfills.ts",
+                        "tsConfig": "projects/test/tsconfig.app.json",
+                        "inlineStyleLanguage": "scss",
+                        "assets": [
+                            "projects/test/src/favicon.ico",
+                            "projects/test/src/assets"
+                        ],
+                        "styles": ["projects/test/src/styles.scss"],
+                        "scripts": []
+                    },
+                    "configurations": {
+                        "production": {
+                            "budgets": [
+                                {
+                                    "type": "initial",
+                                    "maximumWarning": "500kb",
+                                    "maximumError": "1mb"
+                                },
+                                {
+                                    "type": "anyComponentStyle",
+                                    "maximumWarning": "2kb",
+                                    "maximumError": "4kb"
+                                }
+                            ],
+                            "fileReplacements": [
+                                {
+                                    "replace": "projects/test/src/environments/environment.ts",
+                                    "with": "projects/test/src/environments/environment.prod.ts"
+                                }
+                            ],
+                            "outputHashing": "all"
+                        },
+                        "development": {
+                            "buildOptimizer": false,
+                            "optimization": false,
+                            "vendorChunk": true,
+                            "extractLicenses": false,
+                            "sourceMap": true,
+                            "namedChunks": true
+                        }
+                    },
+                    "defaultConfiguration": "production"
+                },
+                "serve": {
+                    "builder": "@angular-devkit/build-angular:dev-server",
+                    "options": {
+                        "port": 4300
+                    },
+                    "configurations": {
+                        "production": {
+                            "browserTarget": "test:build:production"
+                        },
+                        "development": {
+                            "browserTarget": "test:build:development"
+                        }
+                    },
+                    "defaultConfiguration": "development"
+                },
+                "extract-i18n": {
+                    "builder": "@angular-devkit/build-angular:extract-i18n",
+                    "options": {
+                        "browserTarget": "test:build"
+                    }
+                },
+                "test": {
+                    "builder": "@angular-devkit/build-angular:karma",
+                    "options": {
+                        "main": "projects/test/src/test.ts",
+                        "polyfills": "projects/test/src/polyfills.ts",
+                        "tsConfig": "projects/test/tsconfig.spec.json",
+                        "karmaConfig": "projects/test/karma.conf.js",
+                        "inlineStyleLanguage": "scss",
+                        "assets": [
+                            "projects/test/src/favicon.ico",
+                            "projects/test/src/assets"
+                        ],
+                        "styles": ["projects/test/src/styles.scss"],
+                        "scripts": []
+                    }
+                }
+            }
         }
-      }
-    }
-  },
-  "defaultProject": "ngx-zorro"
+    },
+    "defaultProject": "ngx-zorro"
 }
