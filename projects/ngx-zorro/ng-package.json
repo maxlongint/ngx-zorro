@@ -1,7 +1,10 @@
 {
-  "$schema": "../../node_modules/ng-packagr/ng-package.schema.json",
-  "dest": "../../dist/ngx-zorro",
-  "lib": {
-    "entryFile": "src/index.ts"
-  }
+    "$schema": "../../node_modules/ng-packagr/ng-package.schema.json",
+    "dest": "../../dist/ngx-zorro",
+    "lib": {
+        "entryFile": "index.ts",
+        "umdModuleIds": {
+            "ng-zorro-antd/core/services": "ng-zorro-antd/core/services"
+        }
+    }
 }
