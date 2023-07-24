@@ -1,0 +1,39 @@
+{
+  "$schema": "./node_modules/@angular/cli/lib/config/schema.json",
+  "version": 1,
+  "newProjectRoot": "projects",
+  "projects": {
+    "ngx-zorro": {
+      "projectType": "library",
+      "root": "projects/ngx-zorro",
+      "sourceRoot": "projects/ngx-zorro/src",
+      "prefix": "ngz",
+      "architect": {
+        "build": {
+          "builder": "@angular-devkit/build-angular:ng-packagr",
+          "options": {
+            "project": "projects/ngx-zorro/ng-package.json"
+          },
+          "configurations": {
+            "production": {
+              "tsConfig": "projects/ngx-zorro/tsconfig.lib.prod.json"
+            },
+            "development": {
+              "tsConfig": "projects/ngx-zorro/tsconfig.lib.json"
+            }
+          },
+          "defaultConfiguration": "production"
+        },
+        "test": {
+          "builder": "@angular-devkit/build-angular:karma",
+          "options": {
+            "main": "projects/ngx-zorro/src/test.ts",
+            "tsConfig": "projects/ngx-zorro/tsconfig.spec.json",
+            "karmaConfig": "projects/ngx-zorro/karma.conf.js"
+          }
+        }
+      }
+    }
+  },
+  "defaultProject": "ngx-zorro"
+}
