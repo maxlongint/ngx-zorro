@@ -2,4 +2,4 @@
  * Public API Surface of ngx-zorro
  */
 
-// export * from './src';
+export * from './src/directives';
