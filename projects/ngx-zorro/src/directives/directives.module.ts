@@ -5,4 +5,4 @@ import { ClickDebounceDirective } from './click-debounce.directive';
     declarations: [ClickDebounceDirective],
     exports: [ClickDebounceDirective],
 })
-export class DirectivesModule {}
+export class NgxDirectivesModule {}

@@ -1,3 +1,7 @@
-<h1>test app</h1>
-
-<button (click.d)="onClick()">防抖方式点击</button>
+<div class="container">
+    <h1>test app</h1>
+    <div style="width: 500px; height: 300px">
+        <ngx-loading [(visible)]="visible"></ngx-loading>
+    </div>
+    <button (click)="onClick()" (click.d)="onDebClick()">防抖方式点击</button>
+</div>

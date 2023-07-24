@@ -6,9 +6,14 @@ import { Component } from '@angular/core';
     styleUrls: ['./app.component.scss'],
 })
 export class AppComponent {
-    title = 'test';
+    visible = false;
 
     onClick() {
-        console.dir(+new Date());
+        this.visible = true;
+        setTimeout(() => {
+            // this.visible = false;
+        }, 5000);
     }
+
+    onDebClick() {}
 }

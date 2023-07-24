@@ -5,9 +5,14 @@
     "projects": {
         "ngx-zorro": {
             "projectType": "library",
+            "schematics": {
+                "@schematics/angular:component": {
+                    "style": "scss"
+                }
+            },
             "root": "projects/ngx-zorro",
             "sourceRoot": "projects/ngx-zorro/src",
-            "prefix": "ngz",
+            "prefix": "ngx",
             "architect": {
                 "build": {
                     "builder": "@angular-devkit/build-angular:ng-packagr",
@@ -76,11 +81,8 @@
                         "polyfills": "projects/test/src/polyfills.ts",
                         "tsConfig": "projects/test/tsconfig.app.json",
                         "inlineStyleLanguage": "scss",
-                        "assets": [
-                            "projects/test/src/favicon.ico",
-                            "projects/test/src/assets"
-                        ],
-                        "styles": ["projects/test/src/styles.scss"],
+                        "assets": ["projects/test/src/favicon.ico", "projects/test/src/assets"],
+                        "styles": ["projects/test/src/styles.scss", "node_modules/ng-zorro-antd/ng-zorro-antd.min.css"],
                         "scripts": []
                     },
                     "configurations": {
@@ -145,10 +147,7 @@
                         "tsConfig": "projects/test/tsconfig.spec.json",
                         "karmaConfig": "projects/test/karma.conf.js",
                         "inlineStyleLanguage": "scss",
-                        "assets": [
-                            "projects/test/src/favicon.ico",
-                            "projects/test/src/assets"
-                        ],
+                        "assets": ["projects/test/src/favicon.ico", "projects/test/src/assets"],
                         "styles": ["projects/test/src/styles.scss"],
                         "scripts": []
                     }
