@@ -1,4 +1,18 @@
 <div class="container">
     <h1>test app</h1>
-    <ngx-dynamic-form></ngx-dynamic-form>
+    <ngx-dynamic-form #dynamicFormElement [fields]="fieldList"></ngx-dynamic-form>
+    <ng-template #definedTemplate let-control let-field="context">
+        <nz-form-item>
+            <nz-form-label [nzRequired]="field.required">
+                {{ field.label }}
+            </nz-form-label>
+            <nz-form-control [nzErrorTip]="errorTemplate">
+                <input nz-input [formControl]="control" [placeholder]="field.placeholder" />
+            </nz-form-control>
+        </nz-form-item>
+        <ng-template #errorTemplate>
+            <ng-container *ngIf="control.hasError('required')">{{ field.label }}不能为空</ng-container>
+        </ng-template>
+    </ng-template>
+    <button nz-button nzType="primary" (click)="submit()">提交</button>
 </div>

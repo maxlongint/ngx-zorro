@@ -1,15 +1,38 @@
+import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { NgModule } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
 
+import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { AppComponent } from './app.component';
 import { NgxDirectivesModule } from 'components/directives';
 import { NgxLoadingModule } from 'components/loading';
 import { NgxDynamicFormModule } from 'components/dynamic-form';
 
+import { registerLocaleData } from '@angular/common';
+import zh from '@angular/common/locales/zh';
+import { NZ_I18N } from 'ng-zorro-antd/i18n';
+import { zh_CN } from 'ng-zorro-antd/i18n';
+import { NzButtonModule } from 'ng-zorro-antd/button';
+import { NzFormModule } from 'ng-zorro-antd/form';
+import { NzInputModule } from 'ng-zorro-antd/input';
+registerLocaleData(zh);
+const LANG_PROVIDES = [{ provide: NZ_I18N, useValue: zh_CN }];
+
 @NgModule({
     declarations: [AppComponent],
-    imports: [BrowserModule, NgxDirectivesModule, NgxLoadingModule, NgxDynamicFormModule],
-    providers: [],
+    imports: [
+        BrowserModule,
+        BrowserAnimationsModule,
+        FormsModule,
+        ReactiveFormsModule,
+        NzInputModule,
+        NzFormModule,
+        NzButtonModule,
+        NgxDirectivesModule,
+        NgxLoadingModule,
+        NgxDynamicFormModule,
+    ],
+    providers: [...LANG_PROVIDES],
     bootstrap: [AppComponent],
 })
 export class AppModule {}
