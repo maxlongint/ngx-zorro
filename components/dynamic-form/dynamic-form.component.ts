@@ -1,9 +1,9 @@
 import { Component, Input, OnChanges, OnDestroy, OnInit, SimpleChanges, TemplateRef, ViewChild } from '@angular/core';
 import { AbstractControl, FormArray, FormControl, FormGroup, ValidatorFn, Validators } from '@angular/forms';
-import { FormItemType, IFormItem, IFormItemCheckbox, ValidatorScriptFn } from 'components/core/tree';
-import { IFormData, IFormDataFn } from 'components/core/tree/IFormData';
+import { FormItemType, IFormItem, IFormItemCheckbox, ValidatorScriptFn } from 'ngx-zorro/core/tree';
+import { IFormData, IFormDataFn } from 'ngx-zorro/core/tree';
 import { Subject, Subscription } from 'rxjs';
-import { distinctUntilChanged, filter } from 'rxjs/operators';
+import { filter } from 'rxjs/operators';
 
 interface IFormItemControl {
     $implicit?: AbstractControl;
