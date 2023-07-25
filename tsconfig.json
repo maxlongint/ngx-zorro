@@ -13,7 +13,7 @@
         "downlevelIteration": true,
         "paths": {
             "ngx-zorro": [
-                "projects/ngx-zorro/src",
+                "components",
             ]
         },
         "experimentalDecorators": true,

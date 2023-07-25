@@ -10,21 +10,21 @@
                     "style": "scss"
                 }
             },
-            "root": "projects/ngx-zorro",
-            "sourceRoot": "projects/ngx-zorro/src",
+            "root": "components",
+            "sourceRoot": "components",
             "prefix": "ngx",
             "architect": {
                 "build": {
                     "builder": "@angular-devkit/build-angular:ng-packagr",
                     "options": {
-                        "project": "projects/ngx-zorro/ng-package.json"
+                        "project": "components/ng-package.json"
                     },
                     "configurations": {
                         "production": {
-                            "tsConfig": "projects/ngx-zorro/tsconfig.lib.prod.json"
+                            "tsConfig": "components/tsconfig.lib.prod.json"
                         },
                         "development": {
-                            "tsConfig": "projects/ngx-zorro/tsconfig.lib.json"
+                            "tsConfig": "components/tsconfig.lib.json"
                         }
                     },
                     "defaultConfiguration": "production"
@@ -32,9 +32,9 @@
                 "test": {
                     "builder": "@angular-devkit/build-angular:karma",
                     "options": {
-                        "main": "projects/ngx-zorro/src/test.ts",
-                        "tsConfig": "projects/ngx-zorro/tsconfig.spec.json",
-                        "karmaConfig": "projects/ngx-zorro/karma.conf.js"
+                        "main": "components/test.ts",
+                        "tsConfig": "components/tsconfig.spec.json",
+                        "karmaConfig": "components·/karma.conf.js"
                     }
                 }
             }
@@ -68,21 +68,21 @@
                     "strict": true
                 }
             },
-            "root": "projects/test",
-            "sourceRoot": "projects/test/src",
+            "root": "test",
+            "sourceRoot": "test/src",
             "prefix": "app",
             "architect": {
                 "build": {
                     "builder": "@angular-devkit/build-angular:browser",
                     "options": {
                         "outputPath": "dist/test",
-                        "index": "projects/test/src/index.html",
-                        "main": "projects/test/src/main.ts",
-                        "polyfills": "projects/test/src/polyfills.ts",
-                        "tsConfig": "projects/test/tsconfig.app.json",
+                        "index": "test/src/index.html",
+                        "main": "test/src/main.ts",
+                        "polyfills": "test/src/polyfills.ts",
+                        "tsConfig": "test/tsconfig.app.json",
                         "inlineStyleLanguage": "scss",
-                        "assets": ["projects/test/src/favicon.ico", "projects/test/src/assets"],
-                        "styles": ["projects/test/src/styles.scss", "node_modules/ng-zorro-antd/ng-zorro-antd.min.css"],
+                        "assets": ["test/src/favicon.ico", "test/src/assets"],
+                        "styles": ["test/src/styles.scss", "node_modules/ng-zorro-antd/ng-zorro-antd.min.css"],
                         "scripts": []
                     },
                     "configurations": {
@@ -101,8 +101,8 @@
                             ],
                             "fileReplacements": [
                                 {
-                                    "replace": "projects/test/src/environments/environment.ts",
-                                    "with": "projects/test/src/environments/environment.prod.ts"
+                                    "replace": "test/src/environments/environment.ts",
+                                    "with": "test/src/environments/environment.prod.ts"
                                 }
                             ],
                             "outputHashing": "all"
@@ -142,13 +142,13 @@
                 "test": {
                     "builder": "@angular-devkit/build-angular:karma",
                     "options": {
-                        "main": "projects/test/src/test.ts",
-                        "polyfills": "projects/test/src/polyfills.ts",
-                        "tsConfig": "projects/test/tsconfig.spec.json",
-                        "karmaConfig": "projects/test/karma.conf.js",
+                        "main": "test/src/test.ts",
+                        "polyfills": "test/src/polyfills.ts",
+                        "tsConfig": "test/tsconfig.spec.json",
+                        "karmaConfig": "test/karma.conf.js",
                         "inlineStyleLanguage": "scss",
-                        "assets": ["projects/test/src/favicon.ico", "projects/test/src/assets"],
-                        "styles": ["projects/test/src/styles.scss"],
+                        "assets": ["test/src/favicon.ico", "test/src/assets"],
+                        "styles": ["test/src/styles.scss"],
                         "scripts": []
                     }
                 }

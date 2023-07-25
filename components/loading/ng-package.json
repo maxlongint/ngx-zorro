@@ -1,0 +1,8 @@
+{
+    "lib": {
+        "entryFile": "./public_api.ts",
+        "umdModuleIds": {
+            "ng-zorro-antd/core/services": "ng-zorro-antd/core/services"
+        }
+    }
+}
