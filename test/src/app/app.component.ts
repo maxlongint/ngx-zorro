@@ -1,7 +1,7 @@
 import { Component, TemplateRef, ViewChild, OnInit, AfterContentInit } from '@angular/core';
 import { AbstractControl } from '@angular/forms';
-import { FormItemType, IFormItem } from 'components/core/tree';
-import { NgxDynamicFormComponent } from 'components/dynamic-form';
+import { IFormItem, FormItemType } from 'ngx-zorro/core/tree';
+import { NgxDynamicFormComponent } from 'ngx-zorro/dynamic-form';
 
 @Component({
     selector: 'app-root',
