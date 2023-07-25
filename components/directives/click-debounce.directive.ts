@@ -10,7 +10,7 @@ import { debounceTime } from 'rxjs/operators';
 @Directive({
     selector: '[click.d]',
 })
-export class ClickDebounceDirective implements OnDestroy {
+export class NgxClickDebounceDirective implements OnDestroy {
     /**
      * 延迟时间(单位:ms)
      */
