@@ -51,15 +51,15 @@ export class LoadingComponent implements OnInit, OnChanges, OnDestroy {
     /**
      * 浮层对象
      */
-    overlayRef?: OverlayRef | null;
+    private overlayRef?: OverlayRef | null;
     /**
      * 渲染模板
      */
-    templatePortal?: TemplatePortal;
+    private templatePortal?: TemplatePortal;
     /**
      * 父元素大小改变监听对象
      */
-    resizeObserver?: ResizeObserver;
+    private resizeObserver?: ResizeObserver;
 
     ngOnInit(): void {}
 
