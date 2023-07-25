@@ -48,8 +48,18 @@ export class NgxDynamicFormComponent implements OnInit, OnChanges, OnDestroy {
                 if (Object.prototype.toString.call(data) === '[object Function]') {
                     const fn = data as IFormDataFn;
                     fn(this.formGroup);
+                    return;
+                }
+                if (data) {
+                    this.formGroup.patchValue(data);
                 } else {
-                    this.formGroup.reset(data);
+                    const resetData: IFormData = {};
+                    this.fields.forEach(field => {
+                        if (field.defaultValue) {
+                            resetData[field.controlName] = field.defaultValue;
+                        }
+                    });
+                    this.formGroup.reset(resetData);
                 }
             });
     }
@@ -204,7 +214,7 @@ export class NgxDynamicFormComponent implements OnInit, OnChanges, OnDestroy {
             }
         });
         context.options.forEach(option => {
-            option.control = new FormControl(field.context.defaultValue === option.value);
+            option.control = new FormControl(field.context.defaultValue.includes(option.value));
             context.controlArray?.push(option.control);
         });
     }

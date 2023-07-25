@@ -62,7 +62,7 @@ export class AppComponent implements OnInit, AfterContentInit {
                     { label: '跳舞', value: '02' },
                     { label: 'rap', value: '03' },
                 ],
-                defaultValue: '01',
+                defaultValue: ['01', '03'],
             },
             {
                 controlName: 'A0107',
