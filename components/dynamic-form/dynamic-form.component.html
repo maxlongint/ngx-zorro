@@ -1,0 +1,105 @@
+<!-- 构造编辑界面 -->
+<form nz-form [nzLayout]="layout" [formGroup]="formGroup">
+    <ng-container *ngFor="let field of fieldConfigs; trackBy: trackByFields">
+        <ng-template
+            *ngIf="!field.context.hidden"
+            [ngTemplateOutlet]="inputTemplate"
+            [ngTemplateOutletContext]="field"
+        ></ng-template>
+    </ng-container>
+</form>
+
+<!-- 录入模板 -->
+<ng-template
+    #inputTemplate
+    let-control
+    let-labelStyle="labelStyle"
+    let-inputStyle="inputStyle"
+    let-template="template"
+    let-field="context"
+>
+    <nz-form-item>
+        <nz-form-label [ngStyle]="labelStyle" [nzNoColon]="!field.label" [nzRequired]="field.required">
+            {{ field.label }}
+        </nz-form-label>
+        <nz-form-control
+            [ngStyle]="inputStyle"
+            [nzErrorTip]="textErrorTemplate"
+            [nzValidateStatus]="control"
+            [attr.tip]="field.controlName"
+        >
+            <ng-template
+                [ngTemplateOutlet]="template"
+                [ngTemplateOutletContext]="{ $implicit: control, field }"
+            ></ng-template>
+        </nz-form-control>
+    </nz-form-item>
+    <ng-template #textErrorTemplate>
+        <!-- 必填校验 -->
+        <ng-container *ngIf="control.hasError('required'); else uncertaintyTemplate">
+            {{ field.label }}不能为空
+        </ng-container>
+        <!-- 自定义校验提示 -->
+        <ng-template #uncertaintyTemplate>
+            <ng-container *ngIf="control.hasError('uncertainty')">
+                {{ control?.getError('message') || '未知错误' }}。
+            </ng-container>
+        </ng-template>
+    </ng-template>
+</ng-template>
+
+<!-- 文本 FromItemTypeEnum.text -->
+<ng-template #textTemplate let-control let-field="field">
+    <input nz-input [formControl]="control" [placeholder]="field.placeholder" />
+</ng-template>
+
+<!-- 数字 FromItemTypeEnum.number -->
+<ng-template #numberTemplate let-control let-field="field">
+    <nz-input-number
+        style="width: 100%"
+        [formControl]="control"
+        [nzMin]="field.min"
+        [nzMax]="field.max"
+        [nzPlaceHolder]="field.placeholder"
+    ></nz-input-number>
+</ng-template>
+
+<!-- 时间框 FromItemTypeEnum.date -->
+<ng-template #dateTemplate let-control let-field="field">
+    <nz-date-picker style="width: 100%" [formControl]="control" [nzPlaceHolder]="field.placeholder"></nz-date-picker>
+</ng-template>
+
+<!-- 单选 FromItemTypeEnum.radio -->
+<ng-template #radioTemplate let-control let-field="field">
+    <nz-radio-group [formControl]="control">
+        <ng-container *ngFor="let radio of field.options">
+            <label nz-radio [nzValue]="radio.value">{{ radio.label }}</label>
+        </ng-container>
+    </nz-radio-group>
+</ng-template>
+
+<!-- 多选框 FromItemTypeEnum.checkbox -->
+<ng-template #checkboxTemplate let-control let-field="field">
+    <ng-container *ngFor="let check of field.options">
+        <label nz-checkbox [formControl]="check.control">{{ check.label }}</label>
+    </ng-container>
+</ng-template>
+
+<!-- select FromItemTypeEnum.select -->
+<ng-template #selectTemplate let-control let-field="field">
+    <nz-select
+        [formControl]="control"
+        [nzPlaceHolder]="field.placeholder"
+        [nzAllowClear]="field.allowClear"
+        [nzShowSearch]="field.showSearch"
+    >
+        <ng-container *ngFor="let select of field.options">
+            <nz-option [nzValue]="select.value" [nzLabel]="select.label"></nz-option>
+        </ng-container>
+    </nz-select>
+</ng-template>
+
+<!-- 备注 FromItemTypeEnum.textarea -->
+<ng-template #textareaTemplate let-control let-field="field">
+    <textarea [rows]="field.rows" nz-input [formControl]="control" [placeholder]="field.placeholder"></textarea>
+</ng-template>
