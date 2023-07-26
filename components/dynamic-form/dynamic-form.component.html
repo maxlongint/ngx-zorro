@@ -1,5 +1,5 @@
 <!-- 构造编辑界面 -->
-<form nz-form nzLayout="vertical" [formGroup]="formGroup">
+<form nz-form [nzLayout]="layout" [formGroup]="formGroup">
     <ng-container *ngFor="let field of fieldConfigs; trackBy: trackByFields">
         <ng-template
             *ngIf="!field.context.hidden"
@@ -10,12 +10,19 @@
 </form>
 
 <!-- 录入模板 -->
-<ng-template #inputTemplate let-control let-template="template" let-field="context">
+<ng-template
+    #inputTemplate
+    let-control
+    let-labelStyle="labelStyle"
+    let-inputStyle="inputStyle"
+    let-template="template"
+    let-field="context"
+>
     <nz-form-item>
-        <nz-form-label *ngIf="field.label" [nzRequired]="field.required">
+        <nz-form-label [ngStyle]="labelStyle" [nzNoColon]="!field.label" [nzRequired]="field.required">
             {{ field.label }}
         </nz-form-label>
-        <nz-form-control [nzErrorTip]="textErrorTemplate" [nzValidateStatus]="control">
+        <nz-form-control [ngStyle]="inputStyle" [nzErrorTip]="textErrorTemplate" [nzValidateStatus]="control">
             <ng-template
                 [ngTemplateOutlet]="template"
                 [ngTemplateOutletContext]="{ $implicit: control, field }"
@@ -91,5 +98,3 @@
 <ng-template #textareaTemplate let-control let-field="field">
     <textarea [rows]="field.rows" nz-input [formControl]="control" [placeholder]="field.placeholder"></textarea>
 </ng-template>
-
-<ng-template #errorTemplate let-control let-field="field"></ng-template>

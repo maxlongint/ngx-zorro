@@ -28,6 +28,14 @@ export interface IFormItemBase {
      */
     label?: string;
     /**
+     * 字段名称显示宽度
+     */
+    labelWidth?: string;
+    /**
+     * 录入框宽度
+     */
+    inputWidth?: string;
+    /**
      * 字段编码
      */
     controlName: string;

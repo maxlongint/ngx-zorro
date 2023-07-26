@@ -1,4 +1,15 @@
-import { Component, Input, OnChanges, OnDestroy, OnInit, SimpleChanges, TemplateRef, ViewChild } from '@angular/core';
+import {
+    AfterViewInit,
+    Component,
+    Input,
+    OnChanges,
+    OnDestroy,
+    OnInit,
+    Renderer2,
+    SimpleChanges,
+    TemplateRef,
+    ViewChild,
+} from '@angular/core';
 import { AbstractControl, FormArray, FormControl, FormGroup, ValidatorFn, Validators } from '@angular/forms';
 import { FormItemType, IFormItem, IFormItemCheckbox, ValidatorScriptFn } from 'ngx-zorro/core/tree';
 import { IFormData, IFormDataFn } from 'ngx-zorro/core/tree';
@@ -9,6 +20,9 @@ interface IFormItemControl {
     $implicit?: AbstractControl;
     context: IFormItem;
     template: TemplateRef<any> | null;
+
+    labelStyle?: Record<string, string>;
+    inputStyle?: Record<string, string>;
 }
 
 @Component({
@@ -16,7 +30,7 @@ interface IFormItemControl {
     templateUrl: './dynamic-form.component.html',
     styleUrls: ['./dynamic-form.component.scss'],
 })
-export class NgxDynamicFormComponent implements OnInit, OnChanges, OnDestroy {
+export class NgxDynamicFormComponent implements OnInit, OnChanges, AfterViewInit, OnDestroy {
     /**
      * 字段列表
      */
@@ -33,15 +47,21 @@ export class NgxDynamicFormComponent implements OnInit, OnChanges, OnDestroy {
     get fields(): Array<IFormItem> {
         return this._fields;
     }
-
     /**
      * 设置值
      * 示例1: { name: '小明'}
-     * 示例2: (form: FormGroup) => { form.patchValue('小明') }
+     * 示例2: (form: FormGroup) => { form.patchValue({ name: '小明'}) }
      */
     @Input() formData: IFormData;
+    /**
+     * 表单布局
+     * vertical:垂直布局
+     * horizontal:水平布局
+     * inline:水平自适应
+     */
+    @Input() layout: 'vertical' | 'horizontal' | 'inline' = 'inline';
 
-    constructor() {
+    constructor(private renderer: Renderer2) {
         this.setDataSubscription = this.setData$
             .pipe(filter(() => Object.keys(this.formGroup.controls).length !== 0))
             .subscribe(data => {
@@ -89,6 +109,8 @@ export class NgxDynamicFormComponent implements OnInit, OnChanges, OnDestroy {
         }
     }
 
+    ngAfterViewInit(): void {}
+
     ngOnDestroy(): void {
         this.setDataSubscription?.unsubscribe();
     }
@@ -106,6 +128,18 @@ export class NgxDynamicFormComponent implements OnInit, OnChanges, OnDestroy {
                 field.context.placeholder = '';
                 field.$implicit.disable();
             }
+
+            if (field.context.labelWidth) {
+                if (this.layout === 'horizontal' || this.layout === 'inline') {
+                    field.labelStyle = { width: field.context.labelWidth };
+                }
+            }
+            if (field.context.inputWidth) {
+                if (this.layout === 'inline') {
+                    field.inputStyle = { width: field.context.inputWidth };
+                }
+            }
+
             this.formGroup.addControl(field.context.controlName, field.$implicit);
             switch (field.context.type) {
                 case FormItemType.text:
