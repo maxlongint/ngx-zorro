@@ -1,4 +1,4 @@
-import { Component, TemplateRef, ViewChild, OnInit, AfterContentInit } from '@angular/core';
+import { Component, TemplateRef, ViewChild, OnInit, AfterContentInit, AfterViewInit } from '@angular/core';
 import { AbstractControl } from '@angular/forms';
 import { IFormItem, FormItemType } from 'ngx-zorro/core/tree';
 import { NgxDynamicFormComponent } from 'ngx-zorro/dynamic-form';
@@ -8,7 +8,7 @@ import { NgxDynamicFormComponent } from 'ngx-zorro/dynamic-form';
     templateUrl: './app.component.html',
     styleUrls: ['./app.component.scss'],
 })
-export class AppComponent implements OnInit, AfterContentInit {
+export class AppComponent implements OnInit, AfterViewInit, AfterContentInit {
     visible = false;
     fieldList: Array<IFormItem> = [];
 
@@ -17,7 +17,7 @@ export class AppComponent implements OnInit, AfterContentInit {
     };
 
     @ViewChild('definedTemplate', { static: true }) definedTemplate!: TemplateRef<any>;
-    @ViewChild('dynamicFormElement', { static: true }) dynamicFormElement!: NgxDynamicFormComponent;
+    @ViewChild('dynamicFormElement') dynamicFormElement!: NgxDynamicFormComponent;
     ngOnInit(): void {
         this.fieldList = [
             {
@@ -119,9 +119,13 @@ export class AppComponent implements OnInit, AfterContentInit {
         ];
     }
 
-    ngAfterContentInit(): void {
-        this.dynamicFormElement.setData(this.data);
+    ngAfterViewInit(): void {
+        setTimeout(() => {
+            this.dynamicFormElement.setData({ A0190: '1' });
+        }, 100);
     }
+
+    ngAfterContentInit(): void {}
 
     submit() {
         const data = this.dynamicFormElement.getData();

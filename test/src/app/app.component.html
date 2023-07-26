@@ -1,6 +1,6 @@
 <div class="container">
     <h1>test app</h1>
-    <ngx-dynamic-form #dynamicFormElement [fields]="fieldList"></ngx-dynamic-form>
+    <ngx-dynamic-form #dynamicFormElement [fields]="fieldList" [formData]="data"></ngx-dynamic-form>
     <ng-template #definedTemplate let-control let-field="field">
         <input nz-input [formControl]="control" [placeholder]="field.placeholder" />
     </ng-template>

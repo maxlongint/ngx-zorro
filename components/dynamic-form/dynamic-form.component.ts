@@ -1,11 +1,11 @@
 import {
+    AfterContentInit,
     AfterViewInit,
     Component,
     Input,
     OnChanges,
     OnDestroy,
     OnInit,
-    Renderer2,
     SimpleChanges,
     TemplateRef,
     ViewChild,
@@ -13,8 +13,8 @@ import {
 import { AbstractControl, FormArray, FormControl, FormGroup, ValidatorFn, Validators } from '@angular/forms';
 import { FormItemType, IFormItem, IFormItemCheckbox, ValidatorScriptFn } from 'ngx-zorro/core/tree';
 import { IFormData, IFormDataFn } from 'ngx-zorro/core/tree';
-import { Subject, Subscription } from 'rxjs';
-import { filter } from 'rxjs/operators';
+import { BehaviorSubject, Subject, Subscription } from 'rxjs';
+import { distinctUntilChanged } from 'rxjs/operators';
 
 interface IFormItemControl {
     $implicit?: AbstractControl;
@@ -30,7 +30,7 @@ interface IFormItemControl {
     templateUrl: './dynamic-form.component.html',
     styleUrls: ['./dynamic-form.component.scss'],
 })
-export class NgxDynamicFormComponent implements OnInit, OnChanges, AfterViewInit, OnDestroy {
+export class NgxDynamicFormComponent implements OnInit, OnChanges, AfterViewInit, AfterContentInit, OnDestroy {
     /**
      * 字段列表
      */
@@ -61,33 +61,9 @@ export class NgxDynamicFormComponent implements OnInit, OnChanges, AfterViewInit
      */
     @Input() layout: 'vertical' | 'horizontal' | 'inline' = 'vertical';
 
-    constructor(private renderer: Renderer2) {
-        this.setDataSubscription = this.setData$
-            .pipe(filter(() => Object.keys(this.formGroup.controls).length !== 0))
-            .subscribe(data => {
-                if (Object.prototype.toString.call(data) === '[object Function]') {
-                    const fn = data as IFormDataFn;
-                    fn(this.formGroup);
-                    return;
-                }
-                if (data) {
-                    this.formGroup.patchValue(data);
-                } else {
-                    const resetData: IFormData = {};
-                    this.fields.forEach(field => {
-                        if (field.defaultValue) {
-                            resetData[field.controlName] = field.defaultValue;
-                        }
-                    });
-                    this.formGroup.reset(resetData);
-                }
-            });
-    }
+    constructor() {}
 
     formGroup = new FormGroup({});
-    private setData$ = new Subject<IFormData>();
-    private setDataSubscription?: Subscription;
-
     fieldConfigs: Array<IFormItemControl> = [];
     trackByFields = (index: number, item: IFormItemControl) => item.context.id;
 
@@ -99,7 +75,21 @@ export class NgxDynamicFormComponent implements OnInit, OnChanges, AfterViewInit
     @ViewChild('textareaTemplate', { static: true }) private textareaTemplate!: TemplateRef<any>;
     @ViewChild('selectTemplate', { static: true }) private selectTemplate!: TemplateRef<any>;
 
-    ngOnInit(): void {}
+    setData$ = new BehaviorSubject<IFormData>(undefined);
+    private setDataSubscription?: Subscription;
+
+    ngOnInit(): void {
+        this.setData$.pipe(distinctUntilChanged()).subscribe(data => {
+            if (Object.prototype.toString.call(data) === '[object Function]') {
+                const fn = data as IFormDataFn;
+                fn(this.formGroup);
+                return;
+            }
+            if (data) {
+                this.formGroup.patchValue(data);
+            }
+        });
+    }
 
     ngOnChanges(changes: SimpleChanges): void {
         if (changes.fields) {
@@ -110,6 +100,12 @@ export class NgxDynamicFormComponent implements OnInit, OnChanges, AfterViewInit
     }
 
     ngAfterViewInit(): void {}
+
+    ngAfterContentInit(): void {
+        if (this.formData) {
+            this.setData$.next(this.formData);
+        }
+    }
 
     ngOnDestroy(): void {
         this.setDataSubscription?.unsubscribe();
@@ -165,16 +161,16 @@ export class NgxDynamicFormComponent implements OnInit, OnChanges, AfterViewInit
             }
         });
         this.setFormControlValidators();
-        this.setData$.next(this.formData);
     }
 
     /**
      * 设置表单的值
+     * 示例1: { name: '小明'}
+     * 示例2: (form: FormGroup) => { form.patchValue({ name: '小明'}) }
      * @param data 值
      */
     public setData(data: IFormData) {
-        this.formData = data;
-        this.setData$.next(this.formData);
+        this.setData$.next(data);
     }
 
     /**
