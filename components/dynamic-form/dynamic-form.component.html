@@ -22,7 +22,12 @@
         <nz-form-label [ngStyle]="labelStyle" [nzNoColon]="!field.label" [nzRequired]="field.required">
             {{ field.label }}
         </nz-form-label>
-        <nz-form-control [ngStyle]="inputStyle" [nzErrorTip]="textErrorTemplate" [nzValidateStatus]="control">
+        <nz-form-control
+            [ngStyle]="inputStyle"
+            [nzErrorTip]="textErrorTemplate"
+            [nzValidateStatus]="control"
+            [attr.tip]="field.controlName"
+        >
             <ng-template
                 [ngTemplateOutlet]="template"
                 [ngTemplateOutletContext]="{ $implicit: control, field }"

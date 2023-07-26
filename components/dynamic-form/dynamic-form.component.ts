@@ -59,7 +59,7 @@ export class NgxDynamicFormComponent implements OnInit, OnChanges, AfterViewInit
      * horizontal:水平布局
      * inline:水平自适应
      */
-    @Input() layout: 'vertical' | 'horizontal' | 'inline' = 'inline';
+    @Input() layout: 'vertical' | 'horizontal' | 'inline' = 'vertical';
 
     constructor(private renderer: Renderer2) {
         this.setDataSubscription = this.setData$
@@ -128,18 +128,7 @@ export class NgxDynamicFormComponent implements OnInit, OnChanges, AfterViewInit
                 field.context.placeholder = '';
                 field.$implicit.disable();
             }
-
-            if (field.context.labelWidth) {
-                if (this.layout === 'horizontal' || this.layout === 'inline') {
-                    field.labelStyle = { width: field.context.labelWidth };
-                }
-            }
-            if (field.context.inputWidth) {
-                if (this.layout === 'inline') {
-                    field.inputStyle = { width: field.context.inputWidth };
-                }
-            }
-
+            this.setFormItemStyle(field);
             this.formGroup.addControl(field.context.controlName, field.$implicit);
             switch (field.context.type) {
                 case FormItemType.text:
@@ -208,6 +197,24 @@ export class NgxDynamicFormComponent implements OnInit, OnChanges, AfterViewInit
         }
         const data = form.getRawValue();
         return data;
+    }
+
+    private setFormItemStyle(field: IFormItemControl) {
+        if (field.context.labelWidth) {
+            if (this.layout === 'horizontal' || this.layout === 'inline') {
+                field.labelStyle = { width: field.context.labelWidth };
+            }
+        }
+        if (field.context.inputWidth) {
+            if (this.layout === 'inline') {
+                field.inputStyle = { width: field.context.inputWidth };
+            }
+        }
+        if (!field.context.label) {
+            if (this.layout === 'vertical') {
+                field.labelStyle = { display: 'none' };
+            }
+        }
     }
 
     private setFormControlValidators() {
