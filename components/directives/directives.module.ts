@@ -1,8 +1,8 @@
 import { NgModule } from '@angular/core';
-import { ClickDebounceDirective } from './click-debounce.directive';
+import { NgxClickDebounceDirective } from './click-debounce.directive';
 
 @NgModule({
-    declarations: [ClickDebounceDirective],
-    exports: [ClickDebounceDirective],
+    declarations: [NgxClickDebounceDirective],
+    exports: [NgxClickDebounceDirective],
 })
 export class NgxDirectivesModule {}

@@ -24,7 +24,7 @@ import { NzDestroyService } from 'ng-zorro-antd/core/services';
     styleUrls: ['./loading.component.scss'],
     providers: [NzDestroyService],
 })
-export class LoadingComponent implements OnInit, OnChanges, OnDestroy {
+export class NgxLoadingComponent implements OnInit, OnChanges, OnDestroy {
     /**
      * 是否显示(支持双向绑定)
      */

@@ -1,8 +1,8 @@
-import { ClickDebounceDirective } from './click-debounce.directive';
+import { NgxClickDebounceDirective } from './click-debounce.directive';
 
-describe('ClickDebounceDirective', () => {
-  it('should create an instance', () => {
-    const directive = new ClickDebounceDirective();
-    expect(directive).toBeTruthy();
-  });
+describe('NgxClickDebounceDirective', () => {
+    it('should create an instance', () => {
+        const directive = new NgxClickDebounceDirective();
+        expect(directive).toBeTruthy();
+    });
 });

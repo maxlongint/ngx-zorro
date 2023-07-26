@@ -1,19 +1,19 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 
-import { NgxLoadingComponent } from './loading.component';
+import { NgxDynamicFormComponent } from './dynamic-form.component';
 
-describe('NgxLoadingComponent', () => {
-    let component: NgxLoadingComponent;
-    let fixture: ComponentFixture<NgxLoadingComponent>;
+describe('NgxDynamicFormComponent', () => {
+    let component: NgxDynamicFormComponent;
+    let fixture: ComponentFixture<NgxDynamicFormComponent>;
 
     beforeEach(async () => {
         await TestBed.configureTestingModule({
-            declarations: [NgxLoadingComponent],
+            declarations: [NgxDynamicFormComponent],
         }).compileComponents();
     });
 
     beforeEach(() => {
-        fixture = TestBed.createComponent(NgxLoadingComponent);
+        fixture = TestBed.createComponent(NgxDynamicFormComponent);
         component = fixture.componentInstance;
         fixture.detectChanges();
     });
