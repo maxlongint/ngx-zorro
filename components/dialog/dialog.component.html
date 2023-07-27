@@ -1,0 +1,33 @@
+<ng-template #dialogTemplate>
+    <div class="dialog">
+        <ng-container [ngTemplateOutlet]="header"></ng-container>
+        <ng-container [ngTemplateOutlet]="content"></ng-container>
+    </div>
+</ng-template>
+
+<ng-template #header>
+    <div class="dialog-header">
+        <div #dialogTitle class="dialog-title">
+            <ng-container *nzStringTemplateOutlet="title">{{ title }}</ng-container>
+        </div>
+
+        <div class="nav-handle" title="最大化" *ngIf="!fullscreen" (click)="updateFullScreen(true)">
+            <i nz-icon nzType="fullscreen" nzTheme="outline"></i>
+        </div>
+        <div class="nav-handle" title="还原" *ngIf="fullscreen" (click)="updateFullScreen(false)">
+            <i nz-icon nzType="fullscreen-exit" nzTheme="outline"></i>
+        </div>
+
+        <div class="nav-handle" title="关闭" (click)="close()">
+            <i nz-icon nzType="close" nzTheme="outline"></i>
+        </div>
+    </div>
+</ng-template>
+
+<ng-template #content>
+    <div class="dialog-content">
+        <ng-container *ngIf="contentTemplate">
+            <ng-template [ngTemplateOutlet]="contentTemplate"></ng-template>
+        </ng-container>
+    </div>
+</ng-template>
