@@ -120,9 +120,9 @@ export class AppComponent implements OnInit, AfterViewInit, AfterContentInit {
     }
 
     ngAfterViewInit(): void {
-        setTimeout(() => {
-            this.dynamicFormElement.setData({ A0190: '1' });
-        }, 100);
+        // setTimeout(() => {
+        //     this.dynamicFormElement.setData({ A0190: '1' });
+        // }, 100);
     }
 
     ngAfterContentInit(): void {}

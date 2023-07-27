@@ -1,9 +1,15 @@
 <div class="container">
     <h1>test app</h1>
-    <ngx-dynamic-form #dynamicFormElement [fields]="fieldList" [formData]="data"></ngx-dynamic-form>
+
+    <ng-container *auth="'delete'; then authTemplate"></ng-container>
+    <ng-template #authTemplate let-authList>
+        <button nz-button nzDanger>{{ authList.name }}</button>
+    </ng-template>
+
+    <!-- <ngx-dynamic-form #dynamicFormElement [fields]="fieldList" [formData]="data"></ngx-dynamic-form>
     <ng-template #definedTemplate let-control let-field="field">
         <input nz-input [formControl]="control" [placeholder]="field.placeholder" />
     </ng-template>
 
-    <button nz-button nzType="primary" (click)="submit()">提交</button>
+    <button nz-button nzType="primary" (click)="submit()">提交</button> -->
 </div>

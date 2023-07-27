@@ -4,6 +4,35 @@
 
 ngx-zorro 是一个`angular`的组件库，基于`ng-zorro-antd`开发的一些常用组件
 
+## 目录
+
+-   [ngx-Zorro](#ngx-zorro)
+    -   [目录](#目录)
+    -   [依赖](#依赖)
+    -   [安装](#安装)
+    -   [组件库](#组件库)
+        -   [loading 组件 💘](#loading-组件-)
+            -   [如何使用](#如何使用)
+            -   [代码示例](#代码示例)
+            -   [参数说明](#参数说明)
+        -   [动态构造表单 组件 💘](#动态构造表单-组件-)
+            -   [如何使用](#如何使用-1)
+            -   [代码示例](#代码示例-1)
+            -   [具有的能力](#具有的能力)
+                -   [自定义表单模板](#自定义表单模板)
+                -   [自定义验证脚本](#自定义验证脚本)
+                -   [通过自定义脚本实现字段的显示隐藏](#通过自定义脚本实现字段的显示隐藏)
+            -   [参数说明](#参数说明-1)
+    -   [指令](#指令)
+        -   [防抖事件指令 ✈️](#防抖事件指令-️)
+            -   [如何使用](#如何使用-2)
+            -   [代码示例](#代码示例-2)
+            -   [参数说明](#参数说明-2)
+        -   [权限指令 ✈️](#权限指令-️)
+            -   [如何使用](#如何使用-3)
+            -   [代码示例](#代码示例-3)
+            -   [参数说明](#参数说明-3)
+
 ## 依赖
 
 ```package.json
@@ -20,7 +49,7 @@ yarn add ngx-zorro
 
 ## 组件库
 
-### loading 组件
+### loading 组件 💘
 
 #### 如何使用
 
@@ -42,7 +71,7 @@ import { NgxLoadingModule } from 'ngx-zorro/loading';
 | [tip]     | 提示内容               | string  | 加载中… |
 | [inline]  | 是否行内模式           | boolean | false   |
 
-### 动态表单构造组件
+### 动态构造表单 组件 💘
 
 #### 如何使用
 
@@ -150,7 +179,7 @@ fieldList = [
 
 ## 指令
 
-### 防抖事件指令
+### 防抖事件指令 ✈️
 
 #### 如何使用
 
@@ -170,3 +199,41 @@ import { NgxDirectivesModule } from 'ngx-zorro/directives';
 | ---------- | ----------------- | ------- | ------ |
 | [delay]    | 延迟时间(单位:ms) | number  | 500    |
 | [disabled] | 是否只读          | boolean | false  |
+
+### 权限指令 ✈️
+
+#### 如何使用
+
+```typescript
+import { NgxDirectivesModule } from 'ngx-zorro/directives';
+
+@NgModule({
+    imports: [NgxDirectivesModule],
+    providers: [{ provide: NgxConfigService, useExisting: NgxZorroConfigService }],
+})
+
+// NgxZorroConfigService 服务
+export class NgxZorroConfigService extends NgxConfigService {
+    constructor() {
+        super();
+    }
+
+    hasAuth = (tag: Array<string>) => {
+        return of({ $implicit: {}, status: false });
+    };
+}
+```
+
+#### 代码示例
+
+```html
+<ng-container *auth="condition; then authTemplate; else noAuthTemplate"></ng-container>
+<ng-template #authTemplate let-authList>有权限</ng-template>
+<ng-template #noAuthTemplate>无权限</ng-template>
+```
+
+#### 参数说明
+
+| 参数   | 说明       | 类型               | 默认值 |
+| ------ | ---------- | ------------------ | ------ |
+| \*auth | 权限标识符 | string \| string[] | 无     |
