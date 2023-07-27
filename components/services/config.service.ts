@@ -9,6 +9,9 @@ export class NgxConfigService {
 
     /**
      * 是否有权限
+     * 返回值：Observable<{ $implicit: any; status: boolean }
+     * $implicit是then和else模板的变量
+     * status为是否存在权限
      */
     hasAuth?: (value: Array<string>) => Observable<{ $implicit: any; status: boolean }>;
 }
