@@ -3,5 +3,6 @@
     "dest": "../publish",
     "lib": {
         "entryFile": "./public_api.ts"
-    }
+    },
+    "assets": ["./**/*.scss"]
 }

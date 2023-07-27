@@ -133,4 +133,7 @@ export class AppComponent implements OnInit, AfterViewInit, AfterContentInit {
             console.log(data);
         }
     }
+    open() {
+        this.visible = true;
+    }
 }
