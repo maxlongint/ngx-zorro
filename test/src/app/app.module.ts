@@ -15,6 +15,8 @@ import { zh_CN } from 'ng-zorro-antd/i18n';
 import { NzButtonModule } from 'ng-zorro-antd/button';
 import { NzFormModule } from 'ng-zorro-antd/form';
 import { NzInputModule } from 'ng-zorro-antd/input';
+import { NgxZorroConfigService } from './ngx-zorro-config.service';
+import { NgxConfigService } from 'ngx-zorro/services/config.service';
 registerLocaleData(zh);
 const LANG_PROVIDES = [{ provide: NZ_I18N, useValue: zh_CN }];
 
@@ -32,7 +34,7 @@ const LANG_PROVIDES = [{ provide: NZ_I18N, useValue: zh_CN }];
         NgxLoadingModule,
         NgxDynamicFormModule,
     ],
-    providers: [...LANG_PROVIDES],
+    providers: [...LANG_PROVIDES, { provide: NgxConfigService, useExisting: NgxZorroConfigService }],
     bootstrap: [AppComponent],
 })
 export class AppModule {}
