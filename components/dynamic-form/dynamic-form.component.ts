@@ -48,6 +48,10 @@ export class NgxDynamicFormComponent implements OnInit, OnChanges, AfterViewInit
         return this._fields;
     }
     /**
+     * 是否只读
+     */
+    @Input() disabled: boolean = false;
+    /**
      * 设置值
      * 示例1: { name: '小明'}
      * 示例2: (form: FormGroup) => { form.patchValue({ name: '小明'}) }
@@ -63,6 +67,9 @@ export class NgxDynamicFormComponent implements OnInit, OnChanges, AfterViewInit
 
     constructor() {}
 
+    /**
+     * 表单
+     */
     formGroup = new FormGroup({});
     fieldConfigs: Array<IFormItemControl> = [];
     trackByFields = (index: number, item: IFormItemControl) => item.context.id;
@@ -120,7 +127,7 @@ export class NgxDynamicFormComponent implements OnInit, OnChanges, AfterViewInit
                 field.context.placeholder = `请填写${field.context.label || ''}`;
             }
             field.$implicit = new FormControl(field.context.defaultValue || null);
-            if (field.context.disabled) {
+            if (this.disabled || field.context.disabled) {
                 field.context.placeholder = '';
                 field.$implicit.disable();
             }
@@ -254,5 +261,8 @@ export class NgxDynamicFormComponent implements OnInit, OnChanges, AfterViewInit
             option.control = new FormControl(field.context.defaultValue.includes(option.value));
             context.controlArray?.push(option.control);
         });
+        if (this.disabled || field.context.disabled) {
+            context.controlArray.disable();
+        }
     }
 }
