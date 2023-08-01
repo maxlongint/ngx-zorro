@@ -2,6 +2,7 @@ import { Component, TemplateRef, ViewChild, OnInit, AfterContentInit, AfterViewI
 import { AbstractControl } from '@angular/forms';
 import { IFormItem, FormItemType } from 'ngx-zorro/core/tree';
 import { NgxDynamicFormComponent } from 'ngx-zorro/dynamic-form';
+import { Store } from 'ngx-zorro/utils';
 
 @Component({
     selector: 'app-root',
@@ -9,7 +10,9 @@ import { NgxDynamicFormComponent } from 'ngx-zorro/dynamic-form';
     styleUrls: ['./app.component.scss'],
 })
 export class AppComponent implements OnInit, AfterViewInit, AfterContentInit {
+    @Store()
     visible = false;
+
     fieldList: Array<IFormItem> = [];
 
     data = {

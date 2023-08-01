@@ -36,6 +36,11 @@ ngx-zorro 是一个`angular`的组件库，基于`ng-zorro-antd`开发的一些�
             -   [如何使用](#如何使用-4)
             -   [代码示例](#代码示例-4)
             -   [参数说明](#参数说明-4)
+    -   [工具](#工具)
+        -   [缓存装饰器 🚩](#缓存装饰器-)
+            -   [如何使用](#如何使用-5)
+            -   [代码示例](#代码示例-5)
+            -   [参数](#参数)
 
 ## 依赖
 
@@ -290,3 +295,31 @@ export class NgxZorroConfigService extends NgxConfigService {
 | 参数   | 说明       | 类型               | 默认值 |
 | ------ | ---------- | ------------------ | ------ |
 | \*auth | 权限标识符 | string \| string[] | -      |
+
+## 工具
+
+### 缓存装饰器 🚩
+
+#### 如何使用
+
+```typescript
+import { Store } from 'ngx-zorro/utils';
+```
+
+#### 代码示例
+
+```typescript
+@Store()
+authList = [] // 默认值
+```
+
+```typescript
+@Store({ key: 'auth', expires: 1000 * 60 * 60 }) // 缓存的key指定为: auth; 过期时间为: 1小时
+authList = [] // 默认值
+```
+
+#### 参数
+
+| 参数                               | 说明         | 类型         | 默认值 |
+| ---------------------------------- | ------------ | ------------ | ------ |
+| { key?: string, expires?: number } | 缓存配置信息 | StoreOptions | -      |
