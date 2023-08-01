@@ -2,7 +2,8 @@ import { Component, TemplateRef, ViewChild, OnInit, AfterContentInit, AfterViewI
 import { AbstractControl } from '@angular/forms';
 import { IFormItem, FormItemType } from 'ngx-zorro/core/tree';
 import { NgxDynamicFormComponent } from 'ngx-zorro/dynamic-form';
-import { Store } from 'ngx-zorro/utils';
+import { Store, setStorePrefix } from 'ngx-zorro/utils';
+import { environment } from '../environments/environment';
 
 @Component({
     selector: 'app-root',
@@ -18,6 +19,7 @@ export class AppComponent implements OnInit, AfterViewInit, AfterContentInit {
     data = {
         A0101: '张三',
     };
+    constructor() {}
 
     @ViewChild('definedTemplate', { static: true }) definedTemplate!: TemplateRef<any>;
     @ViewChild('dynamicFormElement') dynamicFormElement!: NgxDynamicFormComponent;

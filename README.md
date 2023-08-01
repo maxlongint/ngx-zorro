@@ -153,6 +153,20 @@ fieldList = [
         type: FormItemType.text,
     },
 ]
+
+
+setData() {
+    ajax().subscribe(() => {
+        // 设置值可以通过 [formData] 也可以通过实例的方法传递值或者函数
+        // 方法1：
+        this.dynamicFormElement.setData({ name: 'lucky' })
+        // 方法2：
+        this.dynamicFormElement.setData(form => {
+            form.patchValue({ name: 'lucky' })
+        });
+    })
+}
+
 submit() {
     const data = this.dynamicFormElement.getData();
     if (data) {
@@ -304,6 +318,11 @@ export class NgxZorroConfigService extends NgxConfigService {
 #### 如何使用
 
 ```typescript
+// app.module.ts 中设置前缀
+// 注意：前缀设置在非 app.module 的 app.component 中生效
+import { setStorePrefix } from 'ngx-zorro/utils';
+setStorePrefix('ngx-zorro');
+
 import { Store } from 'ngx-zorro/utils';
 ```
 

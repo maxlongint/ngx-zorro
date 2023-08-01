@@ -1,3 +1,5 @@
+import { NgxConfigService } from 'ngx-zorro/services';
+
 /**
  * 缓存类别
  */
@@ -16,6 +18,13 @@ export interface StoreOptions {
     expires?: number;
 }
 
+let prefix: string = 'NGX_ZORRO';
+
+// 辅助函数用于设置前缀
+export function setStorePrefix(newPrefix: string) {
+    prefix = newPrefix;
+}
+
 /**
  * 存储在缓存
  * @param storage Storage类型 默认:sessionStorage
@@ -25,7 +34,7 @@ export interface StoreOptions {
 export function Store<T>(storage: StorageEngine = sessionStorage, options?: StoreOptions) {
     return function (target: any, name: string) {
         const { key, expires } = options || {};
-        const storageKey = `@NGX_ZORRO_${key || name}`.toLocaleUpperCase();
+        const storageKey = `@${prefix}_${key || name}`.toLocaleUpperCase();
 
         // getter function
         const getter = function () {
