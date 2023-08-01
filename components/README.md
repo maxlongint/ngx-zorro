@@ -229,11 +229,12 @@ fieldList = [
 
 #### 参数说明
 
-| 参数       | 说明     | 类型                                   | 默认值    |
-| ---------- | -------- | -------------------------------------- | --------- |
-| [fields]   | 字段列表 | IFormItem[]                            | []        |
-| [formData] | 表单的值 | IFormData                              | undefined |
-| [layout]   | 表单布局 | 'vertical' \| 'horizontal' \| 'inline' | vertical  |
+| 参数       | 说明         | 类型                                   | 默认值    |
+| ---------- | ------------ | -------------------------------------- | --------- |
+| [fields]   | 字段列表     | IFormItem[]                            | []        |
+| [formData] | 表单的值     | IFormData                              | undefined |
+| [layout]   | 表单布局     | 'vertical' \| 'horizontal' \| 'inline' | vertical  |
+| [disabled] | 表单是否只读 | boolean                                | false     |
 
 ## 指令
 

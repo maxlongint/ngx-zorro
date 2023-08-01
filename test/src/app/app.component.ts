@@ -30,6 +30,7 @@ export class AppComponent implements OnInit, AfterViewInit, AfterContentInit {
                 controlName: 'A0101',
                 type: FormItemType.text,
                 required: true,
+                disabled: true,
             },
             {
                 label: '曾用名',
@@ -78,6 +79,7 @@ export class AppComponent implements OnInit, AfterViewInit, AfterContentInit {
                     { label: 'rap', value: '03' },
                 ],
                 defaultValue: ['01', '03'],
+                disabled: true,
             },
             {
                 controlName: 'A0107',
@@ -89,6 +91,8 @@ export class AppComponent implements OnInit, AfterViewInit, AfterContentInit {
                     { label: '跳舞', value: '02' },
                     { label: 'rap', value: '03' },
                 ],
+                defaultValue: '02',
+                disabled: true,
             },
             {
                 label: '兴趣爱好',
