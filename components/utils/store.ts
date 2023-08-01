@@ -1,5 +1,3 @@
-import { NgxConfigService } from 'ngx-zorro/services';
-
 /**
  * 缓存类别
  */
