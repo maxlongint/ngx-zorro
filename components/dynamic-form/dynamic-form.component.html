@@ -42,7 +42,7 @@
         <!-- 自定义校验提示 -->
         <ng-template #uncertaintyTemplate>
             <ng-container *ngIf="control.hasError('uncertainty')">
-                {{ control?.getError('message') || '未知错误' }}。
+                {{ control?.getError('message') || '未知错误' }}
             </ng-container>
         </ng-template>
     </ng-template>

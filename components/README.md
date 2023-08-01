@@ -199,19 +199,29 @@ fieldList = [
 
 ##### 自定义验证脚本
 
+> 脚本可以是字符串也可以是函数, 错误提示直接 return
+
 ```typescript
 fieldList = [
+    {
+        label: '姓名',
+        controlName: 'name',
+        type: FormItemType.text,
+        required: true,
+        validatorScript: 'if (control.value) { if (control.value.length < 3 ) { return `长度不够` } }',
+    },
     {
         label: '身份证',
         controlName: 'icard',
         type: FormItemType.text,
+        required: true,
         validatorScript: (control: AbstractControl, fields: IFormItem[]) => {
             if (control.value) {
                 if (control.value.length !== 18) {
-                    return { uncertainty: true, message: '身份证长度不够18位' };
+                    return '身份证长度不够18位';
                 }
             }
-            return {};
+            return '';
         },
     },
 ];
@@ -230,7 +240,6 @@ fieldList = [
             if (use_name_time) {
                 use_name_time.hidden = !control.value;
             }
-            return {};
         },
     },
     {
@@ -243,12 +252,12 @@ fieldList = [
 
 #### 参数说明
 
-| 参数       | 说明         | 类型                                   | 默认值    |
-| ---------- | ------------ | -------------------------------------- | --------- |
-| [fields]   | 字段列表     | IFormItem[]                            | []        |
-| [formData] | 表单的值     | IFormData                              | undefined |
-| [layout]   | 表单布局     | 'vertical' \| 'horizontal' \| 'inline' | vertical  |
-| [disabled] | 表单是否只读 | boolean                                | false     |
+| 参数       | 说明         | 类型                                             | 默认值    |
+| ---------- | ------------ | ------------------------------------------------ | --------- |
+| [fields]   | 字段列表     | IFormItem[]                                      | []        |
+| [formData] | 表单的值     | IFormData                                        | undefined |
+| [layout]   | 表单布局     | 'vertical' \| 'horizontal' \| 'inline'( 自适应 ) | vertical  |
+| [disabled] | 表单是否只读 | boolean                                          | false     |
 
 ## 指令
 
