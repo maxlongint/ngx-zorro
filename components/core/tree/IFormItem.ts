@@ -78,15 +78,12 @@ export type ValidatorScript = string | ValidatorScriptFn;
 /**
  * 自定义验证器错误返回值类型
  */
-export interface ValidatorError {
-    uncertainty?: boolean;
-    message?: string;
-}
+export type ValidatorError = string;
 
 /**
  * 自定义验证器函数约束类型
  */
-export type ValidatorScriptFn = (control: AbstractControl, fields: IFormItem[]) => ValidatorError;
+export type ValidatorScriptFn = (control: AbstractControl, fields: IFormItem[]) => ValidatorError | void;
 
 /**
  * 文本类型字段相关配置

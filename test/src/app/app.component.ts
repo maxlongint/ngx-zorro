@@ -32,7 +32,21 @@ export class AppComponent implements OnInit, AfterViewInit, AfterContentInit {
                 controlName: 'A0101',
                 type: FormItemType.text,
                 required: true,
-                disabled: true,
+                validatorScript: 'if (control.value) { if (control.value.length < 3 ) {return `长度不够`} }',
+            },
+            {
+                label: '身份证',
+                controlName: 'icard',
+                type: FormItemType.text,
+                required: true,
+                validatorScript: (control: AbstractControl) => {
+                    if (control.value) {
+                        if (control.value.length !== 18) {
+                            return '身份证长度不够18位';
+                        }
+                    }
+                    return '';
+                },
             },
             {
                 label: '曾用名',
@@ -45,7 +59,6 @@ export class AppComponent implements OnInit, AfterViewInit, AfterContentInit {
                     if (A0103) {
                         A0103.hidden = !control.value;
                     }
-                    return {};
                 },
             },
             {

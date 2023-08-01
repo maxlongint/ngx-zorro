@@ -241,7 +241,14 @@ export class NgxDynamicFormComponent implements OnInit, OnChanges, AfterViewInit
                 fn = new Function('control', 'fields', field.context.validatorScript as string);
             }
             // 校验脚本传递额参数： control, fields
-            validators.push((control: AbstractControl) => fn(control, this.fields));
+            const validatorFn = (control: AbstractControl) => {
+                const error = fn(control, this.fields);
+                if (error) {
+                    return { uncertainty: true, message: error };
+                }
+                return {};
+            };
+            validators.push(validatorFn);
         }
         return validators;
     }
