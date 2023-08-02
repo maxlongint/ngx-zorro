@@ -2,7 +2,7 @@ import { Component, TemplateRef, ViewChild, OnInit, AfterContentInit, AfterViewI
 import { AbstractControl } from '@angular/forms';
 import { IFormItem, FormItemType } from 'ngx-zorro/core/tree';
 import { NgxDynamicFormComponent } from 'ngx-zorro/dynamic-form';
-import { Store, setStorePrefix } from 'ngx-zorro/utils';
+import { DownFileService, Store, setStorePrefix } from 'ngx-zorro/utils';
 import { environment } from '../environments/environment';
 
 @Component({
@@ -19,7 +19,7 @@ export class AppComponent implements OnInit, AfterViewInit, AfterContentInit {
     data = {
         A0101: '张三',
     };
-    constructor() {}
+    constructor(private downFile: DownFileService) {}
 
     @ViewChild('definedTemplate', { static: true }) definedTemplate!: TemplateRef<any>;
     @ViewChild('dynamicFormElement') dynamicFormElement!: NgxDynamicFormComponent;
@@ -139,6 +139,15 @@ export class AppComponent implements OnInit, AfterViewInit, AfterContentInit {
                 required: true,
             },
         ];
+
+        // this.downFile.download('get', 'assets/background.jpg?fileName=bg.jpg').subscribe({
+        //     next: () => {
+        //         console.log('下载成功');
+        //     },
+        //     error: json => {
+        //         console.log('错误提示');
+        //     },
+        // });
     }
 
     ngAfterViewInit(): void {
