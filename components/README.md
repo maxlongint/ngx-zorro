@@ -36,11 +36,20 @@ ngx-zorro 是一个`angular`的组件库，基于`ng-zorro-antd`开发的一些�
             -   [如何使用](#如何使用-4)
             -   [代码示例](#代码示例-4)
             -   [参数说明](#参数说明-4)
+    -   [拦截器](#拦截器)
+        -   [下载文件拦截器 📍](#下载文件拦截器-)
+            -   [如何使用](#如何使用-5)
+            -   [具有的能力](#具有的能力-1)
     -   [工具](#工具)
         -   [缓存装饰器 🚩](#缓存装饰器-)
-            -   [如何使用](#如何使用-5)
+            -   [如何使用](#如何使用-6)
             -   [代码示例](#代码示例-5)
             -   [参数](#参数)
+        -   [下载文件服务 🚩](#下载文件服务-)
+            -   [如何使用](#如何使用-7)
+            -   [代码示例](#代码示例-6)
+            -   [参数说明](#参数说明-5)
+        -   [](#)
 
 ## 依赖
 
@@ -320,6 +329,21 @@ export class NgxZorroConfigService extends NgxConfigService {
 | ------ | ---------- | ------------------ | ------ |
 | \*auth | 权限标识符 | string \| string[] | -      |
 
+## 拦截器
+
+### 下载文件拦截器 📍
+
+#### 如何使用
+
+```typescript
+import { BlobInterceptor } from 'ngx-zorro/interceptors';
+providers: [...BlobInterceptor],
+```
+
+#### 具有的能力
+
+> 可以把错误处理成 JSON 返回，而不是 Blob。
+
 ## 工具
 
 ### 缓存装饰器 🚩
@@ -352,3 +376,39 @@ authList = [] // 默认值
 | 参数                               | 说明         | 类型         | 默认值 |
 | ---------------------------------- | ------------ | ------------ | ------ |
 | { key?: string, expires?: number } | 缓存配置信息 | StoreOptions | -      |
+
+### 下载文件服务 🚩
+
+#### 如何使用
+
+```typescript
+import { DownFileService } from 'ngx-zorro/utils';
+constructor(private downFile: DownFileService) {}
+
+// 依赖 blob http拦截器
+import { BlobInterceptor } from 'ngx-zorro/interceptors';
+providers: [...BlobInterceptor],
+```
+
+#### 代码示例
+
+```typescript
+this.downFile.download('get', 'assets/background.jpg?fileName=bg.jpg').subscribe({
+    next: () => {
+        // 下载成功处理
+    },
+    error: json => {
+        // 下载错误处理
+    },
+});
+```
+
+#### 参数说明
+
+| 参数   | 说明                                                                                                                | 类型                    | 默认值 |
+| ------ | ------------------------------------------------------------------------------------------------------------------- | ----------------------- | ------ |
+| method | 请求类型                                                                                                            | 'get' \| 'post'         | -      |
+| url    | 请求地址，url 可以传递自定义文件名；<br />如：api/file/down?fileName=身份证.jpg，文件名则优先使用 url 参数 fileName | string                  | -      |
+| params | 请求参数                                                                                                            | **Record**<string, any> | -      |
+
+###

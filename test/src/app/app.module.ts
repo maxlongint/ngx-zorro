@@ -22,6 +22,8 @@ import { NgxZorroConfigService } from './ngx-zorro-config.service';
 import { NgxConfigService } from 'ngx-zorro/services/config.service';
 import { NgxDialogModule } from 'ngx-zorro/dialog';
 import { setStorePrefix } from 'ngx-zorro/utils';
+import { BlobInterceptor } from 'ngx-zorro/interceptors';
+import { HttpClientModule } from '@angular/common/http';
 
 const LANG_PROVIDES = [{ provide: NZ_I18N, useValue: zh_CN }];
 
@@ -39,8 +41,9 @@ const LANG_PROVIDES = [{ provide: NZ_I18N, useValue: zh_CN }];
         NgxLoadingModule,
         NgxDynamicFormModule,
         NgxDialogModule,
+        HttpClientModule,
     ],
-    providers: [...LANG_PROVIDES, { provide: NgxConfigService, useExisting: NgxZorroConfigService }],
+    providers: [...LANG_PROVIDES, { provide: NgxConfigService, useExisting: NgxZorroConfigService }, BlobInterceptor],
     bootstrap: [AppComponent],
 })
 export class AppModule {}
