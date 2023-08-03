@@ -37,7 +37,7 @@ ngx-zorro 是一个`angular`的组件库，基于`ng-zorro-antd`开发的一些�
             -   [代码示例](#代码示例-4)
             -   [参数说明](#参数说明-4)
     -   [拦截器](#拦截器)
-        -   [下载文件拦截器 📍](#下载文件拦截器-)
+        -   [请求缓存拦截器 📍](#请求缓存拦截器-)
             -   [如何使用](#如何使用-5)
             -   [具有的能力](#具有的能力-1)
     -   [工具](#工具)
@@ -331,18 +331,23 @@ export class NgxZorroConfigService extends NgxConfigService {
 
 ## 拦截器
 
-### 下载文件拦截器 📍
+### 请求缓存拦截器 📍
 
 #### 如何使用
 
 ```typescript
-import { BlobInterceptor } from 'ngx-zorro/interceptors';
-providers: [...BlobInterceptor],
+import { CacheInterceptor } from 'ngx-zorro/interceptors';
+providers: [CacheInterceptor],
+```
+
+```typescript
+const headers = new HttpHeaders({ 'Cache-Map': 'Storage' });
+this.http.get(url, { headers }).subscribe();
 ```
 
 #### 具有的能力
 
-> 可以把错误处理成 JSON 返回，而不是 Blob。
+> 把一些结果稳定不变的 GET 请求缓存起来了，缓解请求压力
 
 ## 工具
 
@@ -385,7 +390,7 @@ authList = [] // 默认值
 import { DownFileService } from 'ngx-zorro/utils';
 constructor(private downFile: DownFileService) {}
 
-// 依赖 blob http拦截器
+// 必须配合 blob http 拦截器才能使用
 import { BlobInterceptor } from 'ngx-zorro/interceptors';
 providers: [...BlobInterceptor],
 ```
