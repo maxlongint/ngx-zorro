@@ -297,6 +297,7 @@ import { NgxDirectivesModule } from 'ngx-zorro/directives';
 
 ```typescript
 import { NgxDirectivesModule } from 'ngx-zorro/directives';
+import { NgxConfigService } from 'ngx-zorro/services';
 
 @NgModule({
     imports: [NgxDirectivesModule],
