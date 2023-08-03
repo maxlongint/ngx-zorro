@@ -297,6 +297,7 @@ import { NgxDirectivesModule } from 'ngx-zorro/directives';
 
 ```typescript
 import { NgxDirectivesModule } from 'ngx-zorro/directives';
+import { NgxConfigService } from 'ngx-zorro/services';
 
 @NgModule({
     imports: [NgxDirectivesModule],
@@ -357,7 +358,6 @@ this.http.get(url, { headers }).subscribe();
 
 ```typescript
 // app.module.ts 中设置前缀
-// 注意：前缀设置在非 app.module 的 app.component 中生效
 import { setStorePrefix } from 'ngx-zorro/utils';
 setStorePrefix('ngx-zorro');
 
