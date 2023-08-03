@@ -32,28 +32,24 @@ export function setStorePrefix(newPrefix: string) {
 export function Store<T>(storage: StorageEngine = sessionStorage, options?: StoreOptions) {
     return function (target: any, name: string) {
         const { key, expires } = options || {};
-        const storageKey = `@${prefix}_${key || name}`.toLocaleUpperCase();
-
-        // getter function
+        const storageKey = () => `@${prefix}_${key || name}`.toLocaleUpperCase();
         const getter = function () {
-            const storedValue = storage.getItem(storageKey);
+            const storedValue = storage.getItem(storageKey());
             if (storedValue) {
                 const { data, expiry } = JSON.parse(storedValue);
                 if (!expiry || expiry > Date.now()) {
                     return data as T;
                 } else {
-                    storage.removeItem(storageKey);
+                    storage.removeItem(storageKey());
                 }
             }
             return null;
         };
-
-        // setter function
         const setter = function (newVal: any) {
             if (!target.hasOwnProperty('_isFirstTime')) {
                 // 如果标记属性不存在，说明是第一次设置值
                 target._isFirstTime = true;
-                if (storage.getItem(storageKey)) {
+                if (storage.getItem(storageKey())) {
                     return;
                 }
             }
@@ -62,13 +58,11 @@ export function Store<T>(storage: StorageEngine = sessionStorage, options?: Stor
                     data: newVal,
                     expiry: expires ? Date.now() + expires : null,
                 });
-                storage.setItem(storageKey, valueToStore);
+                storage.setItem(storageKey(), valueToStore);
             } else {
-                storage.removeItem(storageKey);
+                storage.removeItem(storageKey());
             }
         };
-
-        // replace the property with a getter/setter
         Object.defineProperty(target, name, {
             get: getter,
             set: setter,
