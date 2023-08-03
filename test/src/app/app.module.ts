@@ -18,7 +18,6 @@ import { zh_CN } from 'ng-zorro-antd/i18n';
 import { NzButtonModule } from 'ng-zorro-antd/button';
 import { NzFormModule } from 'ng-zorro-antd/form';
 import { NzInputModule } from 'ng-zorro-antd/input';
-import { NgxZorroConfigService } from './ngx-zorro-config.service';
 import { NgxConfigService } from 'ngx-zorro/services/config.service';
 import { NgxDialogModule } from 'ngx-zorro/dialog';
 import { setStorePrefix } from 'ngx-zorro/utils';
@@ -43,12 +42,7 @@ const LANG_PROVIDES = [{ provide: NZ_I18N, useValue: zh_CN }];
         NgxDialogModule,
         HttpClientModule,
     ],
-    providers: [
-        ...LANG_PROVIDES,
-        { provide: NgxConfigService, useExisting: NgxZorroConfigService },
-        BlobInterceptor,
-        CacheInterceptor,
-    ],
+    providers: [...LANG_PROVIDES],
     bootstrap: [AppComponent],
 })
 export class AppModule {}
