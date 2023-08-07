@@ -1,0 +1,13 @@
+<nz-input-group class="datetime-picker-group" #originElement [nzSuffix]="inputClearTpl">
+    <input #inputElement nz-input [placeholder]="placeholder" [disabled]="disabled" />
+</nz-input-group>
+<ng-template #inputClearTpl>
+    <ng-container *ngIf="!disabled">
+        <ng-container *ngIf="value">
+            <i nz-icon class="ant-input-clear-icon close" nzTheme="fill" nzType="close-circle"></i>
+        </ng-container>
+        <ng-container *ngIf="!value">
+            <i nz-icon class="ant-input-clear-icon" nzType="calendar"></i>
+        </ng-container>
+    </ng-container>
+</ng-template>

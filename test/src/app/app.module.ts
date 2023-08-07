@@ -23,6 +23,7 @@ import { NgxDialogModule } from 'ngx-zorro/dialog';
 import { setStorePrefix } from 'ngx-zorro/utils';
 import { BlobInterceptor, CacheInterceptor } from 'ngx-zorro/interceptors';
 import { HttpClientModule } from '@angular/common/http';
+import { NgxDatePickerModule } from 'ngx-zorro/date-picker';
 
 const LANG_PROVIDES = [{ provide: NZ_I18N, useValue: zh_CN }];
 
@@ -40,6 +41,7 @@ const LANG_PROVIDES = [{ provide: NZ_I18N, useValue: zh_CN }];
         NgxLoadingModule,
         NgxDynamicFormModule,
         NgxDialogModule,
+        NgxDatePickerModule,
         HttpClientModule,
     ],
     providers: [...LANG_PROVIDES],
