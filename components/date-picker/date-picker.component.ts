@@ -275,6 +275,7 @@ export class NgxDatePickerComponent implements OnInit, ControlValueAccessor {
                 this.value = format(date, this.formatValue);
             }
             this.text = format(date, this.formatText);
+            this.date = date;
             this.onChange(this.value);
             this.close();
         });
