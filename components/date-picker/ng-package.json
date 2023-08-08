@@ -1,5 +1,12 @@
 {
     "lib": {
-        "entryFile": "./public_api.ts"
+        "entryFile": "./public_api.ts",
+        "umdModuleIds": {
+            "date-fns": "date-fns",
+            "ng-zorro-antd/core/services": "ng-zorro-antd/core/services",
+            "ng-zorro-antd/input": "ng-zorro-antd/input",
+            "ng-zorro-antd/date-picker": "ng-zorro-antd/date-picker",
+            "ng-zorro-antd/icon": "ng-zorro-antd/icon"
+        }
     }
 }

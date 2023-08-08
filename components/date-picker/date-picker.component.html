@@ -1,10 +1,10 @@
 <nz-input-group class="datetime-picker-group" #originElement [nzSuffix]="inputIconTemplate" (click)="open()">
-    <input nz-input #inputElement [placeholder]="placeholder" [disabled]="disabled" />
+    <input nz-input #inputElement [placeholder]="placeholder" [disabled]="disabled" [(ngModel)]="text" />
 </nz-input-group>
 <ng-template #inputIconTemplate>
     <ng-container *ngIf="!disabled">
         <ng-container *ngIf="value">
-            <i nz-icon nzType="close-circle" class="input-suffix-iocn"></i>
+            <i nz-icon class="ant-input-clear-icon" nzTheme="fill" nzType="close-circle" (click)="clear()"></i>
         </ng-container>
         <ng-container *ngIf="!value">
             <i nz-icon nzType="calendar" class="input-suffix-iocn"></i>
@@ -13,5 +13,10 @@
 </ng-template>
 
 <ng-template #dateTimePickerTemplate>
-    <nz-date-picker nzInline></nz-date-picker>
+    <nz-date-picker
+        nzInline
+        [nzMode]="mode"
+        [(ngModel)]="date"
+        (ngModelChange)="onPickerChange($event)"
+    ></nz-date-picker>
 </ng-template>

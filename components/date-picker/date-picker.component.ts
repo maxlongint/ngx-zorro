@@ -1,10 +1,8 @@
 import { CdkOverlayOrigin, Overlay, OverlayConfig, OverlayRef } from '@angular/cdk/overlay';
 import { TemplatePortal } from '@angular/cdk/portal';
-import { DOCUMENT } from '@angular/common';
 import {
     Component,
     ElementRef,
-    Inject,
     Input,
     OnInit,
     Renderer2,
@@ -15,7 +13,9 @@ import {
 } from '@angular/core';
 import { ControlValueAccessor, NG_VALUE_ACCESSOR } from '@angular/forms';
 import { NzDestroyService } from 'ng-zorro-antd/core/services';
-import { takeUntil } from 'rxjs/operators';
+import { Subject, fromEvent, merge } from 'rxjs';
+import { filter, takeUntil } from 'rxjs/operators';
+import { format, parseISO } from 'date-fns';
 
 @Component({
     selector: 'ngx-date-picker',
@@ -40,13 +40,14 @@ export class NgxDatePickerComponent implements OnInit, ControlValueAccessor {
      */
     @Input() placeholder = '请填写';
     /**
-     * 显示格式
+     * 显示格式;例如: yyyy-MM-dd
      */
-    @Input() formatText = 'YYYY-MM-DD';
+    @Input() formatText = 'yyyy-MM-dd';
     /**
-     * 结果格式
+     * 结果格式;例如: yyyy-MM-dd
+     * 如果为空则返回日期Date对象
      */
-    @Input() formatValue = 'YYYY-MM-DD';
+    @Input() formatValue?: string;
     /**
      * 显示模式 （参考 nz-date-picker 的nzMode）
      */
@@ -56,25 +57,28 @@ export class NgxDatePickerComponent implements OnInit, ControlValueAccessor {
         private destroy: NzDestroyService,
         private overlay: Overlay,
         private viewContainerRef: ViewContainerRef,
-        private renderer: Renderer2,
-        @Inject(DOCUMENT) private document: Document
+        private renderer: Renderer2
     ) {}
 
-    ngOnInit(): void {}
+    ngOnInit(): void {
+        this.formatDateToString();
+    }
 
     // 定义ControlValueAccessor提供的事件回调
     value!: string | null;
-    onChange: (value: string | null) => void = () => null;
+    onChange: (value: string | Date | null) => void = () => null;
     onTouched: () => void = () => null;
 
     writeValue(obj: any): void {
         this.value = obj;
+        this.date = new Date(obj);
+        this.text = format(this.date, this.formatText);
     }
     registerOnChange(fn: any): void {
         this.onChange = fn;
     }
     registerOnTouched(fn: any): void {
-        this.onChange = fn;
+        this.onTouched = fn;
     }
     setDisabledState?(isDisabled: boolean): void {
         this.disabled = isDisabled;
@@ -94,23 +98,48 @@ export class NgxDatePickerComponent implements OnInit, ControlValueAccessor {
      */
     templatePortal?: TemplatePortal;
     /**
+     * input显示内容
+     */
+    text?: string;
+    /**
+     * nz-date-picker值
+     */
+    date?: Date;
+    /**
      * overlay浮层是否显示
      */
     visible = false;
+    /**
+     * 日期格式化
+     */
+    format$ = new Subject<any>();
+    /**
+     * 时间选择面板关闭触发
+     */
+    close$ = new Subject<void>();
 
     open() {
-        this.updateInputState();
         this.attachOverlay();
         this.visible = true;
+        this.updateInputState();
         this.updateOverlayStyle();
         this.updateBodyOverflow();
     }
 
     close() {
         this.visible = false;
+        this.close$.next();
+        this.updateInputState();
         this.updateOverlayStyle();
         this.updateBodyOverflow();
         this.disposeOverlay();
+    }
+
+    clear() {
+        this.text = undefined;
+        this.date = undefined;
+        this.value = null;
+        this.onChange(this.value);
     }
 
     private attachOverlay(): void {
@@ -118,16 +147,19 @@ export class NgxDatePickerComponent implements OnInit, ControlValueAccessor {
         this.overlayRef = this.overlay.create(this.getOverlayConfig());
 
         if (this.overlayRef && !this.overlayRef.hasAttached()) {
-            this.overlayRef.attachments().subscribe(() => {});
+            this.overlayRef.attachments().subscribe(() => {
+                this.onListenKeyDown();
+            });
             this.overlayRef.attach(this.templatePortal);
             this.overlayRef
                 .outsidePointerEvents()
                 .pipe(takeUntil(this.destroy))
                 .subscribe((event: MouseEvent) => {
-                    // 点击的是目标内部的元素则不做处理
-                    if (this.originElement.elementRef.nativeElement.contains(event.target)) {
+                    // 点击的是input则不做处理
+                    if (this.inputElement.nativeElement === event.target) {
                         this.updateInputState();
-                        return event.stopPropagation();
+                        event.stopPropagation();
+                        return;
                     }
                     this.close();
                 });
@@ -207,6 +239,48 @@ export class NgxDatePickerComponent implements OnInit, ControlValueAccessor {
 
     private updateInputState() {
         const inputElement = this.inputElement.nativeElement;
-        inputElement.focus();
+        if (this.visible) {
+            inputElement.focus();
+        } else {
+            inputElement.blur();
+        }
+    }
+
+    /**
+     * 监听input的回车和失去焦点事件，触发格式化
+     */
+    private onListenKeyDown() {
+        const blur = fromEvent(this.inputElement.nativeElement, 'blur');
+        const enter = fromEvent(this.inputElement.nativeElement, 'keydown').pipe(
+            filter((event: any) => event.key === 'Enter')
+        );
+        merge(blur, enter)
+            .pipe(takeUntil(this.close$))
+            .subscribe(() => {
+                if (this.text) {
+                    const dateTime = parseISO(this.text);
+                    if (dateTime.getTime()) {
+                        this.format$.next(dateTime);
+                    } else {
+                        this.clear();
+                    }
+                }
+            });
+    }
+
+    private formatDateToString() {
+        this.format$.pipe(takeUntil(this.destroy)).subscribe(date => {
+            this.value = date;
+            if (this.formatValue) {
+                this.value = format(date, this.formatValue);
+            }
+            this.text = format(date, this.formatText);
+            this.onChange(this.value);
+            this.close();
+        });
+    }
+
+    onPickerChange(value: Date) {
+        this.format$.next(value);
     }
 }
