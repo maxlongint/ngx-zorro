@@ -18,4 +18,8 @@ export class AppComponent implements OnInit, AfterViewInit, AfterContentInit {
     ngAfterViewInit(): void {}
 
     ngAfterContentInit(): void {}
+
+    change(event: Date) {
+        console.dir(event);
+    }
 }
