@@ -71,8 +71,10 @@ export class NgxDatePickerComponent implements OnInit, ControlValueAccessor {
 
     writeValue(obj: any): void {
         this.value = obj;
-        this.date = new Date(obj);
-        this.text = format(this.date, this.formatText);
+        if (obj) {
+            this.date = new Date(obj);
+            this.text = format(this.date, this.formatText);
+        }
     }
     registerOnChange(fn: any): void {
         this.onChange = fn;
@@ -119,6 +121,9 @@ export class NgxDatePickerComponent implements OnInit, ControlValueAccessor {
     close$ = new Subject<void>();
 
     open() {
+        if (this.disabled) {
+            return;
+        }
         this.attachOverlay();
         this.visible = true;
         this.updateInputState();
