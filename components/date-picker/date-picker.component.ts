@@ -82,8 +82,8 @@ export class NgxDatePickerComponent implements OnInit, ControlValueAccessor {
     }
 
     @ViewChild('originElement') originElement!: CdkOverlayOrigin;
-    @ViewChild('inputElement') inputElement!: ElementRef;
     @ViewChild('dateTimePickerTemplate') dateTimePickerTemplate!: TemplateRef<ElementRef>;
+    @ViewChild('inputElement') inputElement!: ElementRef<HTMLInputElement>;
 
     /**
      * 浮层对象
@@ -99,6 +99,7 @@ export class NgxDatePickerComponent implements OnInit, ControlValueAccessor {
     visible = false;
 
     open() {
+        this.updateInputState();
         this.attachOverlay();
         this.visible = true;
         this.updateOverlayStyle();
@@ -123,12 +124,11 @@ export class NgxDatePickerComponent implements OnInit, ControlValueAccessor {
                 .outsidePointerEvents()
                 .pipe(takeUntil(this.destroy))
                 .subscribe((event: MouseEvent) => {
-                    // 点击的是input就不触发
-                    if (event.target === this.inputElement.nativeElement) {
-                        event.stopPropagation();
-                        return;
+                    // 点击的是目标内部的元素则不做处理
+                    if (this.originElement.elementRef.nativeElement.contains(event.target)) {
+                        this.updateInputState();
+                        return event.stopPropagation();
                     }
-
                     this.close();
                 });
         }
@@ -174,10 +174,10 @@ export class NgxDatePickerComponent implements OnInit, ControlValueAccessor {
                 },
             ])
             .withPush(false);
-        const scrollStrategy = this.overlay.scrollStrategies.close();
+        // 这里滚动策略是不生效的，因为并不是body的滚动
+        const scrollStrategy = this.overlay.scrollStrategies.reposition();
         return new OverlayConfig({
             positionStrategy,
-            // 这里滚动策略是不生效的，因为并不是body的滚动
             scrollStrategy,
             hasBackdrop: false,
             disposeOnNavigation: true,
@@ -203,5 +203,10 @@ export class NgxDatePickerComponent implements OnInit, ControlValueAccessor {
                 this.overlayRef.getConfig().scrollStrategy!.disable();
             }
         }
+    }
+
+    private updateInputState() {
+        const inputElement = this.inputElement.nativeElement;
+        inputElement.focus();
     }
 }
