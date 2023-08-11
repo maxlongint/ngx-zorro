@@ -19,41 +19,28 @@ ngx-zorro 是一个`angular`的组件库，基于`ng-zorro-antd`开发的一些�
             -   [如何使用](#如何使用-1)
             -   [代码示例](#代码示例-1)
             -   [参数说明](#参数说明-1)
-        -   [动态构造表单组件 💘](#动态构造表单组件-)
-            -   [如何使用](#如何使用-2)
-            -   [代码示例](#代码示例-2)
-            -   [具有的能力](#具有的能力)
-                -   [自定义表单模板](#自定义表单模板)
-                -   [自定义验证脚本](#自定义验证脚本)
-                -   [通过自定义脚本实现字段的显示隐藏](#通过自定义脚本实现字段的显示隐藏)
-            -   [参数说明](#参数说明-2)
-        -   [日期选择框](#日期选择框)
-            -   [如何使用](#如何使用-3)
-            -   [代码示例](#代码示例-3)
-            -   [具有的能力](#具有的能力-1)
-            -   [参数说明](#参数说明-3)
     -   [指令](#指令)
         -   [防抖事件指令 ✈️](#防抖事件指令-️)
-            -   [如何使用](#如何使用-4)
-            -   [代码示例](#代码示例-4)
-            -   [参数说明](#参数说明-4)
+            -   [如何使用](#如何使用-2)
+            -   [代码示例](#代码示例-2)
+            -   [参数说明](#参数说明-2)
         -   [权限指令 ✈️](#权限指令-️)
-            -   [如何使用](#如何使用-5)
-            -   [代码示例](#代码示例-5)
-            -   [参数说明](#参数说明-5)
+            -   [如何使用](#如何使用-3)
+            -   [代码示例](#代码示例-3)
+            -   [参数说明](#参数说明-3)
     -   [拦截器](#拦截器)
-        -   [请求缓存拦截器 📍](#请求缓存拦截器-)
-            -   [如何使用](#如何使用-6)
-            -   [具有的能力](#具有的能力-2)
+        -   [HTTP 请求缓存拦截器 📍](#http-请求缓存拦截器-)
+            -   [如何使用](#如何使用-4)
+            -   [具有的能力](#具有的能力)
     -   [工具](#工具)
-        -   [缓存装饰器 🚩](#缓存装饰器-)
-            -   [如何使用](#如何使用-7)
-            -   [代码示例](#代码示例-6)
+        -   [缓存属性装饰器 🚩](#缓存属性装饰器-)
+            -   [如何使用](#如何使用-5)
+            -   [代码示例](#代码示例-4)
             -   [参数](#参数)
         -   [下载文件服务 🚩](#下载文件服务-)
-            -   [如何使用](#如何使用-8)
-            -   [代码示例](#代码示例-7)
-            -   [参数说明](#参数说明-6)
+            -   [如何使用](#如何使用-6)
+            -   [代码示例](#代码示例-5)
+            -   [参数说明](#参数说明-4)
         -   [](#)
 
 ## 依赖
@@ -143,166 +130,6 @@ import { NgxDialogModule } from 'ngx-zorro/dialog';
 | [right]            | 窗口距离右边距离                   | string                        | -      |
 | [bottom]           | 窗口距离底部距离                   | string                        | -      |
 
-### 动态构造表单组件 💘
-
-#### 如何使用
-
-```typescript
-import { NgxDynamicFormModule } from 'ngx-zorro/dynamic-form';
-```
-
-#### 代码示例
-
-```html
-<ngx-dynamic-form #dynamicFormElement [fields]="fieldList" [formData]="data"></ngx-dynamic-form>
-```
-
-```typescript
-@ViewChild('dynamicFormElement') dynamicFormElement!: NgxDynamicFormComponent;
-data = { name: 'lucky' };
-fieldList = [
-    {
-        label: '姓名',
-        controlName: 'name',
-        type: FormItemType.text,
-    },
-]
-
-
-setData() {
-    ajax().subscribe(() => {
-        // 设置值可以通过 [formData] 也可以通过实例的方法传递值或者函数
-        // 方法1：
-        this.dynamicFormElement.setData({ name: 'lucky' })
-        // 方法2：
-        this.dynamicFormElement.setData(form => {
-            form.patchValue({ name: 'lucky' })
-        });
-    })
-}
-
-submit() {
-    const data = this.dynamicFormElement.getData();
-    if (data) {
-        // 进行数据操作
-    }
-}
-```
-
-#### 具有的能力
-
-##### 自定义表单模板
-
-```html
-<ng-template #definedTemplate let-control let-field="field">
-    <input nz-input [formControl]="control" [placeholder]="field.placeholder" />
-</ng-template>
-```
-
-```typescript
-@ViewChild('definedTemplate', { static: true }) definedTemplate!: TemplateRef<any>;
-fieldList = [
-    {
-        label: '自定义类型',
-        controlName: 'defined',
-        type: FormItemType.defined,
-        template: this.definedTemplate,
-    },
-]
-```
-
-##### 自定义验证脚本
-
-> 脚本可以是字符串也可以是函数, 错误提示直接 return
-
-```typescript
-fieldList = [
-    {
-        label: '姓名',
-        controlName: 'name',
-        type: FormItemType.text,
-        required: true,
-        validatorScript: 'if (control.value) { if (control.value.length < 3 ) { return `长度不够` } }',
-    },
-    {
-        label: '身份证',
-        controlName: 'icard',
-        type: FormItemType.text,
-        required: true,
-        validatorScript: (control: AbstractControl, fields: IFormItem[]) => {
-            if (control.value) {
-                if (control.value.length !== 18) {
-                    return '身份证长度不够18位';
-                }
-            }
-            return '';
-        },
-    },
-];
-```
-
-##### 通过自定义脚本实现字段的显示隐藏
-
-```typescript
-fieldList = [
-    {
-        label: '曾用名',
-        controlName: 'use_name',
-        type: FormItemType.text,
-        validatorScript: (control: AbstractControl, fields: IFormItem[]) => {
-            const use_name_time = fields.find(item => item.controlName === 'use_name_time');
-            if (use_name_time) {
-                use_name_time.hidden = !control.value;
-            }
-        },
-    },
-    {
-        label: '曾用名改名时间',
-        controlName: 'use_name_time',
-        type: FormItemType.text,
-    },
-];
-```
-
-#### 参数说明
-
-| 参数       | 说明         | 类型                                             | 默认值    |
-| ---------- | ------------ | ------------------------------------------------ | --------- |
-| [fields]   | 字段列表     | IFormItem[]                                      | []        |
-| [formData] | 表单的值     | IFormData                                        | undefined |
-| [layout]   | 表单布局     | 'vertical' \| 'horizontal' \| 'inline'( 自适应 ) | vertical  |
-| [disabled] | 表单是否只读 | boolean                                          | false     |
-
-### 日期选择框
-
-#### 如何使用
-
-```typescript
-import { NgxDatePickerModule } from 'ngx-zorro/date-picker';
-```
-
-#### 代码示例
-
-```typescript
-<ngx-date-picker [(ngModel)]="date"></ngx-date-picker>
-```
-
-#### 具有的能力
-
-区分显示格式和结果格式，输入不限制格式，组件会把输入内容自动格式化成显示格式
-
-可以直接手动输入 `19910306` 或者 `1991-03-06`这 2 种格式回车或者失去焦点则会自动格式化成显示格式，结果也可以格式化；如果结果格式未传递则返回的是`Date`对象
-
-#### 参数说明
-
-| 参数          | 说明                                       | 类型                        | 默认值     |
-| ------------- | ------------------------------------------ | --------------------------- | ---------- |
-| [disabled]    | 是否只读                                   | boolean                     | false      |
-| [placeholder] | 录入提示信息                               | string                      | 请填写     |
-| [formatText]  | 显示格式;例如: yyyy-MM-dd                  | string                      | yyyy-MM-dd |
-| [formatValue] | 显示格式;例如: yyyy-MM-dd                  | string                      | -          |
-| [mode]        | 显示模式 （参考 nz-date-picker 的 nzMode） | 'date' \| 'month' \| 'year' | date       |
-
 ## 指令
 
 ### 防抖事件指令 ✈️
@@ -367,7 +194,7 @@ export class NgxZorroConfigService extends NgxConfigService {
 
 ## 拦截器
 
-### 请求缓存拦截器 📍
+### HTTP 请求缓存拦截器 📍
 
 #### 如何使用
 
@@ -387,7 +214,7 @@ this.http.get(url, { headers }).subscribe();
 
 ## 工具
 
-### 缓存装饰器 🚩
+### 缓存属性装饰器 🚩
 
 #### 如何使用
 
