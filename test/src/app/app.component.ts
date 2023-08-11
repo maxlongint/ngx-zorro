@@ -1,9 +1,4 @@
-import { Component, TemplateRef, ViewChild, OnInit, AfterContentInit, AfterViewInit } from '@angular/core';
-import { AbstractControl } from '@angular/forms';
-import { IFormItem, FormItemType } from 'ngx-zorro/core/tree';
-import { NgxDynamicFormComponent } from 'ngx-zorro/dynamic-form';
-import { DownFileService, Store, setStorePrefix } from 'ngx-zorro/utils';
-import { environment } from '../environments/environment';
+import { Component, OnInit, AfterContentInit, AfterViewInit } from '@angular/core';
 
 @Component({
     selector: 'app-root',
@@ -13,13 +8,24 @@ import { environment } from '../environments/environment';
 export class AppComponent implements OnInit, AfterViewInit, AfterContentInit {
     constructor() {}
 
+    visible = false;
+    dialogVisible = false;
+
     ngOnInit(): void {}
 
     ngAfterViewInit(): void {}
 
     ngAfterContentInit(): void {}
 
-    change(event: Date) {
-        console.dir(event);
+    onLoading() {
+        this.visible = true;
+
+        setTimeout(() => {
+            this.visible = false;
+        }, 3000);
+    }
+
+    onDialog() {
+        this.dialogVisible = true;
     }
 }

@@ -8,7 +8,6 @@ import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { AppComponent } from './app.component';
 import { NgxDirectivesModule } from 'components/directives';
 import { NgxLoadingModule } from 'components/loading';
-import { NgxDynamicFormModule } from 'components/dynamic-form';
 
 import { registerLocaleData } from '@angular/common';
 registerLocaleData(zh);
@@ -18,12 +17,9 @@ import { zh_CN } from 'ng-zorro-antd/i18n';
 import { NzButtonModule } from 'ng-zorro-antd/button';
 import { NzFormModule } from 'ng-zorro-antd/form';
 import { NzInputModule } from 'ng-zorro-antd/input';
-import { NgxConfigService } from 'ngx-zorro/services/config.service';
 import { NgxDialogModule } from 'ngx-zorro/dialog';
 import { setStorePrefix } from 'ngx-zorro/utils';
-import { BlobInterceptor, CacheInterceptor } from 'ngx-zorro/interceptors';
 import { HttpClientModule } from '@angular/common/http';
-import { NgxDatePickerModule } from 'ngx-zorro/date-picker';
 
 const LANG_PROVIDES = [{ provide: NZ_I18N, useValue: zh_CN }];
 
@@ -39,9 +35,7 @@ const LANG_PROVIDES = [{ provide: NZ_I18N, useValue: zh_CN }];
         NzButtonModule,
         NgxDirectivesModule,
         NgxLoadingModule,
-        NgxDynamicFormModule,
         NgxDialogModule,
-        NgxDatePickerModule,
         HttpClientModule,
     ],
     providers: [...LANG_PROVIDES],

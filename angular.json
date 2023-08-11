@@ -81,7 +81,15 @@
                         "polyfills": "test/src/polyfills.ts",
                         "tsConfig": "test/tsconfig.app.json",
                         "inlineStyleLanguage": "scss",
-                        "assets": ["test/src/favicon.ico", "test/src/assets"],
+                        "assets": [
+                            "test/src/favicon.ico",
+                            "test/src/assets",
+                            {
+                                "glob": "**/*",
+                                "input": "./node_modules/@ant-design/icons-angular/src/inline-svg/",
+                                "output": "/assets/"
+                            }
+                        ],
                         "styles": ["test/src/styles.scss", "node_modules/ng-zorro-antd/ng-zorro-antd.min.css"],
                         "scripts": []
                     },
