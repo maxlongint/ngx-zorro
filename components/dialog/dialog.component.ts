@@ -1,4 +1,5 @@
 import {
+    ChangeDetectionStrategy,
     Component,
     ContentChild,
     ElementRef,
@@ -29,6 +30,7 @@ import { delay, takeUntil } from 'rxjs/operators';
     selector: 'ngx-dialog',
     templateUrl: './dialog.component.html',
     styleUrls: ['./dialog.component.scss'],
+    changeDetection: ChangeDetectionStrategy.OnPush,
     providers: [NzDestroyService],
 })
 export class NgxDialogComponent implements OnInit, OnChanges, OnDestroy {

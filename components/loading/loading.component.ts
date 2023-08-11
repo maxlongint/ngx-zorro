@@ -1,6 +1,7 @@
 import { Overlay, OverlayConfig, OverlayRef } from '@angular/cdk/overlay';
 import { TemplatePortal } from '@angular/cdk/portal';
 import {
+    ChangeDetectionStrategy,
     Component,
     ElementRef,
     EventEmitter,
@@ -22,6 +23,7 @@ import { NzDestroyService } from 'ng-zorro-antd/core/services';
     selector: 'ngx-loading',
     templateUrl: './loading.component.html',
     styleUrls: ['./loading.component.scss'],
+    changeDetection: ChangeDetectionStrategy.OnPush,
     providers: [NzDestroyService],
 })
 export class NgxLoadingComponent implements OnInit, OnChanges, OnDestroy {

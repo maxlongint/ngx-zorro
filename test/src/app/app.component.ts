@@ -8,13 +8,24 @@ import { Component, OnInit, AfterContentInit, AfterViewInit } from '@angular/cor
 export class AppComponent implements OnInit, AfterViewInit, AfterContentInit {
     constructor() {}
 
+    visible = false;
+    dialogVisible = false;
+
     ngOnInit(): void {}
 
     ngAfterViewInit(): void {}
 
     ngAfterContentInit(): void {}
 
-    change(event: Date) {
-        console.dir(event);
+    onLoading() {
+        this.visible = true;
+
+        setTimeout(() => {
+            this.visible = false;
+        }, 3000);
+    }
+
+    onDialog() {
+        this.dialogVisible = true;
     }
 }

@@ -1,3 +1,10 @@
 <div class="container">
     <h1>测试</h1>
+
+    <button nz-button (click)="onLoading()">Loading</button>
+    <button nz-button (click)="onDialog()">Dialog</button>
 </div>
+
+<ngx-loading [(visible)]="visible"></ngx-loading>
+
+<ngx-dialog [(visible)]="dialogVisible"></ngx-dialog>
