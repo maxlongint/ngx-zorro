@@ -42,7 +42,7 @@ export class NgxDialogComponent implements OnInit, OnChanges, OnDestroy {
     /**
      * 弹框标题
      */
-    @Input() title: string | TemplateRef<any> = '';
+    @Input() title?: string | TemplateRef<any> | undefined;
     /**
      * 弹框内容模板
      */

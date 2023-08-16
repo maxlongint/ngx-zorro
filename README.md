@@ -110,26 +110,26 @@ import { NgxDialogModule } from 'ngx-zorro/dialog';
 
 #### 参数说明
 
-| 参数               | 说明                               | 类型                          | 默认值 |
-| ------------------ | ---------------------------------- | ----------------------------- | ------ |
-| [(visible)]        | 是否显示                           | boolean                       | false  |
-| [title]            | 弹框标题                           | string \| TemplateRef&lt;any> | -      |
-| \*ngxDialogContent | 弹框内容模板                       | TemplateRef                   | -      |
-| [full]             | 是否全屏                           | boolean                       | false  |
-| [fullButton]       | 是否显示全屏按钮                   | boolean                       | true   |
-| [mask]             | 是否展示遮罩                       | boolean                       | false  |
-| [dragBoundary]     | 是否启用拖动边界【可视区域内拖动】 | boolean                       | true   |
-| [keyboard]         | 是否支持键盘 esc 关闭              | boolean                       | true   |
-| [move]             | 是否启用拖拽                       | boolean                       | true   |
-| [resize]           | 是否允许拖拽弹层右下角拉伸尺寸     | boolean                       | true   |
-| [width]            | 宽度                               | string \| number              | 960    |
-| [height]           | 高度                               | string \| number              | 580    |
-| [minWidth]         | 最小宽度                           | number                        | 400    |
-| [minHeight]        | 最小高度                           | number                        | 200    |
-| [top]              | 窗口距离顶部距离                   | string                        | -      |
-| [left]             | 窗口距离左边距离                   | string                        | -      |
-| [right]            | 窗口距离右边距离                   | string                        | -      |
-| [bottom]           | 窗口距离底部距离                   | string                        | -      |
+| 参数               | 说明                               | 类型                                       | 默认值 |
+| ------------------ | ---------------------------------- | ------------------------------------------ | ------ |
+| [(visible)]        | 是否显示                           | boolean                                    | false  |
+| [title]            | 弹框标题                           | string \| TemplateRef&lt;any> \| undefined | -      |
+| \*ngxDialogContent | 弹框内容模板                       | TemplateRef                                | -      |
+| [full]             | 是否全屏                           | boolean                                    | false  |
+| [fullButton]       | 是否显示全屏按钮                   | boolean                                    | true   |
+| [mask]             | 是否展示遮罩                       | boolean                                    | false  |
+| [dragBoundary]     | 是否启用拖动边界【可视区域内拖动】 | boolean                                    | true   |
+| [keyboard]         | 是否支持键盘 esc 关闭              | boolean                                    | true   |
+| [move]             | 是否启用拖拽                       | boolean                                    | true   |
+| [resize]           | 是否允许拖拽弹层右下角拉伸尺寸     | boolean                                    | true   |
+| [width]            | 宽度                               | string \| number                           | 960    |
+| [height]           | 高度                               | string \| number                           | 580    |
+| [minWidth]         | 最小宽度                           | number                                     | 400    |
+| [minHeight]        | 最小高度                           | number                                     | 200    |
+| [top]              | 窗口距离顶部距离                   | string                                     | -      |
+| [left]             | 窗口距离左边距离                   | string                                     | -      |
+| [right]            | 窗口距离右边距离                   | string                                     | -      |
+| [bottom]           | 窗口距离底部距离                   | string                                     | -      |
 
 ## 指令
 
