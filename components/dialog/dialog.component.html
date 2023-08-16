@@ -11,12 +11,14 @@
             <ng-container *nzStringTemplateOutlet="title">{{ title }}</ng-container>
         </div>
 
-        <div class="nav-handle" title="最大化" *ngIf="!fullscreen" (click)="updateFullScreen(true)">
-            <i nz-icon nzType="fullscreen" nzTheme="outline"></i>
-        </div>
-        <div class="nav-handle" title="还原" *ngIf="fullscreen" (click)="updateFullScreen(false)">
-            <i nz-icon nzType="fullscreen-exit" nzTheme="outline"></i>
-        </div>
+        <ng-container *ngIf="fullButton">
+            <div class="nav-handle" title="最大化" *ngIf="!fullscreen" (click)="updateFullScreen(true)">
+                <i nz-icon nzType="fullscreen" nzTheme="outline"></i>
+            </div>
+            <div class="nav-handle" title="还原" *ngIf="fullscreen" (click)="updateFullScreen(false)">
+                <i nz-icon nzType="fullscreen-exit" nzTheme="outline"></i>
+            </div>
+        </ng-container>
 
         <div class="nav-handle" title="关闭" (click)="close()">
             <i nz-icon nzType="close" nzTheme="outline"></i>

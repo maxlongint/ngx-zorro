@@ -52,6 +52,10 @@ export class NgxDialogComponent implements OnInit, OnChanges, OnDestroy {
      */
     @Input() full = false;
     /**
+     * 是否显示全屏按钮
+     */
+    @Input() fullButton = true;
+    /**
      * 是否展示遮罩
      */
     @Input() mask = true;
