@@ -116,6 +116,7 @@ import { NgxDialogModule } from 'ngx-zorro/dialog';
 | [title]            | 弹框标题                           | string \| TemplateRef&lt;any> | -      |
 | \*ngxDialogContent | 弹框内容模板                       | TemplateRef                   | -      |
 | [full]             | 是否全屏                           | boolean                       | false  |
+| [fullButton]       | 是否显示全屏按钮                   | boolean                       | true   |
 | [mask]             | 是否展示遮罩                       | boolean                       | false  |
 | [dragBoundary]     | 是否启用拖动边界【可视区域内拖动】 | boolean                       | true   |
 | [keyboard]         | 是否支持键盘 esc 关闭              | boolean                       | true   |
