@@ -11,6 +11,7 @@ export class AppComponent implements OnInit, AfterViewInit, AfterContentInit {
 
     visible = false;
     dialogVisible = false;
+    title?: string;
 
     ngOnInit(): void {}
 
