@@ -4,6 +4,7 @@ import {
     ContentChild,
     ElementRef,
     EventEmitter,
+    HostListener,
     Inject,
     Input,
     NgZone,
@@ -206,6 +207,11 @@ export class NgxDialogComponent implements OnInit, OnChanges, OnDestroy {
                 }
             }
         }
+    }
+
+    @HostListener('window:resize', ['$event'])
+    handleKeyDown(event: Event) {
+        this.setOverlayCenterPosition();
     }
 
     private attachOverlay(): void {
