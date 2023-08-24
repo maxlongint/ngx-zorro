@@ -60,8 +60,7 @@ export class NgxAuthDirective implements OnDestroy {
         if (!this.config.hasAuth) {
             throw '未实现 NgxZorroConfigService 的 hasAuth 方法';
         }
-        const conditions = Array.isArray(this.condition) ? this.condition : [this.condition];
-        this.authSubscription = this.config.hasAuth(conditions).subscribe(context => {
+        this.authSubscription = this.config.hasAuth(this.condition).subscribe(context => {
             if (context.status) {
                 if (!this.thenViewRef) {
                     this.viewContainerRef.clear();
