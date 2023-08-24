@@ -13,5 +13,5 @@ export class NgxConfigService {
      * $implicit是then和else模板的变量
      * status为是否存在权限
      */
-    hasAuth?: (value: Array<string>) => Observable<{ $implicit: any; status: boolean }>;
+    hasAuth?: (value: string | string[]) => Observable<{ $implicit: any; status: boolean }>;
 }
