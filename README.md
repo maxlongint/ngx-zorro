@@ -73,6 +73,12 @@ import { NgxLoadingModule } from 'ngx-zorro/loading';
 <ngx-loading [(visible)]="visible"></ngx-loading>
 ```
 
+``` typescript
+constructor(private loading: NgxLoadingService) {}
+const loading = this.loading.open();
+loading.close();
+```
+
 #### 参数说明
 
 | 参数      | 说明                   | 类型    | 默认值  |
