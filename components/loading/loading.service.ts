@@ -7,10 +7,9 @@ import {
     Inject,
     Injectable,
     Injector,
-    ViewRef,
 } from '@angular/core';
 import { DOCUMENT } from '@angular/common';
-import { NgxLoadingContainerComponent } from 'ngx-zorro/loading/loading-container.component';
+import { NgxLoadingContainerComponent } from './loading-container.component';
 
 @Injectable({
     providedIn: 'root',
