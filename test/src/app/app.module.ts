@@ -34,7 +34,6 @@ const LANG_PROVIDES = [{ provide: NZ_I18N, useValue: zh_CN }];
         NzFormModule,
         NzButtonModule,
         NgxDirectivesModule,
-        NgxLoadingModule,
         NgxDialogModule,
         HttpClientModule,
     ],
