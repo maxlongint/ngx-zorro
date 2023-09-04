@@ -1,5 +1,6 @@
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Component, OnInit, AfterContentInit, AfterViewInit } from '@angular/core';
+import { NgxLoadingService } from 'ngx-zorro/loading/loading.service';
 
 @Component({
     selector: 'app-root',
@@ -7,7 +8,10 @@ import { Component, OnInit, AfterContentInit, AfterViewInit } from '@angular/cor
     styleUrls: ['./app.component.scss'],
 })
 export class AppComponent implements OnInit, AfterViewInit, AfterContentInit {
-    constructor(private http: HttpClient) {}
+    constructor(
+        private http: HttpClient,
+        private loading: NgxLoadingService,
+    ) {}
 
     visible = false;
     dialogVisible = false;
@@ -20,10 +24,10 @@ export class AppComponent implements OnInit, AfterViewInit, AfterContentInit {
     ngAfterContentInit(): void {}
 
     onLoading() {
-        this.visible = true;
+        const loading = this.loading.open();
 
         setTimeout(() => {
-            this.visible = false;
+            loading.close();
         }, 3000);
     }
 
