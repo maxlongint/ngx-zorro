@@ -1,6 +1,14 @@
-import { ModuleWithProviders, NgModule } from '@angular/core';
+import { Inject, ModuleWithProviders, NgModule, Optional } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { NgxDynamicFormComponent } from './dynamic-form.component';
+import { FORM_CONFIG, FormConfig } from './core/base';
+import { NgxDynamicFormService } from './dynamic-form.service';
+
+export function defaultConfig(): FormConfig {
+    return {
+        types: [],
+    };
+}
 
 @NgModule({
     declarations: [NgxDynamicFormComponent],
@@ -8,17 +16,22 @@ import { NgxDynamicFormComponent } from './dynamic-form.component';
     exports: [NgxDynamicFormComponent],
 })
 export class NgxDynamicFormModule {
-    static forRoot(config: Array<Record<string, any>> = []): ModuleWithProviders<NgxDynamicFormModule> {
-        return {
-            ngModule: NgxDynamicFormModule,
-            providers: [],
-        };
+    constructor(
+        @Optional() @Inject(FORM_CONFIG) configs: FormConfig[],
+        private service: NgxDynamicFormService,
+    ) {
+        if (configs) {
+            configs.filter(c => c).forEach(config => this.service.addConfig(config));
+        }
     }
 
-    static forChild(config: Array<Record<string, any>> = []): ModuleWithProviders<NgxDynamicFormModule> {
+    static forRoot(config?: FormConfig): ModuleWithProviders<NgxDynamicFormModule> {
         return {
             ngModule: NgxDynamicFormModule,
-            providers: [],
+            providers: [
+                { provide: FORM_CONFIG, useFactory: defaultConfig, multi: true },
+                { provide: FORM_CONFIG, useValue: config, multi: true },
+            ],
         };
     }
 }

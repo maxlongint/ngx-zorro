@@ -20,6 +20,7 @@ import { NzInputModule } from 'ng-zorro-antd/input';
 import { NgxDialogModule } from 'ngx-zorro/dialog';
 import { setStorePrefix } from 'ngx-zorro/utils';
 import { HttpClientModule } from '@angular/common/http';
+import { NgxDynamicFormModule } from 'ngx-zorro/dynamic-form';
 
 const LANG_PROVIDES = [{ provide: NZ_I18N, useValue: zh_CN }];
 
@@ -36,6 +37,7 @@ const LANG_PROVIDES = [{ provide: NZ_I18N, useValue: zh_CN }];
         NgxDirectivesModule,
         NgxDialogModule,
         HttpClientModule,
+        NgxDynamicFormModule.forRoot(),
     ],
     providers: [...LANG_PROVIDES],
     bootstrap: [AppComponent],
