@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import { NgxDynamicFormService } from 'ngx-zorro/dynamic-form/dynamic-form.service';
 
 @Component({
     selector: 'ngx-dynamic-form',
@@ -6,7 +7,7 @@ import { Component, OnInit } from '@angular/core';
     styleUrls: ['./dynamic-form.component.scss'],
 })
 export class NgxDynamicFormComponent implements OnInit {
-    constructor() {}
+    constructor(private service: NgxDynamicFormService) {}
 
     ngOnInit(): void {}
 }

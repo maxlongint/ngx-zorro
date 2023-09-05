@@ -3,16 +3,18 @@ import { CommonModule } from '@angular/common';
 import { NgxDynamicFormComponent } from './dynamic-form.component';
 import { FORM_CONFIG, FormConfig } from './core/base';
 import { NgxDynamicFormService } from './dynamic-form.service';
+import { NgxControlTypeModule } from './control-type/control-type.module';
+import { InputComponent } from './control-type/input/input.component';
 
 export function defaultConfig(): FormConfig {
     return {
-        types: [],
+        types: [{ type: 'input', component: InputComponent }],
     };
 }
 
 @NgModule({
     declarations: [NgxDynamicFormComponent],
-    imports: [CommonModule],
+    imports: [CommonModule, NgxControlTypeModule],
     exports: [NgxDynamicFormComponent],
 })
 export class NgxDynamicFormModule {
