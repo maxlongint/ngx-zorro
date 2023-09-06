@@ -1,13 +1,14 @@
 <form nz-form [nzLayout]="layout" [formGroup]="formGroup">
     <ng-container *ngFor="let f of fields; trackBy: trackByFields">
         <nz-form-item>
-            <nz-form-label [nzNoColon]="!f.label" [nzRequired]="f.required">
+            <nz-form-label [nzNoColon]="!f.label" [nzRequired]="f.required" [ngStyle]="f.labelStyle ?? null">
                 {{ f.label }}
             </nz-form-label>
             <nz-form-control
                 [nzErrorTip]="f.errorTemplate || defaultErrorTemplate"
                 [nzValidateStatus]="f.formControl!"
                 [attr.tip]="f.label"
+                [ngStyle]="f.inputStyle ?? null"
             >
                 <ng-container *ngComponentOutlet="f.component!; injector: f.injector!"></ng-container>
             </nz-form-control>
