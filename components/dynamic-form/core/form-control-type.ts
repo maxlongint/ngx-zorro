@@ -6,8 +6,12 @@ import { AbstractControl, FormControl } from '@angular/forms';
 export abstract class FormControlType<F extends FormFieldConfig = FormFieldConfig> {
     constructor(@Optional() @Inject(FORM_FIELD_CONFIG) protected fieldConfig: F) {}
 
-    get label(): string | undefined {
-        return this.fieldConfig?.label;
+    get field(): F {
+        return this.fieldConfig;
+    }
+
+    get key(): string {
+        return this.fieldConfig.key;
     }
 
     get formControl(): FormControl {

@@ -1,6 +1,6 @@
 <form nz-form [nzLayout]="layout" [formGroup]="formGroup">
     <ng-container *ngFor="let f of fields; trackBy: trackByFields">
-        <nz-form-item>
+        <nz-form-item *ngIf="!f.hidden">
             <nz-form-label [nzNoColon]="!f.label" [nzRequired]="f.required" [ngStyle]="f.labelStyle ?? null">
                 {{ f.label }}
             </nz-form-label>

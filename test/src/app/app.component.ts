@@ -30,6 +30,12 @@ export class AppComponent implements OnInit, AfterViewInit, AfterContentInit {
             inputStyle: {
                 width: '200px',
             },
+            validatorScript: (control, fields) => {
+                const name2 = fields.find(f => f.key === 'name2');
+                if (name2) {
+                    name2.hidden = !control.value;
+                }
+            },
         },
         {
             type: 'input',
@@ -51,6 +57,12 @@ export class AppComponent implements OnInit, AfterViewInit, AfterContentInit {
             },
             inputStyle: {
                 width: '200px',
+            },
+            validatorScript: (control, fields) => {
+                if (control.value && control.value.length !== 18) {
+                    return '身份证号必须是18位';
+                }
+                return;
             },
         },
         {
@@ -109,11 +121,18 @@ export class AppComponent implements OnInit, AfterViewInit, AfterContentInit {
             },
         },
     ];
+
+    data = {
+        name: '张三',
+    };
+
     ngOnInit(): void {}
 
     ngAfterViewInit(): void {}
 
-    ngAfterContentInit(): void {}
+    ngAfterContentInit(): void {
+        this.data = null as any;
+    }
 
     onLoading() {
         const loading = this.loading.open();

@@ -21,6 +21,7 @@ export class NgxDynamicFormComponent implements OnInit, OnChanges {
     get fields(): FormFieldConfigs {
         return this._fields;
     }
+    @Input() data?: Record<string, any>;
     @Input() layout: 'vertical' | 'horizontal' | 'inline' = 'vertical';
 
     constructor(
@@ -38,6 +39,17 @@ export class NgxDynamicFormComponent implements OnInit, OnChanges {
         if (changes.fields) {
             this.createFormControl();
         }
+        if (changes.data) {
+            this.reset(this.data);
+        }
+    }
+
+    public reset(data?: Record<string, any>) {
+        this.formGroup.reset(data ?? undefined);
+    }
+
+    public patchValue(data: Record<string, any>) {
+        this.formGroup.patchValue(data);
     }
 
     private createFormControl(): void {
