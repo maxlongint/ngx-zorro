@@ -1,10 +1,16 @@
-import { Directive } from '@angular/core';
+import { Directive, Inject, Optional } from '@angular/core';
+import { FORM_FIELD_CONFIG, FormFieldConfig } from './field';
+import { AbstractControl, FormControl } from '@angular/forms';
 
 @Directive()
-export abstract class FormControlType {
-    constructor() {}
+export abstract class FormControlType<F extends FormFieldConfig = FormFieldConfig> {
+    constructor(@Optional() @Inject(FORM_FIELD_CONFIG) protected fieldConfig: F) {}
 
-    get formControl() {
-        return '';
+    get label(): string | undefined {
+        return this.fieldConfig?.label;
+    }
+
+    get formControl(): FormControl {
+        return this.fieldConfig.formControl!;
     }
 }

@@ -5,6 +5,8 @@ import { FORM_CONFIG, FormConfig } from './core/base';
 import { NgxDynamicFormService } from './dynamic-form.service';
 import { NgxControlTypeModule } from './control-type/control-type.module';
 import { InputComponent } from './control-type/input/input.component';
+import { NzFormModule } from 'ng-zorro-antd/form';
+import { ReactiveFormsModule } from '@angular/forms';
 
 export function defaultConfig(): FormConfig {
     return {
@@ -14,7 +16,7 @@ export function defaultConfig(): FormConfig {
 
 @NgModule({
     declarations: [NgxDynamicFormComponent],
-    imports: [CommonModule, NgxControlTypeModule],
+    imports: [CommonModule, NgxControlTypeModule, ReactiveFormsModule, NzFormModule],
     exports: [NgxDynamicFormComponent],
 })
 export class NgxDynamicFormModule {
@@ -23,7 +25,7 @@ export class NgxDynamicFormModule {
         private service: NgxDynamicFormService,
     ) {
         if (configs) {
-            configs.filter(c => c).forEach(config => this.service.addConfig(config));
+            configs.forEach(config => config && this.service.addConfig(config));
         }
     }
 

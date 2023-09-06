@@ -17,6 +17,20 @@ export class AppComponent implements OnInit, AfterViewInit, AfterContentInit {
     dialogVisible = false;
     title?: string;
 
+    fields = [
+        {
+            type: 'input',
+            label: '姓名',
+            key: 'name',
+            required: true,
+        },
+        {
+            type: 'input',
+            label: '曾用名',
+            key: 'name2',
+        },
+    ];
+
     ngOnInit(): void {}
 
     ngAfterViewInit(): void {}

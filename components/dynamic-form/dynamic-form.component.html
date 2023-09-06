@@ -1,1 +1,28 @@
-<p>dynamic-form works!</p>
+<form nz-form [nzLayout]="layout" [formGroup]="formGroup">
+    <ng-container *ngFor="let f of fields; trackBy: trackByFields">
+        <nz-form-item>
+            <nz-form-label [nzNoColon]="!f.label" [nzRequired]="f.required">
+                {{ f.label }}
+            </nz-form-label>
+            <nz-form-control
+                [nzErrorTip]="f.errorTemplate || defaultErrorTemplate"
+                [nzValidateStatus]="f.formControl!"
+                [attr.tip]="f.label"
+            >
+                <ng-container *ngComponentOutlet="f.component!; injector: f.injector!"></ng-container>
+            </nz-form-control>
+        </nz-form-item>
+        <ng-template #defaultErrorTemplate>
+            <!-- 必填校验 -->
+            <ng-container *ngIf="f.formControl?.hasError('required'); else uncertaintyTemplate">
+                {{ f.label }}不能为空
+            </ng-container>
+            <!-- 自定义校验提示 -->
+            <ng-template #uncertaintyTemplate>
+                <ng-container *ngIf="f.formControl?.hasError('uncertainty')">
+                    {{ f.formControl?.getError('message') || '未知错误' }}
+                </ng-container>
+            </ng-template>
+        </ng-template>
+    </ng-container>
+</form>

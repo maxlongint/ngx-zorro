@@ -1,5 +1,6 @@
 import { Injectable, Type } from '@angular/core';
 import { ControlType, ControlTypes, FormConfig } from './core/base';
+import { FormFieldConfig } from './core/field';
 import { FormControlType } from './core/form-control-type';
 
 @Injectable({
@@ -10,7 +11,13 @@ export class NgxDynamicFormService {
 
     constructor() {}
 
-    setType(ct: ControlType | ControlTypes) {
+    addConfig(config: FormConfig): void {
+        if (config.types) {
+            config.types.forEach(type => this.setType(type));
+        }
+    }
+
+    setType(ct: ControlType | ControlTypes): void {
         if (Array.isArray(ct)) {
             ct.forEach(t => this.setType(t));
         } else {
@@ -18,9 +25,7 @@ export class NgxDynamicFormService {
         }
     }
 
-    addConfig(config: FormConfig) {
-        if (config.types) {
-            config.types.forEach(type => this.setType(type));
-        }
+    getType(type: string): Type<FormControlType> | undefined {
+        return this.types.get(type);
     }
 }
