@@ -44,12 +44,41 @@ export class NgxDynamicFormComponent implements OnInit, OnChanges {
         }
     }
 
+    /**
+     * 重置表单
+     * @param data
+     */
     public reset(data?: Record<string, any>) {
         this.formGroup.reset(data ?? undefined);
     }
 
+    /**
+     * 设置表单数据
+     * @param data
+     */
     public patchValue(data: Record<string, any>) {
         this.formGroup.patchValue(data);
+    }
+
+    /**
+     * 获取表单数据
+     */
+    public getRawValue(): Record<string, any> | false {
+        const form = this.formGroup;
+        const errList = [];
+        for (const i in form.controls) {
+            form.controls[i].markAsDirty();
+            form.controls[i].updateValueAndValidity();
+            if (form.controls[i].status !== 'VALID' && form.controls[i].status !== 'DISABLED') {
+                errList.push({ 前端校验不通过字段: i });
+            }
+        }
+        // 表单验证状态
+        if (form.status !== 'VALID') {
+            console.table(errList);
+            return false;
+        }
+        return form.getRawValue();
     }
 
     private createFormControl(): void {

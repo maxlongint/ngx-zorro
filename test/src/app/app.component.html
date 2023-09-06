@@ -2,10 +2,10 @@
     <h1>测试</h1>
 
     <div>
-        <ngx-dynamic-form [fields]="fields" [data]="data" layout="inline"></ngx-dynamic-form>
+        <ngx-dynamic-form #formEditor [fields]="fields" [data]="data" layout="inline"></ngx-dynamic-form>
     </div>
 
-    <button nz-button nzType="primary">Submit</button>
+    <button nz-button nzType="primary" (click)="submit()">Submit</button>
     <hr />
     <button nz-button (click)="onLoading()">Loading</button>
     <button nz-button (click)="onDialog()">Dialog</button>

@@ -1,7 +1,8 @@
 import { HttpClient, HttpHeaders } from '@angular/common/http';
-import { Component, OnInit, AfterContentInit, AfterViewInit } from '@angular/core';
+import { Component, OnInit, AfterContentInit, AfterViewInit, ViewChild } from '@angular/core';
 import { NgxLoadingService } from 'ngx-zorro/loading/loading.service';
 import { FormFieldConfig, FormFieldConfigs } from 'ngx-zorro/dynamic-form/core/field';
+import { NgxDynamicFormComponent } from 'ngx-zorro/dynamic-form';
 
 @Component({
     selector: 'app-root',
@@ -126,6 +127,8 @@ export class AppComponent implements OnInit, AfterViewInit, AfterContentInit {
         name: '张三',
     };
 
+    @ViewChild('formEditor') formEditor!: NgxDynamicFormComponent;
+
     ngOnInit(): void {}
 
     ngAfterViewInit(): void {}
@@ -144,5 +147,10 @@ export class AppComponent implements OnInit, AfterViewInit, AfterContentInit {
 
     onDialog() {
         this.dialogVisible = true;
+    }
+
+    submit() {
+        const data = this.formEditor.getRawValue();
+        console.dir(data);
     }
 }
