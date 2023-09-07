@@ -4,13 +4,13 @@ import { NgxDynamicFormComponent } from './dynamic-form.component';
 import { FORM_CONFIG, FormConfig } from './core/base';
 import { NgxDynamicFormService } from './dynamic-form.service';
 import { NgxControlTypeModule } from './control-type/control-type.module';
-import { InputComponent } from './control-type/input/input.component';
+import { NgxInputComponent } from './control-type/input/input.component';
 import { NzFormModule } from 'ng-zorro-antd/form';
 import { ReactiveFormsModule } from '@angular/forms';
 
 export function defaultConfig(): FormConfig {
     return {
-        types: [{ type: 'input', component: InputComponent }],
+        types: [{ type: 'input', component: NgxInputComponent }],
     };
 }
 

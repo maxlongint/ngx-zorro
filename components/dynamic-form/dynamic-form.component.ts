@@ -1,7 +1,8 @@
-import { Component, Injector, Input, OnChanges, OnInit, SimpleChanges } from '@angular/core';
-import { NgxDynamicFormService } from 'ngx-zorro/dynamic-form/dynamic-form.service';
+import { Component, Injector, Input, OnChanges, OnInit, SimpleChanges, Type } from '@angular/core';
 import { FORM_FIELD_CONFIG, FormFieldConfig, FormFieldConfigs, ValidatorScriptFn } from './core/field';
 import { AbstractControl, FormControl, FormGroup, ValidatorFn, Validators } from '@angular/forms';
+import { NgxDynamicFormService } from './dynamic-form.service';
+import { FormControlType } from 'ngx-zorro/dynamic-form/core/form-control-type';
 
 @Component({
     selector: 'ngx-dynamic-form',
@@ -92,11 +93,12 @@ export class NgxDynamicFormComponent implements OnInit, OnChanges {
 
     private loadDynamicComponent(f: FormFieldConfig): void {
         if (f.type) {
-            const component = this.service.getType(f.type);
-            if (!component) {
-                throw new Error(`Can't find component for type ${f.type}`);
+            if (!f.component) {
+                f.component = this.service.getType(f.type);
+                if (!f.component) {
+                    throw new Error(`Can't find component for type ${f.type}`);
+                }
             }
-            f.component = component;
             // 创建动态注入器，并传递数据
             f.injector = Injector.create({
                 providers: [{ provide: FORM_FIELD_CONFIG, useValue: f }],

@@ -93,7 +93,7 @@ export class AppComponent implements OnInit, AfterViewInit, AfterContentInit {
             label: '地址',
             key: 'address',
             labelStyle: {
-                width: '160px',
+                'width.px': '160',
             },
             inputStyle: {
                 width: '200px',

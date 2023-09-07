@@ -5,7 +5,7 @@
                 {{ f.label }}
             </nz-form-label>
             <nz-form-control
-                [nzErrorTip]="f.errorTemplate || defaultErrorTemplate"
+                [nzErrorTip]="defaultErrorTemplate"
                 [nzValidateStatus]="f.formControl!"
                 [attr.tip]="f.label"
                 [ngStyle]="f.inputStyle ?? null"

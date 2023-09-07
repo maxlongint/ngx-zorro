@@ -6,6 +6,6 @@ import { FormControlType } from '../../core/form-control-type';
     templateUrl: './input.component.html',
     styleUrls: ['./input.component.scss'],
 })
-export class InputComponent extends FormControlType implements OnInit {
+export class NgxInputComponent extends FormControlType implements OnInit {
     ngOnInit(): void {}
 }
