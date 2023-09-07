@@ -1,6 +1,12 @@
 <div class="container">
     <h1>测试</h1>
 
+    <div>
+        <ngx-dynamic-form #formEditor [fields]="fields" [data]="data" layout="vertical"></ngx-dynamic-form>
+    </div>
+
+    <button nz-button nzType="primary" (click)="submit()">Submit</button>
+    <hr />
     <button nz-button (click)="onLoading()">Loading</button>
     <button nz-button (click)="onDialog()">Dialog</button>
 </div>
