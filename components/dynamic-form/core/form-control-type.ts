@@ -1,6 +1,6 @@
 import { Directive, Inject, Optional } from '@angular/core';
 import { FORM_FIELD_CONFIG, FormFieldConfig } from './field';
-import { AbstractControl, FormControl } from '@angular/forms';
+import { FormControl } from '@angular/forms';
 
 @Directive()
 export abstract class FormControlType<F extends FormFieldConfig = FormFieldConfig> {

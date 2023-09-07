@@ -1,6 +1,5 @@
 import { Injectable, Type } from '@angular/core';
 import { ControlType, ControlTypes, FormConfig } from './core/base';
-import { FormFieldConfig } from './core/field';
 import { FormControlType } from './core/form-control-type';
 
 @Injectable({

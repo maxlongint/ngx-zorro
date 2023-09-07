@@ -69,6 +69,7 @@ export interface FormFieldProps {
     min?: number;
     mode?: 'date' | 'week' | 'month' | 'year';
     rows?: number;
+    options?: Array<any>;
 }
 
 export type ValidatorScript = string | ValidatorScriptFn;

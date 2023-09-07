@@ -1,8 +1,7 @@
-import { Component, Injector, Input, OnChanges, OnInit, SimpleChanges, Type } from '@angular/core';
+import { Component, Injector, Input, OnChanges, OnInit, SimpleChanges } from '@angular/core';
 import { FORM_FIELD_CONFIG, FormFieldConfig, FormFieldConfigs, ValidatorScriptFn } from './core/field';
 import { AbstractControl, FormControl, FormGroup, ValidatorFn, Validators } from '@angular/forms';
 import { NgxDynamicFormService } from './dynamic-form.service';
-import { FormControlType } from 'ngx-zorro/dynamic-form/core/form-control-type';
 
 @Component({
     selector: 'ngx-dynamic-form',

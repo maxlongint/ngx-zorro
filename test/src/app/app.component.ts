@@ -65,10 +65,11 @@ export class AppComponent implements OnInit, AfterViewInit, AfterContentInit {
         },
         {
             type: 'number',
-            label: '年龄',
+            // label: '年龄',
             key: 'age',
             labelStyle: {
                 width: '160px',
+                display: 'none',
             },
             inputStyle: {
                 width: '200px',

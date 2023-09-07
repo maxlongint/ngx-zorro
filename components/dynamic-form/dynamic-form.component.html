@@ -7,7 +7,7 @@
             <nz-form-control
                 [nzErrorTip]="defaultErrorTemplate"
                 [nzValidateStatus]="f.formControl!"
-                [attr.tip]="f.label"
+                [attr.dynamic-key]="f.key"
                 [ngStyle]="f.inputStyle ?? null"
             >
                 <ng-container *ngComponentOutlet="f.component!; injector: f.injector!"></ng-container>
