@@ -9,6 +9,7 @@ import { ReactiveFormsModule } from '@angular/forms';
 import { NgxInputComponent } from './control-type/input/input.component';
 import { NgxNumberComponent } from './control-type/number/number.component';
 import { NgxDateComponent } from './control-type/date/date.component';
+import { NgxTextareaComponent } from './control-type/textarea/textarea.component';
 
 export function defaultConfig(): FormConfig {
     return {
@@ -16,6 +17,7 @@ export function defaultConfig(): FormConfig {
             { type: 'input', component: NgxInputComponent },
             { type: 'number', component: NgxNumberComponent },
             { type: 'date', component: NgxDateComponent },
+            { type: 'textarea', component: NgxTextareaComponent },
         ],
     };
 }

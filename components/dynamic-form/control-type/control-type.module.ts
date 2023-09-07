@@ -7,10 +7,11 @@ import { NgxNumberComponent } from './number/number.component';
 import { NzInputNumberModule } from 'ng-zorro-antd/input-number';
 import { NgxDateComponent } from './date/date.component';
 import { NzDatePickerModule } from 'ng-zorro-antd/date-picker';
+import { NgxTextareaComponent } from './textarea/textarea.component';
 
 @NgModule({
-    declarations: [NgxInputComponent, NgxNumberComponent, NgxDateComponent],
+    declarations: [NgxInputComponent, NgxNumberComponent, NgxDateComponent, NgxTextareaComponent],
     imports: [CommonModule, ReactiveFormsModule, NzInputModule, NzInputNumberModule, NzDatePickerModule],
-    exports: [NgxInputComponent, NgxNumberComponent, NgxDateComponent],
+    exports: [NgxInputComponent, NgxNumberComponent, NgxDateComponent, NgxTextareaComponent],
 })
 export class NgxControlTypeModule {}

@@ -125,25 +125,14 @@ export class AppComponent implements OnInit, AfterViewInit, AfterContentInit {
             },
         },
         {
-            type: 'input',
+            type: 'textarea',
             label: '备注',
             key: 'remark',
             labelStyle: {
                 width: '160px',
             },
             inputStyle: {
-                width: '200px',
-            },
-        },
-        {
-            type: 'input',
-            label: '备注2',
-            key: 'remark2',
-            labelStyle: {
-                width: '160px',
-            },
-            inputStyle: {
-                width: '200px',
+                width: '600px',
             },
         },
     ];
