@@ -76,6 +76,23 @@ export class AppComponent implements OnInit, AfterViewInit, AfterContentInit {
             },
         },
         {
+            type: 'radio',
+            key: 'sex',
+            labelStyle: {
+                width: '160px',
+                display: 'none',
+            },
+            inputStyle: {
+                width: '200px',
+            },
+            props: {
+                options: [
+                    { label: '男', value: '1' },
+                    { label: '女', value: '2' },
+                ],
+            },
+        },
+        {
             type: 'input',
             label: '身份证号',
             key: 'idCard',
