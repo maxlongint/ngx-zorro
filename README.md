@@ -4,44 +4,11 @@
 
 ngx-zorro 是一个`angular`的组件库，基于`ng-zorro-antd`开发的一些常用组件
 
-## 目录
 
--   [ngx-Zorro](#ngx-zorro)
-    -   [目录](#目录)
-    -   [依赖](#依赖)
-    -   [安装](#安装)
-    -   [组件库](#组件库)
-        -   [loading 组件 💘](#loading-组件-)
-            -   [如何使用](#如何使用)
-            -   [代码示例](#代码示例)
-            -   [参数说明](#参数说明)
-        -   [弹框组件 💘](#弹框组件-)
-            -   [如何使用](#如何使用-1)
-            -   [代码示例](#代码示例-1)
-            -   [参数说明](#参数说明-1)
-    -   [指令](#指令)
-        -   [防抖事件指令 ✈️](#防抖事件指令-️)
-            -   [如何使用](#如何使用-2)
-            -   [代码示例](#代码示例-2)
-            -   [参数说明](#参数说明-2)
-        -   [权限指令 ✈️](#权限指令-️)
-            -   [如何使用](#如何使用-3)
-            -   [代码示例](#代码示例-3)
-            -   [参数说明](#参数说明-3)
-    -   [拦截器](#拦截器)
-        -   [HTTP 请求缓存拦截器 📍](#http-请求缓存拦截器-)
-            -   [如何使用](#如何使用-4)
-            -   [具有的能力](#具有的能力)
-    -   [工具](#工具)
-        -   [缓存属性装饰器 🚩](#缓存属性装饰器-)
-            -   [如何使用](#如何使用-5)
-            -   [代码示例](#代码示例-4)
-            -   [参数](#参数)
-        -   [下载文件服务 🚩](#下载文件服务-)
-            -   [如何使用](#如何使用-6)
-            -   [代码示例](#代码示例-5)
-            -   [参数说明](#参数说明-4)
-        -   [](#)
+
+[TOC]
+
+
 
 ## 依赖
 
@@ -136,6 +103,149 @@ import { NgxDialogModule } from 'ngx-zorro/dialog';
 | [left]             | 窗口距离左边距离                   | string                                     | -      |
 | [right]            | 窗口距离右边距离                   | string                                     | -      |
 | [bottom]           | 窗口距离底部距离                   | string                                     | -      |
+
+
+
+### 动态构造表单组件 💘
+
+#### 具有的能力
+
+> 可以自定义表单类型，支持自定义脚本验证和联合判断，自定义特定模板扩展属性，
+>
+> 默认支持类型有： input, date, number, textarea
+
+
+
+#### 如何使用
+
+``` typescript
+import { NgxDynamicFormModule } from 'ngx-zorro/dynamic-form';
+NgxDynamicFormModule.forRoot()
+```
+
+
+
+#### 代码说明
+
+```  html
+<ngx-dynamic-form #formEditor [fields]="fields" [data]="data" layout="vertical"></ngx-dynamic-form>
+```
+
+
+
+##### 自定义表单类型
+
+``` typescript
+interface RadioProps {
+    options?: { label: string; value: any }[];
+}
+
+@Component({
+    selector: 'app-radio',
+    template: `
+        <nz-radio-group [formControl]="formControl">
+            <ng-container *ngFor="let item of options">
+                <label nz-radio [nzValue]="item.value">{{ item.label }}</label>
+            </ng-container>
+        </nz-radio-group>
+    `,
+})
+export class RadioComponent extends FormControlType<FormFieldConfig<RadioProps>> implements OnInit {
+    ngOnInit(): void {}
+
+    get options() {
+        return this.props?.options ?? [];
+    }
+}
+
+// app.module.ts
+NgxDynamicFormModule..forRoot({
+    types: [{ type: 'radio', component: RadioComponent }],
+})
+
+// app.component.ts
+fields = [
+    {
+        type: 'radio',
+        key: 'sex',
+        props: {
+            options: [
+                { label: '男', value: '1' },
+                { label: '女', value: '2' },
+            ],
+        },
+    }
+]
+```
+
+
+
+##### 自定义脚本验证和联合判断
+
+``` typescript
+fields = [
+    {
+        type: 'input',
+        label: '姓名',
+        key: 'name',
+        validatorScript: (control, fields) => {
+            // 姓名有值曾用名字段才会显示，否则隐藏
+            const name2 = fields.find(f => f.key === 'name2');
+            if (name2) {
+                name2.hidden = !control.value;
+            }
+        },
+    },
+    {
+        type: 'input',
+        label: '曾用名',
+        key: 'name2'
+    },
+    {
+        type: 'input',
+        label: '身份证号',
+        key: 'idCard',
+        validatorScript: (control, fields) => {
+            // 身份证验证18位
+            if (control.value && control.value.length !== 18) {
+                return '身份证号必须是18位';
+            }
+            return;
+        },
+    },
+]
+```
+
+
+
+##### 自定义特定模板扩展属性
+
+``` typescript
+// 支持扩展属性继承，可以在自定义组件里面使用
+interface RadioProps {
+    options?: { label: string; value: any }[];
+}
+export class RadioComponent extends FormControlType<FormFieldConfig<RadioProps>> implements OnInit {
+    ngOnInit(): void {}
+
+    get options() {
+        return this.props?.options ?? [];
+    }
+}
+```
+
+
+
+#### 参数说明
+
+| 参数       | 说明     | 类型                                    | 默认值     |
+| ---------- | -------- | --------------------------------------- | ---------- |
+| [fields]   | 字段列表 | FormFieldConfigs                        | -          |
+| [disabled] | 是否只读 | boolean                                 | false      |
+| [data]     | 表单数据 | Record<string,any>                      | -          |
+| [layout]   | 表单布局 | 'vertical' \| 'horizontal'  \| 'inline' | 'vertical' |
+
+
 
 ## 指令
 

@@ -20,11 +20,14 @@ import { NzInputModule } from 'ng-zorro-antd/input';
 import { NgxDialogModule } from 'ngx-zorro/dialog';
 import { setStorePrefix } from 'ngx-zorro/utils';
 import { HttpClientModule } from '@angular/common/http';
+import { NgxDynamicFormModule } from 'ngx-zorro/dynamic-form';
+import { RadioComponent } from './radio/radio.component';
+import { NzRadioModule } from 'ng-zorro-antd/radio';
 
 const LANG_PROVIDES = [{ provide: NZ_I18N, useValue: zh_CN }];
 
 @NgModule({
-    declarations: [AppComponent],
+    declarations: [AppComponent, RadioComponent],
     imports: [
         BrowserModule,
         BrowserAnimationsModule,
@@ -36,6 +39,11 @@ const LANG_PROVIDES = [{ provide: NZ_I18N, useValue: zh_CN }];
         NgxDirectivesModule,
         NgxDialogModule,
         HttpClientModule,
+        NzRadioModule,
+        NgxLoadingModule,
+        NgxDynamicFormModule.forRoot({
+            types: [{ type: 'radio', component: RadioComponent }],
+        }),
     ],
     providers: [...LANG_PROVIDES],
     bootstrap: [AppComponent],

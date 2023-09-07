@@ -1,6 +1,8 @@
 import { HttpClient, HttpHeaders } from '@angular/common/http';
-import { Component, OnInit, AfterContentInit, AfterViewInit } from '@angular/core';
+import { Component, OnInit, AfterContentInit, AfterViewInit, ViewChild } from '@angular/core';
 import { NgxLoadingService } from 'ngx-zorro/loading/loading.service';
+import { FormFieldConfig, FormFieldConfigs } from 'ngx-zorro/dynamic-form/core/field';
+import { NgxDynamicFormComponent } from 'ngx-zorro/dynamic-form';
 
 @Component({
     selector: 'app-root',
@@ -17,11 +19,156 @@ export class AppComponent implements OnInit, AfterViewInit, AfterContentInit {
     dialogVisible = false;
     title?: string;
 
+    fields: FormFieldConfigs = [
+        {
+            type: 'input',
+            label: '姓名',
+            key: 'name',
+            required: true,
+            labelStyle: {
+                width: '160px',
+            },
+            inputStyle: {
+                width: '200px',
+            },
+            validatorScript: (control, fields) => {
+                const name2 = fields.find(f => f.key === 'name2');
+                if (name2) {
+                    name2.hidden = !control.value;
+                }
+            },
+        },
+        {
+            type: 'input',
+            label: '曾用名',
+            key: 'name2',
+            labelStyle: {
+                width: '160px',
+            },
+            inputStyle: {
+                width: '200px',
+            },
+        },
+        {
+            type: 'date',
+            label: '出生日期',
+            key: 'birthday',
+            labelStyle: {
+                width: '160px',
+            },
+            inputStyle: {
+                width: '200px',
+            },
+            props: {
+                mode: 'year',
+            },
+        },
+        {
+            type: 'number',
+            // label: '年龄',
+            key: 'age',
+            labelStyle: {
+                width: '160px',
+                display: 'none',
+            },
+            inputStyle: {
+                width: '200px',
+            },
+        },
+        {
+            type: 'radio',
+            key: 'sex',
+            labelStyle: {
+                width: '160px',
+                display: 'none',
+            },
+            inputStyle: {
+                width: '200px',
+            },
+            props: {
+                options: [
+                    { label: '男', value: '1' },
+                    { label: '女', value: '2' },
+                ],
+            },
+        },
+        {
+            type: 'input',
+            label: '身份证号',
+            key: 'idCard',
+            labelStyle: {
+                width: '160px',
+            },
+            inputStyle: {
+                width: '200px',
+            },
+            validatorScript: (control, fields) => {
+                if (control.value && control.value.length !== 18) {
+                    return '身份证号必须是18位';
+                }
+                return;
+            },
+        },
+        {
+            type: 'input',
+            label: '手机号',
+            key: 'phone',
+            labelStyle: {
+                width: '160px',
+            },
+            inputStyle: {
+                width: '200px',
+            },
+        },
+        {
+            type: 'input',
+            label: '邮箱',
+            key: 'email',
+            labelStyle: {
+                width: '160px',
+            },
+            inputStyle: {
+                width: '200px',
+            },
+            disabled: true,
+        },
+        {
+            type: 'input',
+            label: '地址',
+            key: 'address',
+            labelStyle: {
+                'width.px': '160',
+            },
+            inputStyle: {
+                width: '200px',
+            },
+        },
+        {
+            type: 'textarea',
+            label: '备注',
+            key: 'remark',
+            labelStyle: {
+                width: '160px',
+            },
+            inputStyle: {
+                width: '600px',
+            },
+        },
+    ];
+
+    data = {
+        name: '张三',
+    };
+
+    @ViewChild('formEditor') formEditor!: NgxDynamicFormComponent;
+
     ngOnInit(): void {}
 
     ngAfterViewInit(): void {}
 
-    ngAfterContentInit(): void {}
+    ngAfterContentInit(): void {
+        this.data = null as any;
+    }
 
     onLoading() {
         const loading = this.loading.open();
@@ -33,5 +180,10 @@ export class AppComponent implements OnInit, AfterViewInit, AfterContentInit {
 
     onDialog() {
         this.dialogVisible = true;
+    }
+
+    submit() {
+        const data = this.formEditor.getRawValue();
+        console.dir(data);
     }
 }
