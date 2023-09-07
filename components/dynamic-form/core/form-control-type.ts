@@ -10,11 +10,19 @@ export abstract class FormControlType<F extends FormFieldConfig = FormFieldConfi
         return this.fieldConfig;
     }
 
+    get props(): F['props'] {
+        return this.fieldConfig.props ?? {};
+    }
+
     get key(): string {
         return this.fieldConfig.key;
     }
 
     get formControl(): FormControl {
         return this.fieldConfig.formControl!;
+    }
+
+    get placeholder(): string {
+        return this.fieldConfig.placeholder ?? '';
     }
 }

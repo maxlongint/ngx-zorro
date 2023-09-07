@@ -50,6 +50,17 @@ export class AppComponent implements OnInit, AfterViewInit, AfterContentInit {
             },
         },
         {
+            type: 'number',
+            label: '年龄',
+            key: 'age',
+            labelStyle: {
+                width: '160px',
+            },
+            inputStyle: {
+                width: '200px',
+            },
+        },
+        {
             type: 'input',
             label: '身份证号',
             key: 'idCard',

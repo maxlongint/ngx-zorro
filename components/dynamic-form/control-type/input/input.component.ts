@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component } from '@angular/core';
 import { FormControlType } from '../../core/form-control-type';
 
 @Component({
@@ -6,6 +6,4 @@ import { FormControlType } from '../../core/form-control-type';
     templateUrl: './input.component.html',
     styleUrls: ['./input.component.scss'],
 })
-export class NgxInputComponent extends FormControlType implements OnInit {
-    ngOnInit(): void {}
-}
+export class NgxInputComponent extends FormControlType {}
