@@ -18,11 +18,15 @@ export abstract class FormControlType<F extends FormFieldConfig = FormFieldConfi
         return this.fieldConfig.key;
     }
 
+    get label(): string {
+        return this.fieldConfig.label ?? '';
+    }
+
     get formControl(): FormControl {
         return this.fieldConfig.formControl!;
     }
 
     get placeholder(): string {
-        return this.fieldConfig.placeholder ?? '';
+        return this.fieldConfig.placeholder ?? `请填写${this.label || ''}`;
     }
 }

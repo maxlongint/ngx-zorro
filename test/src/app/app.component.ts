@@ -50,6 +50,20 @@ export class AppComponent implements OnInit, AfterViewInit, AfterContentInit {
             },
         },
         {
+            type: 'date',
+            label: '出生日期',
+            key: 'birthday',
+            labelStyle: {
+                width: '160px',
+            },
+            inputStyle: {
+                width: '200px',
+            },
+            props: {
+                mode: 'year',
+            },
+        },
+        {
             type: 'number',
             label: '年龄',
             key: 'age',

@@ -1,5 +1,5 @@
 import { AbstractControl, FormControl } from '@angular/forms';
-import { InjectionToken, Injector, TemplateRef, Type } from '@angular/core';
+import { InjectionToken, Injector, Type } from '@angular/core';
 import { FormControlType } from './form-control-type';
 
 export const FORM_FIELD_CONFIG = new InjectionToken<FormFieldConfig[]>('FORM_FIELD_CONFIG');
@@ -67,6 +67,7 @@ export interface FormFieldConfig<Props = FormFieldProps & { [key: string]: any }
 export interface FormFieldProps {
     max?: number;
     min?: number;
+    mode?: 'date' | 'week' | 'month' | 'year';
 }
 
 export type ValidatorScript = string | ValidatorScriptFn;
