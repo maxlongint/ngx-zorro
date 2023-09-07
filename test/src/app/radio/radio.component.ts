@@ -8,8 +8,13 @@ interface RadioProps {
 
 @Component({
     selector: 'app-radio',
-    templateUrl: './radio.component.html',
-    styleUrls: ['./radio.component.scss'],
+    template: `
+        <nz-radio-group [formControl]="formControl">
+            <ng-container *ngFor="let item of options">
+                <label nz-radio [nzValue]="item.value">{{ item.label }}</label>
+            </ng-container>
+        </nz-radio-group>
+    `,
 })
 export class RadioComponent extends FormControlType<FormFieldConfig<RadioProps>> implements OnInit {
     ngOnInit(): void {}

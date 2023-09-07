@@ -130,6 +130,7 @@ export class AppComponent implements OnInit, AfterViewInit, AfterContentInit {
             inputStyle: {
                 width: '200px',
             },
+            disabled: true,
         },
         {
             type: 'input',

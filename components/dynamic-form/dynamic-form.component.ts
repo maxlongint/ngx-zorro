@@ -21,6 +21,7 @@ export class NgxDynamicFormComponent implements OnInit, OnChanges {
     get fields(): FormFieldConfigs {
         return this._fields;
     }
+    @Input() disabled: boolean = false;
     @Input() data?: Record<string, any>;
     @Input() layout: 'vertical' | 'horizontal' | 'inline' = 'vertical';
 
@@ -70,7 +71,7 @@ export class NgxDynamicFormComponent implements OnInit, OnChanges {
             form.controls[i].markAsDirty();
             form.controls[i].updateValueAndValidity();
             if (form.controls[i].status !== 'VALID' && form.controls[i].status !== 'DISABLED') {
-                errList.push({ 前端校验不通过字段: i });
+                errList.push({ field: i, error: '校验不通过' });
             }
         }
         // 表单验证状态
@@ -84,6 +85,12 @@ export class NgxDynamicFormComponent implements OnInit, OnChanges {
     private createFormControl(): void {
         this.fields.forEach(f => {
             f.formControl = new FormControl();
+            if (this.disabled) {
+                f.disabled = true;
+            }
+            if (f.disabled) {
+                f.formControl.disable();
+            }
             this.formGroup.addControl(f.key, f.formControl);
             this.loadDynamicComponent(f);
         });

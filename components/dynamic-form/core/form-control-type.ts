@@ -10,10 +10,6 @@ export abstract class FormControlType<F extends FormFieldConfig = FormFieldConfi
         return this.fieldConfig;
     }
 
-    get props(): F['props'] {
-        return this.fieldConfig.props ?? {};
-    }
-
     get key(): string {
         return this.fieldConfig.key;
     }
@@ -26,7 +22,26 @@ export abstract class FormControlType<F extends FormFieldConfig = FormFieldConfi
         return this.fieldConfig.formControl!;
     }
 
+    get disabled(): boolean {
+        return this.fieldConfig.disabled ?? false;
+    }
+
+    get required(): boolean {
+        return this.fieldConfig.required ?? false;
+    }
+
+    get hidden(): boolean {
+        return this.fieldConfig.hidden ?? false;
+    }
+
     get placeholder(): string {
+        if (this.disabled) {
+            return '';
+        }
         return this.fieldConfig.placeholder ?? `请填写${this.label || ''}`;
+    }
+
+    get props(): F['props'] {
+        return this.fieldConfig.props ?? {};
     }
 }
