@@ -4,11 +4,49 @@
 
 ngx-zorro 是一个`angular`的组件库，基于`ng-zorro-antd`开发的一些常用组件
 
-
-
-[TOC]
-
-
+-   [ngx-Zorro](#ngx-zorro)
+    -   [依赖](#依赖)
+    -   [安装](#安装)
+    -   [组件库](#组件库)
+        -   [loading 组件 💘](#loading-组件-)
+            -   [如何使用](#如何使用)
+            -   [代码示例](#代码示例)
+            -   [参数说明](#参数说明)
+        -   [弹框组件 💘](#弹框组件-)
+            -   [如何使用](#如何使用-1)
+            -   [代码示例](#代码示例-1)
+            -   [参数说明](#参数说明-1)
+        -   [动态构造表单组件 💘](#动态构造表单组件-)
+            -   [具有的能力](#具有的能力)
+            -   [如何使用](#如何使用-2)
+            -   [代码说明](#代码说明)
+                -   [自定义表单类型](#自定义表单类型)
+                -   [自定义脚本验证和联合判断](#自定义脚本验证和联合判断)
+                -   [自定义特定模板扩展属性](#自定义特定模板扩展属性)
+            -   [参数说明](#参数说明-2)
+    -   [指令](#指令)
+        -   [防抖事件指令 ✈️](#防抖事件指令-️)
+            -   [如何使用](#如何使用-3)
+            -   [代码示例](#代码示例-2)
+            -   [参数说明](#参数说明-3)
+        -   [权限指令 ✈️](#权限指令-️)
+            -   [如何使用](#如何使用-4)
+            -   [代码示例](#代码示例-3)
+            -   [参数说明](#参数说明-4)
+    -   [拦截器](#拦截器)
+        -   [HTTP 请求缓存拦截器 📍](#http-请求缓存拦截器-)
+            -   [如何使用](#如何使用-5)
+            -   [具有的能力](#具有的能力-1)
+    -   [工具](#工具)
+        -   [缓存属性装饰器 🚩](#缓存属性装饰器-)
+            -   [如何使用](#如何使用-6)
+            -   [代码示例](#代码示例-4)
+            -   [参数](#参数)
+        -   [下载文件服务 🚩](#下载文件服务-)
+            -   [如何使用](#如何使用-7)
+            -   [代码示例](#代码示例-5)
+            -   [参数说明](#参数说明-5)
+        -   [](#)
 
 ## 依赖
 
@@ -40,7 +78,7 @@ import { NgxLoadingModule } from 'ngx-zorro/loading';
 <ngx-loading [(visible)]="visible"></ngx-loading>
 ```
 
-``` typescript
+```typescript
 constructor(private loading: NgxLoadingService) {}
 const loading = this.loading.open();
 loading.close();
@@ -104,8 +142,6 @@ import { NgxDialogModule } from 'ngx-zorro/dialog';
 | [right]            | 窗口距离右边距离                   | string                                     | -      |
 | [bottom]           | 窗口距离底部距离                   | string                                     | -      |
 
-
-
 ### 动态构造表单组件 💘
 
 #### 具有的能力
@@ -114,28 +150,22 @@ import { NgxDialogModule } from 'ngx-zorro/dialog';
 >
 > 默认支持类型有： input, date, number, textarea
 
-
-
 #### 如何使用
 
-``` typescript
+```typescript
 import { NgxDynamicFormModule } from 'ngx-zorro/dynamic-form';
-NgxDynamicFormModule.forRoot()
+NgxDynamicFormModule.forRoot();
 ```
-
-
 
 #### 代码说明
 
-```  html
+```html
 <ngx-dynamic-form #formEditor [fields]="fields" [data]="data" layout="vertical"></ngx-dynamic-form>
 ```
 
-
-
 ##### 自定义表单类型
 
-``` typescript
+```typescript
 interface RadioProps {
     options?: { label: string; value: any }[];
 }
@@ -178,11 +208,9 @@ fields = [
 ]
 ```
 
-
-
 ##### 自定义脚本验证和联合判断
 
-``` typescript
+```typescript
 fields = [
     {
         type: 'input',
@@ -199,7 +227,7 @@ fields = [
     {
         type: 'input',
         label: '曾用名',
-        key: 'name2'
+        key: 'name2',
     },
     {
         type: 'input',
@@ -213,14 +241,12 @@ fields = [
             return;
         },
     },
-]
+];
 ```
-
-
 
 ##### 自定义特定模板扩展属性
 
-``` typescript
+```typescript
 // 支持扩展属性继承，可以在自定义组件里面使用
 interface RadioProps {
     options?: { label: string; value: any }[];
@@ -234,18 +260,14 @@ export class RadioComponent extends FormControlType<FormFieldConfig<RadioProps>>
 }
 ```
 
-
-
 #### 参数说明
 
-| 参数       | 说明     | 类型                                    | 默认值     |
-| ---------- | -------- | --------------------------------------- | ---------- |
-| [fields]   | 字段列表 | FormFieldConfigs                        | -          |
-| [disabled] | 是否只读 | boolean                                 | false      |
-| [data]     | 表单数据 | Record<string,any>                      | -          |
-| [layout]   | 表单布局 | 'vertical' \| 'horizontal'  \| 'inline' | 'vertical' |
-
-
+| 参数       | 说明     | 类型                                   | 默认值     |
+| ---------- | -------- | -------------------------------------- | ---------- |
+| [fields]   | 字段列表 | FormFieldConfigs                       | -          |
+| [disabled] | 是否只读 | boolean                                | false      |
+| [data]     | 表单数据 | Record<string,any>                     | -          |
+| [layout]   | 表单布局 | 'vertical' \| 'horizontal' \| 'inline' | 'vertical' |
 
 ## 指令
 
