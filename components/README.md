@@ -11,6 +11,7 @@ ngx-zorro 是一个`angular`的组件库，基于`ng-zorro-antd`开发的一些�
         -   [loading 组件 💘](#loading-组件-)
             -   [如何使用](#如何使用)
             -   [代码示例](#代码示例)
+                -   [服务的方式调用](#服务的方式调用)
             -   [参数说明](#参数说明)
         -   [弹框组件 💘](#弹框组件-)
             -   [如何使用](#如何使用-1)
@@ -77,6 +78,8 @@ import { NgxLoadingModule } from 'ngx-zorro/loading';
 ```html
 <ngx-loading [(visible)]="visible"></ngx-loading>
 ```
+
+##### 服务的方式调用
 
 ```typescript
 constructor(private loading: NgxLoadingService) {}
