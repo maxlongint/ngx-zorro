@@ -1,10 +1,10 @@
 import { Injectable } from '@angular/core';
 import { HttpRequest, HttpHandler, HttpEvent, HttpInterceptor, HttpResponse } from '@angular/common/http';
-import { Observable, of } from 'rxjs';
-import { shareReplay, tap } from 'rxjs/operators';
+import { Observable } from 'rxjs';
+import { shareReplay } from 'rxjs/operators';
 
 @Injectable()
-export class CacheInterceptor implements HttpInterceptor {
+export class NgxCacheInterceptor implements HttpInterceptor {
     private cache: Map<string, Observable<HttpEvent<any>>> = new Map<string, Observable<HttpEvent<any>>>();
 
     intercept<T>(request: HttpRequest<T>, next: HttpHandler): Observable<HttpEvent<T>> {

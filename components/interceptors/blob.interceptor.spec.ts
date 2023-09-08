@@ -1,16 +1,16 @@
 import { TestBed } from '@angular/core/testing';
 
-import { BlobInterceptor } from './blob.interceptor';
+import { NgxBlobInterceptor } from './blob.interceptor';
 
-describe('BlobInterceptor', () => {
+describe('NgxBlobInterceptor', () => {
     beforeEach(() =>
         TestBed.configureTestingModule({
-            providers: [BlobInterceptor],
-        })
+            providers: [NgxBlobInterceptor],
+        }),
     );
 
     it('should be created', () => {
-        const interceptor: BlobInterceptor = TestBed.inject(BlobInterceptor);
+        const interceptor: NgxBlobInterceptor = TestBed.inject(NgxBlobInterceptor);
         expect(interceptor).toBeTruthy();
     });
 });
