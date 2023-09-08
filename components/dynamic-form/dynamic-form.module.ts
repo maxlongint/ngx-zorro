@@ -6,10 +6,10 @@ import { NgxDynamicFormService } from './dynamic-form.service';
 import { NgxControlTypeModule } from './control-type/control-type.module';
 import { NzFormModule } from 'ng-zorro-antd/form';
 import { ReactiveFormsModule } from '@angular/forms';
-import { NgxInputComponent } from './control-type/input/input.component';
-import { NgxNumberComponent } from './control-type/number/number.component';
-import { NgxDateComponent } from './control-type/date/date.component';
-import { NgxTextareaComponent } from './control-type/textarea/textarea.component';
+import { NgxInputComponent } from './control-type/input.component';
+import { NgxNumberComponent } from './control-type/number.component';
+import { NgxDateComponent } from './control-type/date.component';
+import { NgxTextareaComponent } from './control-type/textarea.component';
 
 export function defaultConfig(): FormConfig {
     return {
