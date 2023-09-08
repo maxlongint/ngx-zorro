@@ -11,6 +11,7 @@ import { NgxNumberComponent } from './control-type/number.component';
 import { NgxDateComponent } from './control-type/date.component';
 import { NgxTextareaComponent } from './control-type/textarea.component';
 import { NgxRadioComponent } from './control-type/radio.component';
+import { NgxSelectComponent } from './control-type/select.component';
 
 export function defaultConfig(): FormConfig {
     return {
@@ -20,6 +21,7 @@ export function defaultConfig(): FormConfig {
             { type: 'date', component: NgxDateComponent },
             { type: 'textarea', component: NgxTextareaComponent },
             { type: 'radio', component: NgxRadioComponent },
+            { type: 'select', component: NgxSelectComponent },
         ],
     };
 }

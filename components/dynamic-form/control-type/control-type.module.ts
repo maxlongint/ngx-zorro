@@ -10,10 +10,34 @@ import { NzDatePickerModule } from 'ng-zorro-antd/date-picker';
 import { NgxTextareaComponent } from './textarea.component';
 import { NgxRadioComponent } from './radio.component';
 import { NzRadioModule } from 'ng-zorro-antd/radio';
+import { NgxSelectComponent } from './select.component';
+import { NzSelectModule } from 'ng-zorro-antd/select';
 
 @NgModule({
-    declarations: [NgxInputComponent, NgxNumberComponent, NgxDateComponent, NgxTextareaComponent, NgxRadioComponent],
-    imports: [CommonModule, ReactiveFormsModule, NzInputModule, NzInputNumberModule, NzDatePickerModule, NzRadioModule],
-    exports: [NgxInputComponent, NgxNumberComponent, NgxDateComponent, NgxTextareaComponent, NgxRadioComponent],
+    declarations: [
+        NgxInputComponent,
+        NgxNumberComponent,
+        NgxDateComponent,
+        NgxTextareaComponent,
+        NgxRadioComponent,
+        NgxSelectComponent,
+    ],
+    imports: [
+        CommonModule,
+        ReactiveFormsModule,
+        NzInputModule,
+        NzInputNumberModule,
+        NzDatePickerModule,
+        NzRadioModule,
+        NzSelectModule,
+    ],
+    exports: [
+        NgxInputComponent,
+        NgxNumberComponent,
+        NgxDateComponent,
+        NgxTextareaComponent,
+        NgxRadioComponent,
+        NgxSelectComponent,
+    ],
 })
 export class NgxControlTypeModule {}

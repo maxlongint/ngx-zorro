@@ -65,14 +65,16 @@ export class AppComponent implements OnInit, AfterViewInit, AfterContentInit {
         },
         {
             type: 'number',
-            // label: '年龄',
+            label: '年龄',
             key: 'age',
             labelStyle: {
                 width: '160px',
-                display: 'none',
             },
             inputStyle: {
                 width: '200px',
+            },
+            props: {
+                min: 0,
             },
         },
         {
@@ -90,6 +92,28 @@ export class AppComponent implements OnInit, AfterViewInit, AfterContentInit {
                     { label: '男', value: '1' },
                     { label: '女', value: '2' },
                 ],
+            },
+        },
+        {
+            type: 'select',
+            label: '爱好',
+            key: 'hobby',
+            labelStyle: {
+                width: '160px',
+                display: 'none',
+            },
+            inputStyle: {
+                width: '200px',
+            },
+            props: {
+                options: [
+                    { label: '篮球', value: '1' },
+                    { label: '足球', value: '2' },
+                    { label: '乒乓球', value: '3' },
+                    { label: '羽毛球', value: '4' },
+                    { label: '排球', value: '5' },
+                ],
+                allowClear: true,
             },
         },
         {
