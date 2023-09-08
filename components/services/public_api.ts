@@ -1,1 +1,1 @@
-export * from './config.service';
+export { NgxConfigService } from './config.service';
