@@ -20,6 +20,8 @@ export function defaultConfig(): FormConfig {
     exports: [NgxDynamicFormComponent],
 })
 export class NgxDynamicFormModule {
+    static rootConfig?: FormConfig;
+
     constructor(
         @Optional() @Inject(FORM_CONFIG) configs: FormConfig[],
         private service: NgxDynamicFormService,
@@ -30,11 +32,24 @@ export class NgxDynamicFormModule {
     }
 
     static forRoot(config?: FormConfig): ModuleWithProviders<NgxDynamicFormModule> {
+        this.rootConfig = config;
         return {
             ngModule: NgxDynamicFormModule,
             providers: [
                 { provide: FORM_CONFIG, useFactory: defaultConfig, multi: true },
                 { provide: FORM_CONFIG, useValue: config, multi: true },
+            ],
+        };
+    }
+
+    static forChild(config?: FormConfig): ModuleWithProviders<NgxDynamicFormModule> {
+        return {
+            ngModule: NgxDynamicFormModule,
+            providers: [
+                { provide: FORM_CONFIG, useFactory: defaultConfig, multi: true },
+                { provide: FORM_CONFIG, useValue: this.rootConfig, multi: true },
+                { provide: FORM_CONFIG, useValue: config, multi: true },
+                NgxDynamicFormService,
             ],
         };
     }
