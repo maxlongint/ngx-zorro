@@ -1,5 +1,8 @@
 import { Component } from '@angular/core';
 import { FormControlType } from '../core/form-control-type';
+import { FormFieldConfig } from '../core/field';
+
+interface InputProps {}
 
 @Component({
     selector: 'ngx-input',
@@ -7,4 +10,4 @@ import { FormControlType } from '../core/form-control-type';
         <input nz-input [formControl]="formControl" [placeholder]="placeholder" />
     `,
 })
-export class NgxInputComponent extends FormControlType {}
+export class NgxInputComponent extends FormControlType<FormFieldConfig<InputProps>> {}
