@@ -151,7 +151,7 @@ import { NgxDialogModule } from 'ngx-zorro/dialog';
 
 > 可以自定义表单类型，支持自定义脚本验证和联合判断，自定义特定模板扩展属性，
 >
-> 默认支持类型有： input, date, number, textarea
+> 默认支持类型： input，其它类型请自行实现
 
 #### 如何使用
 

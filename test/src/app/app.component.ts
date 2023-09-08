@@ -32,6 +32,17 @@ export class AppComponent implements OnInit, AfterViewInit, AfterContentInit {
                 width: '200px',
             },
         },
+        {
+            type: 'select',
+            label: '性别',
+            key: 'sex',
+            props: {
+                options: [
+                    { label: '男', value: '1' },
+                    { label: '女', value: '2' },
+                ],
+            },
+        },
     ];
 
     data = {

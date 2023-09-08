@@ -22,11 +22,25 @@ import { setStorePrefix } from 'ngx-zorro/utils';
 import { HttpClientModule } from '@angular/common/http';
 import { NgxDynamicFormModule } from 'ngx-zorro/dynamic-form';
 import { NzRadioModule } from 'ng-zorro-antd/radio';
+import { RouterModule, Routes } from '@angular/router';
+import { NgxNumberComponent } from './number.component';
+import { NzInputNumberModule } from 'ng-zorro-antd/input-number';
 
 const LANG_PROVIDES = [{ provide: NZ_I18N, useValue: zh_CN }];
 
+const routes: Routes = [
+    {
+        path: 'page1',
+        loadChildren: () => import('./page1/page1.module').then(m => m.Page1Module),
+    },
+    {
+        path: 'page2',
+        loadChildren: () => import('./page2/page2.module').then(m => m.Page2Module),
+    },
+];
+
 @NgModule({
-    declarations: [AppComponent],
+    declarations: [AppComponent, NgxNumberComponent],
     imports: [
         BrowserModule,
         BrowserAnimationsModule,
@@ -40,7 +54,17 @@ const LANG_PROVIDES = [{ provide: NZ_I18N, useValue: zh_CN }];
         HttpClientModule,
         NzRadioModule,
         NgxLoadingModule,
-        NgxDynamicFormModule.forRoot(),
+        NzInputNumberModule,
+        NgxDynamicFormModule.forRoot({
+            types: [
+                {
+                    type: 'number',
+                    component: NgxNumberComponent,
+                },
+            ],
+        }),
+        // NgxDynamicFormModule.forRoot(),
+        RouterModule.forRoot(routes),
     ],
     providers: [...LANG_PROVIDES],
     bootstrap: [AppComponent],
