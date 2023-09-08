@@ -3,22 +3,14 @@ import { CommonModule } from '@angular/common';
 import { NgxDynamicFormComponent } from './dynamic-form.component';
 import { FORM_CONFIG, FormConfig } from './core/base';
 import { NgxDynamicFormService } from './dynamic-form.service';
-import { NgxControlTypeModule } from './control-type/control-type.module';
 import { NzFormModule } from 'ng-zorro-antd/form';
 import { ReactiveFormsModule } from '@angular/forms';
-import { NgxInputComponent } from './control-type/input/input.component';
-import { NgxNumberComponent } from './control-type/number/number.component';
-import { NgxDateComponent } from './control-type/date/date.component';
-import { NgxTextareaComponent } from './control-type/textarea/textarea.component';
+import { NgxControlTypeModule } from './control-type/control-type.module';
+import { NgxInputComponent } from './control-type/input.component';
 
 export function defaultConfig(): FormConfig {
     return {
-        types: [
-            { type: 'input', component: NgxInputComponent },
-            { type: 'number', component: NgxNumberComponent },
-            { type: 'date', component: NgxDateComponent },
-            { type: 'textarea', component: NgxTextareaComponent },
-        ],
+        types: [{ type: 'input', component: NgxInputComponent }],
     };
 }
 
@@ -28,6 +20,8 @@ export function defaultConfig(): FormConfig {
     exports: [NgxDynamicFormComponent],
 })
 export class NgxDynamicFormModule {
+    static rootConfig?: FormConfig;
+
     constructor(
         @Optional() @Inject(FORM_CONFIG) configs: FormConfig[],
         private service: NgxDynamicFormService,
@@ -38,11 +32,24 @@ export class NgxDynamicFormModule {
     }
 
     static forRoot(config?: FormConfig): ModuleWithProviders<NgxDynamicFormModule> {
+        this.rootConfig = config;
         return {
             ngModule: NgxDynamicFormModule,
             providers: [
                 { provide: FORM_CONFIG, useFactory: defaultConfig, multi: true },
                 { provide: FORM_CONFIG, useValue: config, multi: true },
+            ],
+        };
+    }
+
+    static forChild(config?: FormConfig): ModuleWithProviders<NgxDynamicFormModule> {
+        return {
+            ngModule: NgxDynamicFormModule,
+            providers: [
+                { provide: FORM_CONFIG, useFactory: defaultConfig, multi: true },
+                { provide: FORM_CONFIG, useValue: this.rootConfig, multi: true },
+                { provide: FORM_CONFIG, useValue: config, multi: true },
+                NgxDynamicFormService,
             ],
         };
     }
