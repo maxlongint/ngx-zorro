@@ -4,9 +4,7 @@
         "umdModuleIds": {
             "ng-zorro-antd/form": "ng-zorro-antd/form",
             "ng-zorro-antd/grid": "ng-zorro-antd/grid",
-            "ng-zorro-antd/input": "ng-zorro-antd/input",
-            "ng-zorro-antd/input-number": "ng-zorro-antd/input-number",
-            "ng-zorro-antd/date-picker": "ng-zorro-antd/date-picker"
+            "ng-zorro-antd/input": "ng-zorro-antd/input"
         }
     }
 }
