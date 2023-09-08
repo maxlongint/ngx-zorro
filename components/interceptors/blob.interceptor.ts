@@ -12,7 +12,7 @@ import { Observable, Subscriber } from 'rxjs';
 import { catchError, switchMap } from 'rxjs/operators';
 
 @Injectable()
-export class BlobInterceptor implements HttpInterceptor {
+export class NgxBlobInterceptor implements HttpInterceptor {
     constructor() {}
 
     intercept<T>(request: HttpRequest<T>, next: HttpHandler): Observable<HttpEvent<T>> {
@@ -45,7 +45,7 @@ export class BlobInterceptor implements HttpInterceptor {
                     subscriber.error(response);
                     subscriber.complete();
                 });
-            })
+            }),
         );
     }
 

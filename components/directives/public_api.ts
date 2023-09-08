@@ -1,3 +1,3 @@
-export * from './directives.module';
-export * from './click.debounce.directive';
-export * from './auth.directive';
+export { NgxDirectivesModule } from './directives.module';
+export { NgxClickDebounceDirective } from './click.debounce.directive';
+export { NgxAuthDirective } from './auth.directive';

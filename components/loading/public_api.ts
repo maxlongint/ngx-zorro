@@ -1,4 +1,4 @@
-export * from './loading-container.component';
-export * from './loading.module';
-export * from './loading.component';
-export * from './loading.service';
+export { NgxLoadingContainerComponent } from './loading-container.component';
+export { NgxLoadingModule } from './loading.module';
+export { NgxLoadingComponent } from './loading.component';
+export { NgxLoadingService } from './loading.service';
