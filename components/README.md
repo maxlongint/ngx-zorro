@@ -193,7 +193,7 @@ export class RadioComponent extends FormControlType<FormFieldConfig<RadioProps>>
 }
 
 // app.module.ts
-NgxDynamicFormModule..forRoot({
+NgxDynamicFormModule.forRoot({
     types: [{ type: 'radio', component: RadioComponent }],
 })
 
