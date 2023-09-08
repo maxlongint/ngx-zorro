@@ -9,6 +9,12 @@
     <hr />
     <button nz-button (click)="onLoading()">Loading</button>
     <button nz-button (click)="onDialog()">Dialog</button>
+
+    <hr />
+    <button nz-button [routerLink]="['/']">主页</button>
+    <button nz-button [routerLink]="['page1']">页面1</button>
+    <button nz-button [routerLink]="['page2']">页面2</button>
+    <router-outlet></router-outlet>
 </div>
 
 <ngx-dialog [title]="title" [(visible)]="dialogVisible" [fullButton]="false"></ngx-dialog>

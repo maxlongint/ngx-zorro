@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component } from '@angular/core';
 import { FormControlType } from 'ngx-zorro/dynamic-form/core/form-control-type';
 import { FormFieldConfig } from 'ngx-zorro/dynamic-form/core/field';
 
@@ -7,7 +7,7 @@ interface RadioProps {
 }
 
 @Component({
-    selector: 'app-radio',
+    selector: 'ngx-radio',
     template: `
         <nz-radio-group [formControl]="formControl">
             <ng-container *ngFor="let item of options">
@@ -15,10 +15,9 @@ interface RadioProps {
             </ng-container>
         </nz-radio-group>
     `,
+    styles: [],
 })
-export class RadioComponent extends FormControlType<FormFieldConfig<RadioProps>> implements OnInit {
-    ngOnInit(): void {}
-
+export class NgxRadioComponent extends FormControlType<FormFieldConfig<RadioProps>> {
     get options() {
         return this.props?.options ?? [];
     }

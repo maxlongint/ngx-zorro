@@ -64,13 +64,7 @@ export interface FormFieldConfig<Props = FormFieldProps & { [key: string]: any }
     props?: Props;
 }
 
-export interface FormFieldProps {
-    max?: number;
-    min?: number;
-    mode?: 'date' | 'week' | 'month' | 'year';
-    rows?: number;
-    options?: Array<any>;
-}
+export interface FormFieldProps {}
 
 export type ValidatorScript = string | ValidatorScriptFn;
 export type ValidatorScriptFn = (control: AbstractControl, fields: FormFieldConfig[]) => string | void;

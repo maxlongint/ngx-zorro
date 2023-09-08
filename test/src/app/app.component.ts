@@ -31,127 +31,16 @@ export class AppComponent implements OnInit, AfterViewInit, AfterContentInit {
             inputStyle: {
                 width: '200px',
             },
-            validatorScript: (control, fields) => {
-                const name2 = fields.find(f => f.key === 'name2');
-                if (name2) {
-                    name2.hidden = !control.value;
-                }
-            },
         },
         {
-            type: 'input',
-            label: '曾用名',
-            key: 'name2',
-            labelStyle: {
-                width: '160px',
-            },
-            inputStyle: {
-                width: '200px',
-            },
-        },
-        {
-            type: 'date',
-            label: '出生日期',
-            key: 'birthday',
-            labelStyle: {
-                width: '160px',
-            },
-            inputStyle: {
-                width: '200px',
-            },
-            props: {
-                mode: 'year',
-            },
-        },
-        {
-            type: 'number',
-            // label: '年龄',
-            key: 'age',
-            labelStyle: {
-                width: '160px',
-                display: 'none',
-            },
-            inputStyle: {
-                width: '200px',
-            },
-        },
-        {
-            type: 'radio',
+            type: 'select',
+            label: '性别',
             key: 'sex',
-            labelStyle: {
-                width: '160px',
-                display: 'none',
-            },
-            inputStyle: {
-                width: '200px',
-            },
             props: {
                 options: [
                     { label: '男', value: '1' },
                     { label: '女', value: '2' },
                 ],
-            },
-        },
-        {
-            type: 'input',
-            label: '身份证号',
-            key: 'idCard',
-            labelStyle: {
-                width: '160px',
-            },
-            inputStyle: {
-                width: '200px',
-            },
-            validatorScript: (control, fields) => {
-                if (control.value && control.value.length !== 18) {
-                    return '身份证号必须是18位';
-                }
-                return;
-            },
-        },
-        {
-            type: 'input',
-            label: '手机号',
-            key: 'phone',
-            labelStyle: {
-                width: '160px',
-            },
-            inputStyle: {
-                width: '200px',
-            },
-        },
-        {
-            type: 'input',
-            label: '邮箱',
-            key: 'email',
-            labelStyle: {
-                width: '160px',
-            },
-            inputStyle: {
-                width: '200px',
-            },
-            disabled: true,
-        },
-        {
-            type: 'input',
-            label: '地址',
-            key: 'address',
-            labelStyle: {
-                'width.px': '160',
-            },
-            inputStyle: {
-                width: '200px',
-            },
-        },
-        {
-            type: 'textarea',
-            label: '备注',
-            key: 'remark',
-            labelStyle: {
-                width: '160px',
-            },
-            inputStyle: {
-                width: '600px',
             },
         },
     ];
