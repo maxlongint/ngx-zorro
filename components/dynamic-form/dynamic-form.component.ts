@@ -1,5 +1,5 @@
 import { Component, Injector, Input, OnChanges, OnInit, SimpleChanges } from '@angular/core';
-import { FORM_FIELD_CONFIG, FormFieldConfig, FormFieldConfigs, ValidatorScriptFn } from './core/field';
+import { FORM_FIELD_CONFIG, FormFieldConfig, FormFieldConfigs, TriggerScriptFn } from './core/field';
 import { AbstractControl, FormControl, FormGroup, ValidatorFn, Validators } from '@angular/forms';
 import { NgxDynamicFormService } from './dynamic-form.service';
 
@@ -128,10 +128,10 @@ export class NgxDynamicFormComponent implements OnInit, OnChanges {
         if (f.required) {
             validators.push(Validators.required);
         }
-        if (f.validatorScript) {
-            let fn: Function = f.validatorScript as ValidatorScriptFn;
-            if (Object.prototype.toString.call(f.validatorScript) !== '[object Function]') {
-                fn = new Function('control', 'fields', f.validatorScript as string);
+        if (f.triggerScript) {
+            let fn: Function = f.triggerScript as TriggerScriptFn;
+            if (Object.prototype.toString.call(f.triggerScript) !== '[object Function]') {
+                fn = new Function('control', 'fields', f.triggerScript as string);
             }
             // 校验脚本传递额参数： control, fields
             const validatorFn = (control: AbstractControl) => {
