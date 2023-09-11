@@ -55,9 +55,9 @@ export interface FormFieldConfig<Props = FormFieldProps & { [key: string]: any }
      */
     formControl?: FormControl;
     /**
-     * 验证器
+     * 触发脚本
      */
-    validatorScript?: ValidatorScript;
+    triggerScript?: TriggerScript;
     /**
      * 特定模板属性
      */
@@ -66,7 +66,7 @@ export interface FormFieldConfig<Props = FormFieldProps & { [key: string]: any }
 
 export interface FormFieldProps {}
 
-export type ValidatorScript = string | ValidatorScriptFn;
-export type ValidatorScriptFn = (control: AbstractControl, fields: FormFieldConfig[]) => string | void;
+export type TriggerScript = string | TriggerScriptFn;
+export type TriggerScriptFn = (control: AbstractControl, fields: FormFieldConfig[]) => string | void;
 
 export type FormFieldConfigs = FormFieldConfig[];

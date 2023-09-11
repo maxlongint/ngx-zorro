@@ -220,7 +220,7 @@ fields = [
         type: 'input',
         label: '姓名',
         key: 'name',
-        validatorScript: (control, fields) => {
+        triggerScript: (control, fields) => {
             // 姓名有值曾用名字段才会显示，否则隐藏
             const name2 = fields.find(f => f.key === 'name2');
             if (name2) {
@@ -237,7 +237,7 @@ fields = [
         type: 'input',
         label: '身份证号',
         key: 'idCard',
-        validatorScript: (control, fields) => {
+        triggerScript: (control, fields) => {
             // 身份证验证18位
             if (control.value && control.value.length !== 18) {
                 return '身份证号必须是18位';

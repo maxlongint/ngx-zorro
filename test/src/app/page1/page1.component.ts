@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
-import { FormFieldConfigs } from 'ngx-zorro/dynamic-form/core/field';
+import { FormFieldConfig, FormFieldConfigs } from 'ngx-zorro/dynamic-form/core/field';
+import { AbstractControl } from '@angular/forms';
 
 @Component({
     selector: 'app-page1',
