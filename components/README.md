@@ -392,8 +392,8 @@ authList = [] // 默认值
 #### 如何使用
 
 ```typescript
-import { DownFileService } from 'ngx-zorro/utils';
-constructor(private downFile: DownFileService) {}
+import { NgxDownFileService } from 'ngx-zorro/utils';
+constructor(private downFile: NgxDownFileService) {}
 
 // 必须配合 blob http 拦截器才能使用
 import { BlobInterceptor } from 'ngx-zorro/interceptors';
