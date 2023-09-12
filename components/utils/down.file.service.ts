@@ -20,7 +20,7 @@ export type Method = 'get' | 'post';
 @Injectable({
     providedIn: 'root',
 })
-export class DownFileService {
+export class NgxDownFileService {
     constructor(private http: HttpClient) {}
 
     /**
@@ -36,14 +36,14 @@ export class DownFileService {
             tap((response: HttpResponse<Blob>) => {
                 const filename = this.getFileName(response.headers, url);
                 this.saveAs(response.body!, filename);
-            })
+            }),
         );
         if (method === 'post') {
             request = this.http.post(url, params, { responseType: 'blob', observe: 'response' }).pipe(
                 tap((response: HttpResponse<Blob>) => {
                     const filename = '';
                     this.saveAs(response.body!, filename);
-                })
+                }),
             );
         }
         return request;

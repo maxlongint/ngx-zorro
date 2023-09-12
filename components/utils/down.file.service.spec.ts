@@ -1,13 +1,13 @@
 import { TestBed } from '@angular/core/testing';
 
-import { DownFileService } from './down.file.service';
+import { NgxDownFileService } from './down.file.service';
 
-describe('DownFileService', () => {
-    let service: DownFileService;
+describe('NgxDownFileService', () => {
+    let service: NgxDownFileService;
 
     beforeEach(() => {
         TestBed.configureTestingModule({});
-        service = TestBed.inject(DownFileService);
+        service = TestBed.inject(NgxDownFileService);
     });
 
     it('should be created', () => {
