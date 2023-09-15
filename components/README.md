@@ -245,6 +245,25 @@ fields = [
             return;
         },
     },
+    {
+        type: 'input',
+        label: '出生日期',
+        key: 'birth',
+        triggerScript: (control: AbstractControl, fields: FormFieldConfig[]) => {
+            if (control.value) {
+                // 通过出生日期计算年龄
+                const birthDateObject = new Date(control.value);
+                const currentDate = new Date();
+                const ageNum = currentDate.getFullYear() - birthDateObject.getFullYear();
+                control.parent?.get('age')?.patchValue(ageNum);
+            }
+        },
+    },
+    {
+        type: 'input',
+        label: '年龄',
+        key: 'age',
+    },
 ];
 ```
 
