@@ -85,10 +85,7 @@ export class NgxDynamicFormComponent implements OnInit, OnChanges {
     private createFormControl(): void {
         this.fields.forEach(f => {
             f.formControl = new FormControl();
-            if (this.disabled) {
-                f.disabled = true;
-            }
-            if (f.disabled) {
+            if (this.disabled || f.disabled) {
                 f.formControl.disable();
             }
             this.formGroup.addControl(f.key, f.formControl);
@@ -119,7 +116,39 @@ export class NgxDynamicFormComponent implements OnInit, OnChanges {
             if (control) {
                 const validators: Array<ValidatorFn> = this.addControlValidators(f);
                 control.setValidators(validators);
+                this.listenFieldPropertyChanges(f);
             }
+        });
+    }
+
+    // 监听一些属性的变化
+    private listenFieldPropertyChanges(f: FormFieldConfig) {
+        Object.defineProperties(f, {
+            required: {
+                set: (state: boolean) => {
+                    if (f.formControl) {
+                        if (state) {
+                            f.formControl.setValidators(Validators.required);
+                        } else {
+                            f.formControl.removeValidators(Validators.required);
+                        }
+                        // f.formControl.updateValueAndValidity();
+                    }
+                },
+                get: () => f.formControl?.hasValidator(Validators.required) ?? false,
+            },
+            disabled: {
+                set: (state: boolean) => {
+                    if (f.formControl) {
+                        if (state) {
+                            f.formControl.disable();
+                        } else {
+                            f.formControl.enable();
+                        }
+                    }
+                },
+                get: () => f.formControl?.disabled ?? false,
+            },
         });
     }
 
