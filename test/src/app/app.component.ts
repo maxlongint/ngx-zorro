@@ -3,6 +3,7 @@ import { Component, OnInit, AfterContentInit, AfterViewInit, ViewChild } from '@
 import { NgxLoadingService } from 'ngx-zorro/loading/loading.service';
 import { FormFieldConfig, FormFieldConfigs } from 'ngx-zorro/dynamic-form/core/field';
 import { NgxDynamicFormComponent } from 'ngx-zorro/dynamic-form';
+import { AbstractControl } from '@angular/forms';
 
 @Component({
     selector: 'app-root',
@@ -25,12 +26,17 @@ export class AppComponent implements OnInit, AfterViewInit, AfterContentInit {
             label: '姓名',
             key: 'name',
             required: true,
-            labelStyle: {
-                width: '160px',
+            triggerScript: (control: AbstractControl, fields: FormFieldConfig[]) => {
+                const age = fields.find(f => f.key === 'age');
+                if (age) {
+                    age.required = control.value === '22';
+                }
             },
-            inputStyle: {
-                width: '200px',
-            },
+        },
+        {
+            type: 'input',
+            label: '年龄',
+            key: 'age',
         },
     ];
 
@@ -62,6 +68,6 @@ export class AppComponent implements OnInit, AfterViewInit, AfterContentInit {
 
     submit() {
         const data = this.formEditor.getRawValue();
-        console.dir(data);
+        console.dir(JSON.stringify(data, null, 4));
     }
 }

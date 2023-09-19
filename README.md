@@ -220,13 +220,15 @@ fields = [
         type: 'input',
         label: '姓名',
         key: 'name',
-        triggerScript: (control, fields) => {
+        triggerScript: (control: AbstractControl, fields: FormFieldConfig[]) => {
             // 姓名有值曾用名字段才会显示，否则隐藏
             const name2 = fields.find(f => f.key === 'name2');
             if (name2) {
                 name2.hidden = !control.value;
             }
         },
+        // 支持传递字符串，默认参数：control: AbstractControl, fields: FormFieldConfig[]
+        // triggerScript: `fields.find(f => f.key === 'age').disabled = !control.value;`,
     },
     {
         type: 'input',
@@ -237,7 +239,7 @@ fields = [
         type: 'input',
         label: '身份证号',
         key: 'idCard',
-        triggerScript: (control, fields) => {
+        triggerScript: (control: AbstractControl, fields: FormFieldConfig[]) => {
             // 身份证验证18位
             if (control.value && control.value.length !== 18) {
                 return '身份证号必须是18位';
