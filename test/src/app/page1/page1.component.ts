@@ -42,5 +42,11 @@ export class Page1Component implements OnInit {
         },
     ];
 
+    data = {
+        name: '张三',
+        sex: '2',
+        sex_CN: '女',
+    };
+
     ngOnInit(): void {}
 }

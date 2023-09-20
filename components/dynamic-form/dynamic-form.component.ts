@@ -1,5 +1,5 @@
 import { Component, Injector, Input, OnChanges, OnInit, SimpleChanges } from '@angular/core';
-import { FORM_FIELD_CONFIG, FormFieldConfig, FormFieldConfigs, TriggerScriptFn } from './core/field';
+import { FORM_FIELD_CONFIG, FORM_DATA, FormFieldConfig, FormFieldConfigs, TriggerScriptFn } from './core/field';
 import { AbstractControl, FormControl, FormGroup, ValidatorFn, Validators } from '@angular/forms';
 import { NgxDynamicFormService } from './dynamic-form.service';
 
@@ -51,6 +51,7 @@ export class NgxDynamicFormComponent implements OnInit, OnChanges {
      */
     public reset(data?: Record<string, any>) {
         this.formGroup.reset(data ?? undefined);
+        this.injectFormData(data);
     }
 
     /**
@@ -59,6 +60,7 @@ export class NgxDynamicFormComponent implements OnInit, OnChanges {
      */
     public patchValue(data: Record<string, any>) {
         this.formGroup.patchValue(data);
+        this.injectFormData(data);
     }
 
     /**
@@ -82,6 +84,29 @@ export class NgxDynamicFormComponent implements OnInit, OnChanges {
         return form.getRawValue();
     }
 
+    /**
+     * 手动注入数据
+     */
+    injectFormData(data?: Record<string, any>) {
+        this.fields.forEach(f => this.injectControlData(f, data));
+    }
+
+    /**
+     * 给表单项注入数据
+     * @param f
+     * @param data
+     */
+    injectControlData(f: FormFieldConfig, data: Record<string, any> = {}) {
+        // 创建动态注入器，并传递数据
+        f.injector = Injector.create({
+            providers: [
+                { provide: FORM_FIELD_CONFIG, useValue: f },
+                { provide: FORM_DATA, useValue: data },
+            ],
+            parent: this.injector,
+        });
+    }
+
     private createFormControl(): void {
         this.fields.forEach(f => {
             f.formControl = new FormControl();
@@ -102,11 +127,7 @@ export class NgxDynamicFormComponent implements OnInit, OnChanges {
                     throw new Error(`Can't find component for type ${f.type}`);
                 }
             }
-            // 创建动态注入器，并传递数据
-            f.injector = Injector.create({
-                providers: [{ provide: FORM_FIELD_CONFIG, useValue: f }],
-                parent: this.injector,
-            });
+            this.injectControlData(f);
         }
     }
 
