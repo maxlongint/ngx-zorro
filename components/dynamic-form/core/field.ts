@@ -69,6 +69,9 @@ export interface FormFieldConfig<Props = FormFieldProps & { [key: string]: any }
 export interface FormFieldProps {}
 
 export type TriggerScript = string | TriggerScriptFn;
-export type TriggerScriptFn = (control: AbstractControl, fields: FormFieldConfig[]) => string | void;
+export type TriggerScriptFn<Props = FormFieldProps & { [key: string]: any }> = (
+    control: AbstractControl,
+    fields: FormFieldConfig<Props>[],
+) => string | void;
 
 export type FormFieldConfigs = FormFieldConfig[];

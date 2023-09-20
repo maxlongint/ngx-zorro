@@ -2,7 +2,7 @@ import { Component } from '@angular/core';
 import { FormControlType } from 'ngx-zorro/dynamic-form/core/form-control-type';
 import { FormFieldConfig } from 'ngx-zorro/dynamic-form/core/field';
 
-interface SelectProps {
+export interface SelectProps {
     options?: { label: string; value: any }[];
     allowClear?: boolean;
 }

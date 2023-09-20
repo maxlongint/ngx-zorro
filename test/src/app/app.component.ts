@@ -25,7 +25,7 @@ export class AppComponent implements OnInit, AfterViewInit, AfterContentInit {
             type: 'input',
             label: '姓名',
             key: 'name',
-            required: true,
+            // required: true,
             triggerScript: (control: AbstractControl, fields: FormFieldConfig[]) => {
                 const age = fields.find(f => f.key === 'age');
                 if (age) {

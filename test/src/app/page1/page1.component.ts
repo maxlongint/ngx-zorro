@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { FormFieldConfig, FormFieldConfigs } from 'ngx-zorro/dynamic-form/core/field';
 import { AbstractControl } from '@angular/forms';
+import { SelectProps } from './select.component';
 
 @Component({
     selector: 'app-page1',
@@ -15,7 +16,7 @@ export class Page1Component implements OnInit {
             type: 'input',
             label: '姓名',
             key: 'name',
-            required: true,
+            // required: true,
             labelStyle: {
                 width: '160px',
             },
@@ -38,6 +39,9 @@ export class Page1Component implements OnInit {
                     { label: '男', value: '1' },
                     { label: '女', value: '2' },
                 ],
+            },
+            triggerScript: (control: AbstractControl, fields: FormFieldConfig<SelectProps>[]) => {
+                console.log(+new Date());
             },
         },
     ];

@@ -73,12 +73,12 @@ export class NgxDynamicFormComponent implements OnInit, OnChanges {
             form.controls[i].markAsDirty();
             form.controls[i].updateValueAndValidity();
             if (form.controls[i].status !== 'VALID' && form.controls[i].status !== 'DISABLED') {
-                errList.push({ field: i, error: '校验不通过' });
+                errList.push(i);
             }
         }
         // 表单验证状态
         if (form.status !== 'VALID') {
-            console.table(errList);
+            console.log(errList);
             return false;
         }
         return form.getRawValue();
@@ -113,67 +113,21 @@ export class NgxDynamicFormComponent implements OnInit, OnChanges {
             if (this.disabled || f.disabled) {
                 f.formControl.disable();
             }
+            this.setControlValidators(f);
             this.formGroup.addControl(f.key, f.formControl);
             this.loadDynamicComponent(f);
+            this.listenFieldPropertyChanges(f);
         });
-        this.setFormControlValidators();
     }
 
-    private loadDynamicComponent(f: FormFieldConfig): void {
-        if (f.type) {
-            if (!f.component) {
-                f.component = this.service.getType(f.type);
-                if (!f.component) {
-                    throw new Error(`Can't find component for type ${f.type}`);
-                }
-            }
-            this.injectControlData(f);
+    private setControlValidators(f: FormFieldConfig): void {
+        const validators: Array<ValidatorFn> = this.createControlValidators(f);
+        if (validators.length > 0) {
+            f.formControl?.setValidators(validators);
         }
     }
 
-    private setFormControlValidators() {
-        this.fields.forEach(f => {
-            const control = this.formGroup.get(f.key);
-            if (control) {
-                const validators: Array<ValidatorFn> = this.addControlValidators(f);
-                control.setValidators(validators);
-                this.listenFieldPropertyChanges(f);
-            }
-        });
-    }
-
-    // 监听一些属性的变化
-    private listenFieldPropertyChanges(f: FormFieldConfig) {
-        Object.defineProperties(f, {
-            required: {
-                set: (state: boolean) => {
-                    if (f.formControl) {
-                        if (state) {
-                            f.formControl.setValidators(Validators.required);
-                        } else {
-                            f.formControl.removeValidators(Validators.required);
-                        }
-                        // f.formControl.updateValueAndValidity();
-                    }
-                },
-                get: () => f.formControl?.hasValidator(Validators.required) ?? false,
-            },
-            disabled: {
-                set: (state: boolean) => {
-                    if (f.formControl) {
-                        if (state) {
-                            f.formControl.disable();
-                        } else {
-                            f.formControl.enable();
-                        }
-                    }
-                },
-                get: () => f.formControl?.disabled ?? false,
-            },
-        });
-    }
-
-    private addControlValidators(f: FormFieldConfig): Array<ValidatorFn> {
+    private createControlValidators(f: FormFieldConfig): Array<ValidatorFn> {
         const validators: Array<ValidatorFn> = [];
         if (f.required) {
             validators.push(Validators.required);
@@ -194,5 +148,43 @@ export class NgxDynamicFormComponent implements OnInit, OnChanges {
             validators.push(validatorFn);
         }
         return validators;
+    }
+
+    private loadDynamicComponent(f: FormFieldConfig): void {
+        if (f.type) {
+            if (!f.component) {
+                f.component = this.service.getType(f.type);
+                if (!f.component) {
+                    throw new Error(`Can't find component for type ${f.type}`);
+                }
+            }
+            this.injectControlData(f);
+        }
+    }
+
+    // 监听一些属性的变化
+    private listenFieldPropertyChanges(f: FormFieldConfig) {
+        Object.defineProperties(f, {
+            required: {
+                set: (state: boolean) => {
+                    if (state) {
+                        f.formControl?.setValidators(Validators.required);
+                    } else {
+                        f.formControl?.removeValidators(Validators.required);
+                    }
+                },
+                get: () => f.formControl?.hasValidator(Validators.required) ?? false,
+            },
+            disabled: {
+                set: (state: boolean) => {
+                    if (state) {
+                        f.formControl?.disable();
+                    } else {
+                        f.formControl?.enable();
+                    }
+                },
+                get: () => f.formControl?.disabled ?? false,
+            },
+        });
     }
 }
