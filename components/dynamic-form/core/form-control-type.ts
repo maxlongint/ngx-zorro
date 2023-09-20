@@ -48,7 +48,7 @@ export abstract class FormControlType<F extends FormFieldConfig = FormFieldConfi
         return this.fieldConfig.props ?? {};
     }
 
-    get value(): any {
-        return this.formData[this.key];
+    get data(): any {
+        return this.formData;
     }
 }
