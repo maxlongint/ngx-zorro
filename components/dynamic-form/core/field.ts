@@ -4,6 +4,8 @@ import { FormControlType } from './form-control-type';
 
 export const FORM_FIELD_CONFIG = new InjectionToken<FormFieldConfig[]>('FORM_FIELD_CONFIG');
 
+export const FORM_DATA = new InjectionToken<Record<string, any>>('FORM_DATA');
+
 export interface FormFieldConfig<Props = FormFieldProps & { [key: string]: any }> {
     /**
      * 类型

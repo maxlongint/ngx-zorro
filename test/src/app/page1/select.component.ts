@@ -15,6 +15,7 @@ interface SelectProps {
                 <nz-option [nzValue]="item.value" [nzLabel]="item.label"></nz-option>
             </ng-container>
         </nz-select>
+        <p>{{ value_cn }}</p>
     `,
     styles: [],
 })
@@ -32,5 +33,9 @@ export class NgxSelectComponent extends FormControlType<FormFieldConfig<SelectPr
             return '';
         }
         return this.fieldConfig.placeholder ?? `请选择${this.label || ''}`;
+    }
+
+    get value_cn() {
+        return this.formData[`${this.key}_CN`];
     }
 }
