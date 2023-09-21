@@ -239,12 +239,12 @@ fields = [
         type: 'input',
         label: '身份证号',
         key: 'idCard',
-        triggerScript: (control: AbstractControl, fields: FormFieldConfig[]) => {
+        verifyScript: (control: AbstractControl, fields: FormFieldConfig[]) => {
             // 身份证验证18位
             if (control.value && control.value.length !== 18) {
-                return '身份证号必须是18位';
+                return { error: true, message: '身份证号必须是18位' };
             }
-            return;
+            return {};
         },
     },
     {

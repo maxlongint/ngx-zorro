@@ -149,15 +149,9 @@ export class NgxDynamicFormComponent implements OnInit, OnChanges {
             }
             // 校验脚本传递额参数： control, fields
             const validatorFn = (control: AbstractControl) => {
-                const error: VerifyScriptError = fn(control, this.fields);
+                const error: ValidationErrors = fn(control, this.fields);
                 const message = 'The value returned by the verification script must be of the VerifyScriptError type';
                 if (Object.prototype.toString.call(error) !== '[object Object]') {
-                    throw new Error(message);
-                }
-                if (!error.hasOwnProperty('message')) {
-                    throw new Error(message);
-                }
-                if (!error.hasOwnProperty('uncertainty')) {
                     throw new Error(message);
                 }
                 return error;
@@ -199,7 +193,7 @@ export class NgxDynamicFormComponent implements OnInit, OnChanges {
             required: {
                 set: (state: boolean) => {
                     if (state) {
-                        f.formControl?.setValidators(Validators.required);
+                        f.formControl?.addValidators(Validators.required);
                     } else {
                         f.formControl?.removeValidators(Validators.required);
                     }

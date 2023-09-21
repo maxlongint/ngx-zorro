@@ -1,4 +1,4 @@
-import { AbstractControl, FormControl } from '@angular/forms';
+import { AbstractControl, FormControl, ValidationErrors } from '@angular/forms';
 import { InjectionToken, Injector, Type } from '@angular/core';
 import { FormControlType } from './form-control-type';
 
@@ -72,9 +72,9 @@ export interface FormFieldConfig<Props = FormFieldProps & { [key: string]: any }
 
 export interface FormFieldProps {}
 
-export interface VerifyScriptError {
-    uncertainty: boolean;
-    message: string;
+export interface VerifyScriptError extends ValidationErrors {
+    error?: boolean;
+    message?: string;
 }
 
 export type VerifyScript = string | VerifyScriptFn;
