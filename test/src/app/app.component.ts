@@ -4,6 +4,7 @@ import { NgxLoadingService } from 'ngx-zorro/loading/loading.service';
 import { FormFieldConfig, FormFieldConfigs } from 'ngx-zorro/dynamic-form/core/field';
 import { NgxDynamicFormComponent } from 'ngx-zorro/dynamic-form';
 import { AbstractControl } from '@angular/forms';
+import { SelectProps } from './page1/select.component';
 
 @Component({
     selector: 'app-root',
@@ -25,7 +26,7 @@ export class AppComponent implements OnInit, AfterViewInit, AfterContentInit {
             type: 'input',
             label: '姓名',
             key: 'name',
-            required: true,
+            // required: true,
             triggerScript: (control: AbstractControl, fields: FormFieldConfig[]) => {
                 const age = fields.find(f => f.key === 'age');
                 if (age) {
@@ -37,6 +38,9 @@ export class AppComponent implements OnInit, AfterViewInit, AfterContentInit {
             type: 'input',
             label: '年龄',
             key: 'age',
+            verifyScript: (control: AbstractControl, fields: FormFieldConfig<SelectProps>[]) => {
+                return control.value == '20' ? {} : { error: true, message: '年龄必须是20' };
+            },
         },
     ];
 

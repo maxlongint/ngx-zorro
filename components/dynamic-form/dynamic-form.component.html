@@ -20,7 +20,7 @@
             </ng-container>
             <!-- 自定义校验提示 -->
             <ng-template #uncertaintyTemplate>
-                <ng-container *ngIf="f.formControl?.hasError('uncertainty')">
+                <ng-container *ngIf="f.formControl?.hasError('error')">
                     {{ f.formControl?.getError('message') || '未知错误' }}
                 </ng-container>
             </ng-template>

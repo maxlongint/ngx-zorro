@@ -1,6 +1,15 @@
 import { Component, Injector, Input, OnChanges, OnInit, SimpleChanges } from '@angular/core';
-import { FORM_FIELD_CONFIG, FORM_DATA, FormFieldConfig, FormFieldConfigs, TriggerScriptFn } from './core/field';
-import { AbstractControl, FormControl, FormGroup, ValidatorFn, Validators } from '@angular/forms';
+import {
+    FORM_FIELD_CONFIG,
+    FORM_DATA,
+    FormFieldConfig,
+    FormFieldConfigs,
+    TriggerScriptFn,
+    VerifyScriptError,
+    VerifyScript,
+    VerifyScriptFn,
+} from './core/field';
+import { AbstractControl, FormControl, FormGroup, ValidationErrors, ValidatorFn, Validators } from '@angular/forms';
 import { NgxDynamicFormService } from './dynamic-form.service';
 
 @Component({
@@ -113,10 +122,57 @@ export class NgxDynamicFormComponent implements OnInit, OnChanges {
             if (this.disabled || f.disabled) {
                 f.formControl.disable();
             }
+            this.setControlValidators(f);
+            this.setControlTrigger(f);
             this.formGroup.addControl(f.key, f.formControl);
             this.loadDynamicComponent(f);
+            this.listenFieldPropertyChanges(f);
         });
-        this.setFormControlValidators();
+    }
+
+    private setControlValidators(f: FormFieldConfig): void {
+        const validators: Array<ValidatorFn> = this.createControlValidators(f);
+        if (validators.length > 0) {
+            f.formControl?.setValidators(validators);
+        }
+    }
+
+    private createControlValidators(f: FormFieldConfig): Array<ValidatorFn> {
+        const validators: Array<ValidatorFn> = [];
+        if (f.required) {
+            validators.push(Validators.required);
+        }
+        if (f.verifyScript) {
+            let fn: Function = f.verifyScript as VerifyScriptFn;
+            if (Object.prototype.toString.call(f.verifyScript) !== '[object Function]') {
+                fn = new Function('control', 'fields', f.verifyScript as string);
+            }
+            // 校验脚本传递额参数： control, fields
+            const validatorFn = (control: AbstractControl) => {
+                const error: ValidationErrors = fn(control, this.fields);
+                const message = 'The value returned by the verification script must be of the VerifyScriptError type';
+                if (Object.prototype.toString.call(error) !== '[object Object]') {
+                    throw new Error(message);
+                }
+                return error;
+            };
+            validators.push(validatorFn);
+        }
+        return validators;
+    }
+
+    private setControlTrigger(f: FormFieldConfig): void {
+        if (f.formControl) {
+            if (f.triggerScript) {
+                let fn: Function = f.triggerScript as TriggerScriptFn;
+                if (Object.prototype.toString.call(f.triggerScript) !== '[object Function]') {
+                    fn = new Function('control', 'fields', f.triggerScript as string);
+                }
+                f.formControl.valueChanges.subscribe(() => {
+                    fn(f.formControl, this.fields);
+                });
+            }
+        }
     }
 
     private loadDynamicComponent(f: FormFieldConfig): void {
@@ -131,68 +187,29 @@ export class NgxDynamicFormComponent implements OnInit, OnChanges {
         }
     }
 
-    private setFormControlValidators() {
-        this.fields.forEach(f => {
-            const control = this.formGroup.get(f.key);
-            if (control) {
-                const validators: Array<ValidatorFn> = this.addControlValidators(f);
-                control.setValidators(validators);
-                this.listenFieldPropertyChanges(f);
-            }
-        });
-    }
-
     // 监听一些属性的变化
     private listenFieldPropertyChanges(f: FormFieldConfig) {
         Object.defineProperties(f, {
             required: {
                 set: (state: boolean) => {
-                    if (f.formControl) {
-                        if (state) {
-                            f.formControl.setValidators(Validators.required);
-                        } else {
-                            f.formControl.removeValidators(Validators.required);
-                        }
-                        // f.formControl.updateValueAndValidity();
+                    if (state) {
+                        f.formControl?.addValidators(Validators.required);
+                    } else {
+                        f.formControl?.removeValidators(Validators.required);
                     }
                 },
                 get: () => f.formControl?.hasValidator(Validators.required) ?? false,
             },
             disabled: {
                 set: (state: boolean) => {
-                    if (f.formControl) {
-                        if (state) {
-                            f.formControl.disable();
-                        } else {
-                            f.formControl.enable();
-                        }
+                    if (state) {
+                        f.formControl?.disable();
+                    } else {
+                        f.formControl?.enable();
                     }
                 },
                 get: () => f.formControl?.disabled ?? false,
             },
         });
-    }
-
-    private addControlValidators(f: FormFieldConfig): Array<ValidatorFn> {
-        const validators: Array<ValidatorFn> = [];
-        if (f.required) {
-            validators.push(Validators.required);
-        }
-        if (f.triggerScript) {
-            let fn: Function = f.triggerScript as TriggerScriptFn;
-            if (Object.prototype.toString.call(f.triggerScript) !== '[object Function]') {
-                fn = new Function('control', 'fields', f.triggerScript as string);
-            }
-            // 校验脚本传递额参数： control, fields
-            const validatorFn = (control: AbstractControl) => {
-                const error = fn(control, this.fields);
-                if (error) {
-                    return { uncertainty: true, message: error };
-                }
-                return {};
-            };
-            validators.push(validatorFn);
-        }
-        return validators;
     }
 }
