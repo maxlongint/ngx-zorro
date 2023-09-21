@@ -1,4 +1,4 @@
-import { AbstractControl, FormControl } from '@angular/forms';
+import { AbstractControl, FormControl, ValidationErrors } from '@angular/forms';
 import { InjectionToken, Injector, Type } from '@angular/core';
 import { FormControlType } from './form-control-type';
 
@@ -57,6 +57,10 @@ export interface FormFieldConfig<Props = FormFieldProps & { [key: string]: any }
      */
     formControl?: FormControl;
     /**
+     * 验证脚本
+     */
+    verifyScript?: VerifyScript;
+    /**
      * 触发脚本
      */
     triggerScript?: TriggerScript;
@@ -68,7 +72,21 @@ export interface FormFieldConfig<Props = FormFieldProps & { [key: string]: any }
 
 export interface FormFieldProps {}
 
+export interface VerifyScriptError extends ValidationErrors {
+    error?: boolean;
+    message?: string;
+}
+
+export type VerifyScript = string | VerifyScriptFn;
+export type VerifyScriptFn<Props = FormFieldProps & { [key: string]: any }> = (
+    control: AbstractControl,
+    fields: FormFieldConfig<Props>[],
+) => VerifyScriptError;
+
 export type TriggerScript = string | TriggerScriptFn;
-export type TriggerScriptFn = (control: AbstractControl, fields: FormFieldConfig[]) => string | void;
+export type TriggerScriptFn<Props = FormFieldProps & { [key: string]: any }> = (
+    control: AbstractControl,
+    fields: FormFieldConfig<Props>[],
+) => void;
 
 export type FormFieldConfigs = FormFieldConfig[];
