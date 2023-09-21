@@ -57,6 +57,10 @@ export interface FormFieldConfig<Props = FormFieldProps & { [key: string]: any }
      */
     formControl?: FormControl;
     /**
+     * 验证脚本
+     */
+    verifyScript?: VerifyScript;
+    /**
      * 触发脚本
      */
     triggerScript?: TriggerScript;
@@ -68,10 +72,21 @@ export interface FormFieldConfig<Props = FormFieldProps & { [key: string]: any }
 
 export interface FormFieldProps {}
 
+export interface VerifyScriptError {
+    uncertainty: boolean;
+    message: string;
+}
+
+export type VerifyScript = string | VerifyScriptFn;
+export type VerifyScriptFn<Props = FormFieldProps & { [key: string]: any }> = (
+    control: AbstractControl,
+    fields: FormFieldConfig<Props>[],
+) => VerifyScriptError;
+
 export type TriggerScript = string | TriggerScriptFn;
 export type TriggerScriptFn<Props = FormFieldProps & { [key: string]: any }> = (
     control: AbstractControl,
     fields: FormFieldConfig<Props>[],
-) => string | void;
+) => void;
 
 export type FormFieldConfigs = FormFieldConfig[];

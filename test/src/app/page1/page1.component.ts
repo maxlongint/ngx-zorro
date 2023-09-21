@@ -40,6 +40,9 @@ export class Page1Component implements OnInit {
                     { label: '女', value: '2' },
                 ],
             },
+            verifyScript: (control: AbstractControl, fields: FormFieldConfig<SelectProps>[]) => {
+                return { uncertainty: false, message: '性别不能为空' };
+            },
             triggerScript: (control: AbstractControl, fields: FormFieldConfig<SelectProps>[]) => {
                 console.log(+new Date());
             },

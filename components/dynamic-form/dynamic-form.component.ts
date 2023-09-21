@@ -1,6 +1,15 @@
 import { Component, Injector, Input, OnChanges, OnInit, SimpleChanges } from '@angular/core';
-import { FORM_FIELD_CONFIG, FORM_DATA, FormFieldConfig, FormFieldConfigs, TriggerScriptFn } from './core/field';
-import { AbstractControl, FormControl, FormGroup, ValidatorFn, Validators } from '@angular/forms';
+import {
+    FORM_FIELD_CONFIG,
+    FORM_DATA,
+    FormFieldConfig,
+    FormFieldConfigs,
+    TriggerScriptFn,
+    VerifyScriptError,
+    VerifyScript,
+    VerifyScriptFn,
+} from './core/field';
+import { AbstractControl, FormControl, FormGroup, ValidationErrors, ValidatorFn, Validators } from '@angular/forms';
 import { NgxDynamicFormService } from './dynamic-form.service';
 
 @Component({
@@ -73,12 +82,12 @@ export class NgxDynamicFormComponent implements OnInit, OnChanges {
             form.controls[i].markAsDirty();
             form.controls[i].updateValueAndValidity();
             if (form.controls[i].status !== 'VALID' && form.controls[i].status !== 'DISABLED') {
-                errList.push(i);
+                errList.push({ field: i, error: '校验不通过' });
             }
         }
         // 表单验证状态
         if (form.status !== 'VALID') {
-            console.log(errList);
+            console.table(errList);
             return false;
         }
         return form.getRawValue();
@@ -114,6 +123,7 @@ export class NgxDynamicFormComponent implements OnInit, OnChanges {
                 f.formControl.disable();
             }
             this.setControlValidators(f);
+            this.setControlTrigger(f);
             this.formGroup.addControl(f.key, f.formControl);
             this.loadDynamicComponent(f);
             this.listenFieldPropertyChanges(f);
@@ -132,22 +142,43 @@ export class NgxDynamicFormComponent implements OnInit, OnChanges {
         if (f.required) {
             validators.push(Validators.required);
         }
-        if (f.triggerScript) {
-            let fn: Function = f.triggerScript as TriggerScriptFn;
-            if (Object.prototype.toString.call(f.triggerScript) !== '[object Function]') {
-                fn = new Function('control', 'fields', f.triggerScript as string);
+        if (f.verifyScript) {
+            let fn: Function = f.verifyScript as VerifyScriptFn;
+            if (Object.prototype.toString.call(f.verifyScript) !== '[object Function]') {
+                fn = new Function('control', 'fields', f.verifyScript as string);
             }
             // 校验脚本传递额参数： control, fields
             const validatorFn = (control: AbstractControl) => {
-                const error = fn(control, this.fields);
-                if (error) {
-                    return { uncertainty: true, message: error };
+                const error: VerifyScriptError = fn(control, this.fields);
+                const message = 'The value returned by the verification script must be of the VerifyScriptError type';
+                if (Object.prototype.toString.call(error) !== '[object Object]') {
+                    throw new Error(message);
                 }
-                return {};
+                if (!error.hasOwnProperty('message')) {
+                    throw new Error(message);
+                }
+                if (!error.hasOwnProperty('uncertainty')) {
+                    throw new Error(message);
+                }
+                return error;
             };
             validators.push(validatorFn);
         }
         return validators;
+    }
+
+    private setControlTrigger(f: FormFieldConfig): void {
+        if (f.formControl) {
+            if (f.triggerScript) {
+                let fn: Function = f.triggerScript as TriggerScriptFn;
+                if (Object.prototype.toString.call(f.triggerScript) !== '[object Function]') {
+                    fn = new Function('control', 'fields', f.triggerScript as string);
+                }
+                f.formControl.valueChanges.subscribe(() => {
+                    fn(f.formControl, this.fields);
+                });
+            }
+        }
     }
 
     private loadDynamicComponent(f: FormFieldConfig): void {
