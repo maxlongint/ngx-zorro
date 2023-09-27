@@ -1,13 +1,12 @@
 <form nz-form [nzLayout]="layout" [formGroup]="formGroup">
     <ng-container *ngFor="let f of fields; trackBy: trackByFields">
-        <nz-form-item *ngIf="!f.hidden">
+        <nz-form-item *ngIf="!f.hidden" [attr.dynamic-key]="f.key">
             <nz-form-label [nzNoColon]="!f.label" [nzRequired]="f.required" [ngStyle]="f.labelStyle ?? null">
                 {{ f.label }}
             </nz-form-label>
             <nz-form-control
                 [nzErrorTip]="defaultErrorTemplate"
                 [nzValidateStatus]="f.formControl!"
-                [attr.dynamic-key]="f.key"
                 [ngStyle]="f.inputStyle ?? null"
             >
                 <ng-container *ngComponentOutlet="f.component!; injector: f.injector!"></ng-container>

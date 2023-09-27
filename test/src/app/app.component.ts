@@ -42,6 +42,20 @@ export class AppComponent implements OnInit, AfterViewInit, AfterContentInit {
                 return control.value == '20' ? {} : { error: true, message: '年龄必须是20' };
             },
         },
+        // 再构造10个字段
+        ...Array.from({ length: 10 }).map((_, index) => {
+            return {
+                type: 'input',
+                label: `字段${index + 1}`,
+                key: `field${index + 1}`,
+            };
+        }),
+        {
+            type: 'input',
+            label: '性别',
+            key: 'sex',
+            required: true,
+        },
     ];
 
     data = {
@@ -71,7 +85,7 @@ export class AppComponent implements OnInit, AfterViewInit, AfterContentInit {
     }
 
     submit() {
-        const data = this.formEditor.getRawValue();
+        const data = this.formEditor.getRawValue(true);
         console.dir(JSON.stringify(data, null, 4));
     }
 }

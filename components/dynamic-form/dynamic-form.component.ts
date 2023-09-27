@@ -1,12 +1,10 @@
-import { Component, Injector, Input, OnChanges, OnInit, SimpleChanges } from '@angular/core';
+import { Component, ElementRef, Injector, Input, OnChanges, OnInit, SimpleChanges } from '@angular/core';
 import {
     FORM_FIELD_CONFIG,
     FORM_DATA,
     FormFieldConfig,
     FormFieldConfigs,
     TriggerScriptFn,
-    VerifyScriptError,
-    VerifyScript,
     VerifyScriptFn,
 } from './core/field';
 import { AbstractControl, FormControl, FormGroup, ValidationErrors, ValidatorFn, Validators } from '@angular/forms';
@@ -37,10 +35,10 @@ export class NgxDynamicFormComponent implements OnInit, OnChanges {
     constructor(
         private service: NgxDynamicFormService,
         private injector: Injector,
+        private elementRef: ElementRef,
     ) {}
 
     trackByFields = (index: number, f: FormFieldConfig) => f.id;
-
     formGroup = new FormGroup({});
 
     ngOnInit(): void {}
@@ -74,21 +72,26 @@ export class NgxDynamicFormComponent implements OnInit, OnChanges {
 
     /**
      * 获取表单数据
+     * @param errorLocation 是否定位到错误位置
+     * @param arg element.scrollIntoView 定位参数
      */
-    public getRawValue(): Record<string, any> | false {
+    public getRawValue(errorLocation = false, arg?: ScrollIntoViewOptions): Record<string, any> {
         const form = this.formGroup;
         const errList = [];
-        for (const i in form.controls) {
-            form.controls[i].markAsDirty();
-            form.controls[i].updateValueAndValidity();
-            if (form.controls[i].status !== 'VALID' && form.controls[i].status !== 'DISABLED') {
-                errList.push({ field: i, error: '校验不通过' });
+        for (const key in form.controls) {
+            form.controls[key].markAsDirty();
+            form.controls[key].updateValueAndValidity();
+            if (form.controls[key].status !== 'VALID' && form.controls[key].status !== 'DISABLED') {
+                errList.push(key);
             }
         }
         // 表单验证状态
         if (form.status !== 'VALID') {
-            console.table(errList);
-            return false;
+            if (errorLocation && errList.length > 0) {
+                const element = this.elementRef.nativeElement.querySelector(`[dynamic-key="${errList[0]}"]`);
+                element?.scrollIntoView(arg ?? { behavior: 'instant', block: 'nearest', inline: 'start' });
+            }
+            throw new Error(`Form validation failed fields：${errList.join(',')}`);
         }
         return form.getRawValue();
     }

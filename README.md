@@ -167,6 +167,13 @@ NgxDynamicFormModule.forChild(); // 配置独立：一般用于子模块自定�
 <ngx-dynamic-form #formEditor [fields]="fields" [data]="data" layout="vertical"></ngx-dynamic-form>
 ```
 
+``` typescript
+// 获取表单的值
+const data = this.formEditor.getRawValue(true);
+```
+
+
+
 ##### 自定义表单类型
 
 ```typescript
