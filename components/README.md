@@ -38,6 +38,7 @@ ngx-zorro 是一个`angular`的组件库，基于`ng-zorro-antd`开发的一些�
         -   [HTTP 请求缓存拦截器 📍](#http-请求缓存拦截器-)
             -   [如何使用](#如何使用-5)
             -   [具有的能力](#具有的能力-1)
+                -   [清理已缓存的请求](#清理已缓存的请求)
     -   [工具](#工具)
         -   [缓存属性装饰器 🚩](#缓存属性装饰器-)
             -   [如何使用](#如何使用-6)
@@ -167,12 +168,10 @@ NgxDynamicFormModule.forChild(); // 配置独立：一般用于子模块自定�
 <ngx-dynamic-form #formEditor [fields]="fields" [data]="data" layout="vertical"></ngx-dynamic-form>
 ```
 
-``` typescript
+```typescript
 // 获取表单的值
 const data = this.formEditor.getRawValue(true);
 ```
-
-
 
 ##### 自定义表单类型
 
@@ -202,7 +201,7 @@ export class RadioComponent extends FormControlType<FormFieldConfig<RadioProps>>
 // app.module.ts
 NgxDynamicFormModule.forRoot({
     types: [{ type: 'radio', component: RadioComponent }],
-})
+});
 
 // app.component.ts
 fields = [
@@ -215,8 +214,8 @@ fields = [
                 { label: '女', value: '2' },
             ],
         },
-    }
-]
+    },
+];
 ```
 
 ##### 自定义脚本验证和联合判断
@@ -375,6 +374,10 @@ providers: [CacheInterceptor],
 ```
 
 ```typescript
+// 推荐方式
+this.http.get(...CacheTemplate`api/response.json`).subscribe();
+
+// 其它方式
 const headers = new HttpHeaders({ 'Cache-Map': 'Storage' });
 this.http.get(url, { headers }).subscribe();
 ```
@@ -382,6 +385,14 @@ this.http.get(url, { headers }).subscribe();
 #### 具有的能力
 
 > 把一些结果稳定不变的 GET 请求缓存起来了，缓解请求压力
+
+##### 清理已缓存的请求
+
+```typescript
+constructor(private cache: NgxCacheService) {}
+this.cache.clear();
+this.cache.delete();
+```
 
 ## 工具
 
@@ -443,7 +454,7 @@ this.downFile.download('get', 'assets/background.jpg?fileName=bg.jpg').subscribe
 
 #### 参数说明
 
-| 参数   | 说明                                                                                                                | 类型                 | 默认值 |
+| 参数   | 说明                                                                                                                | 类型               | 默认值 |
 | ------ | ------------------------------------------------------------------------------------------------------------------- | ------------------ | ------ |
 | method | 请求类型                                                                                                            | 'get' \| 'post'    | -      |
 | url    | 请求地址，url 可以传递自定义文件名；<br />如：api/file/down?fileName=身份证.jpg，文件名则优先使用 url 参数 fileName | string             | -      |

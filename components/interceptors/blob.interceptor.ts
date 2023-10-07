@@ -13,8 +13,6 @@ import { catchError, switchMap } from 'rxjs/operators';
 
 @Injectable()
 export class NgxBlobInterceptor implements HttpInterceptor {
-    constructor() {}
-
     intercept<T>(request: HttpRequest<T>, next: HttpHandler): Observable<HttpEvent<T>> {
         if (request.responseType !== 'blob') {
             return next.handle(request);
