@@ -19,15 +19,16 @@ import { NzFormModule } from 'ng-zorro-antd/form';
 import { NzInputModule } from 'ng-zorro-antd/input';
 import { NgxDialogModule } from 'ngx-zorro/dialog';
 import { setStorePrefix } from 'ngx-zorro/utils';
-import { HttpClientModule } from '@angular/common/http';
+import { HTTP_INTERCEPTORS, HttpClientModule } from '@angular/common/http';
 import { NgxDynamicFormModule } from 'ngx-zorro/dynamic-form';
 import { NzRadioModule } from 'ng-zorro-antd/radio';
 import { RouterModule, Routes } from '@angular/router';
 import { NgxNumberComponent } from './number.component';
 import { NzInputNumberModule } from 'ng-zorro-antd/input-number';
+import { NgxCacheInterceptor } from 'ngx-zorro/interceptors';
 
 const LANG_PROVIDES = [{ provide: NZ_I18N, useValue: zh_CN }];
-
+const REQUERY_PROVIDES = [{ provide: HTTP_INTERCEPTORS, useClass: NgxCacheInterceptor, multi: true }];
 const routes: Routes = [
     {
         path: 'page1',
@@ -66,7 +67,7 @@ const routes: Routes = [
         // NgxDynamicFormModule.forRoot(),
         RouterModule.forRoot(routes),
     ],
-    providers: [...LANG_PROVIDES],
+    providers: [...LANG_PROVIDES, ...REQUERY_PROVIDES],
     bootstrap: [AppComponent],
 })
 export class AppModule {}
