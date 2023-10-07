@@ -27,8 +27,9 @@ export class NgxCacheService {
 
 /**
  * 设置为缓存请求；使用方法：this.http.get(...CacheTemplate`api/response.json`).subscribe(res => {});
+ * @param urls 请求地址
  * @param url 请求地址
  */
-export function CacheTemplate([url]: TemplateStringsArray): [string, { headers: HttpHeaders }] {
-    return [url, { headers: new HttpHeaders({ 'Cache-Map': 'Storage' }) }];
+export function CacheTemplate(urls: TemplateStringsArray, url?: string): [string, { headers: HttpHeaders }] {
+    return [url ?? urls[0], { headers: new HttpHeaders({ 'Cache-Map': 'Storage' }) }];
 }
