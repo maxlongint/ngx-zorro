@@ -1,11 +1,12 @@
 import { Injectable } from '@angular/core';
-import { HttpRequest, HttpHandler, HttpEvent, HttpInterceptor, HttpResponse } from '@angular/common/http';
+import { HttpRequest, HttpHandler, HttpEvent, HttpInterceptor } from '@angular/common/http';
 import { Observable } from 'rxjs';
 import { shareReplay } from 'rxjs/operators';
+import { NgxCacheService } from 'ngx-zorro/services';
 
 @Injectable()
 export class NgxCacheInterceptor implements HttpInterceptor {
-    private cache: Map<string, Observable<HttpEvent<any>>> = new Map<string, Observable<HttpEvent<any>>>();
+    constructor(private cache: NgxCacheService) {}
 
     intercept<T>(request: HttpRequest<T>, next: HttpHandler): Observable<HttpEvent<T>> {
         // 1.判断是GET
