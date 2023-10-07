@@ -16,7 +16,10 @@ export class Page2Component implements OnInit {
     ngOnInit(): void {}
 
     request() {
-        this.http.get(...CacheTemplate`assets/response.json`).subscribe();
+        const url = `assets/response.json`;
+        this.http.get(...CacheTemplate`${url}`).subscribe(result => {
+            console.log(result);
+        });
     }
 
     clear() {
