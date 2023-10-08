@@ -17,7 +17,9 @@ export class Page2Component implements OnInit {
 
     request() {
         const url = `assets/response.json`;
-        this.http.get(...CacheTemplate`${url}`).subscribe(result => {
+        const a = 1,
+            b = 2;
+        this.http.get(...CacheTemplate`${url}?a=${a}&b=${b}`).subscribe(result => {
             console.log(result);
         });
     }

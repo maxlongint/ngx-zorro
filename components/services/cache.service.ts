@@ -28,8 +28,12 @@ export class NgxCacheService {
 /**
  * 设置为缓存请求；使用方法：this.http.get(...CacheTemplate`api/response.json`).subscribe(res => {});
  * @param urls 请求地址
- * @param url 请求地址
+ * @param params 模板参数
  */
-export function CacheTemplate(urls: TemplateStringsArray, url?: string): [string, { headers: HttpHeaders }] {
-    return [url ?? urls[0], { headers: new HttpHeaders({ 'Cache-Map': 'Storage' }) }];
+export function CacheTemplate(urls: TemplateStringsArray, ...params: any[]): [string, { headers: HttpHeaders }] {
+    let [url] = urls;
+    if (params.length > 0) {
+        url = String.raw(urls, ...params);
+    }
+    return [url, { headers: new HttpHeaders({ 'Cache-Map': 'Storage' }) }];
 }
