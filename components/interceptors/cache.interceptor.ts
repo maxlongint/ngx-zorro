@@ -12,10 +12,17 @@ export class NgxCacheInterceptor implements HttpInterceptor {
         // 1.判断是GET
         // 2.header中添加 Cache-Map: Storage
         const cacheMap = request.headers.get('Cache-Map');
-        if (cacheMap !== 'Storage' || request.method !== 'GET') {
+        if (cacheMap !== 'Storage') {
             return next.handle(request);
         }
-        const cachedResponse = this.cache.get(request.url);
+        let key: string | null = request.url;
+        if (request.method !== 'GET') {
+            key = request.headers.get('Cache-Map-Key');
+            if (!key) {
+                throw new Error('缓存post请求需要在header中传递Cache-Map-Key');
+            }
+        }
+        const cachedResponse = this.cache.get(key);
         if (cachedResponse) {
             return cachedResponse as Observable<HttpEvent<T>>;
         }

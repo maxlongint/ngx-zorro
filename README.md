@@ -380,11 +380,16 @@ this.http.get(...CacheTemplate`api/response.json`).subscribe();
 // 其它方式
 const headers = new HttpHeaders({ 'Cache-Map': 'Storage' });
 this.http.get(url, { headers }).subscribe();
+// 如果是非 get 请求则需要多加个参数
+const headers = new HttpHeaders({ 
+    'Cache-Map': 'Storage',
+    'Cache-Map-Key': `可以区分请求内容的唯一标识`
+});
 ```
 
 #### 具有的能力
 
-> 把一些结果稳定不变的 GET 请求缓存起来了，缓解请求压力
+> 把一些结果稳定不变的请求缓存起来了，缓解请求压力
 
 ##### 清理已缓存的请求
 
