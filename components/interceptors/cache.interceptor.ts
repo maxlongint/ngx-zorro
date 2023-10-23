@@ -27,7 +27,7 @@ export class NgxCacheInterceptor implements HttpInterceptor {
             return cachedResponse as Observable<HttpEvent<T>>;
         }
         const response = next.handle(request).pipe(shareReplay(1));
-        this.cache.set(request.url, response);
+        this.cache.set(key, response);
         return response;
     }
 }
