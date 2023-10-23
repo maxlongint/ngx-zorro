@@ -8,16 +8,16 @@ import { HttpEvent, HttpHeaders } from '@angular/common/http';
 export class NgxCacheService {
     private cache: Map<string, Observable<HttpEvent<any>>> = new Map<string, Observable<HttpEvent<any>>>();
 
-    get<T>(url: string): Observable<HttpEvent<T>> | undefined {
-        return this.cache.get(url) as Observable<HttpEvent<T>>;
+    get<T>(key: string): Observable<HttpEvent<T>> | undefined {
+        return this.cache.get(key) as Observable<HttpEvent<T>>;
     }
 
-    set<T>(url: string, response: Observable<HttpEvent<T>>) {
-        this.cache.set(url, response);
+    set<T>(key: string, response: Observable<HttpEvent<T>>) {
+        this.cache.set(key, response);
     }
 
-    delete(url: string): void {
-        this.cache.delete(url);
+    delete(key: string): void {
+        this.cache.delete(key);
     }
 
     clear(): void {
