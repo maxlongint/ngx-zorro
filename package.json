@@ -1,6 +1,6 @@
 {
     "name": "ngx-zorro",
-    "version": "12.2.18",
+    "version": "12.2.19",
     "author": "maxlongint",
     "repository": {
         "url": "https://github.com/maxlongint/ngx-zorro",
@@ -10,6 +10,7 @@
         "ng": "ng",
         "start": "ng serve",
         "build": "ng build ngx-zorro",
+        "publish": "npm publish ./publish",
         "watch": "ng build --watch --configuration development",
         "test": "ng test"
     },
