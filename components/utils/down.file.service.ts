@@ -41,7 +41,7 @@ export class NgxDownFileService {
         if (method === 'post') {
             request = this.http.post(url, params, { responseType: 'blob', observe: 'response' }).pipe(
                 tap((response: HttpResponse<Blob>) => {
-                    const filename = '';
+                    const filename = this.getFileName(response.headers, url);
                     this.saveAs(response.body!, filename);
                 }),
             );
