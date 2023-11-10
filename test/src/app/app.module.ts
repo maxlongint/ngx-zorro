@@ -25,10 +25,9 @@ import { NzRadioModule } from 'ng-zorro-antd/radio';
 import { RouterModule, Routes } from '@angular/router';
 import { NgxNumberComponent } from './number.component';
 import { NzInputNumberModule } from 'ng-zorro-antd/input-number';
-import { NgxCacheInterceptor } from 'ngx-zorro/interceptors';
+import { NgxCacheInterceptorProvide } from 'ngx-zorro/interceptors';
 
 const LANG_PROVIDES = [{ provide: NZ_I18N, useValue: zh_CN }];
-const REQUERY_PROVIDES = [{ provide: HTTP_INTERCEPTORS, useClass: NgxCacheInterceptor, multi: true }];
 const routes: Routes = [
     {
         path: 'page1',
@@ -67,7 +66,7 @@ const routes: Routes = [
         // NgxDynamicFormModule.forRoot(),
         RouterModule.forRoot(routes),
     ],
-    providers: [...LANG_PROVIDES, ...REQUERY_PROVIDES],
+    providers: [...LANG_PROVIDES, NgxCacheInterceptorProvide],
     bootstrap: [AppComponent],
 })
 export class AppModule {}

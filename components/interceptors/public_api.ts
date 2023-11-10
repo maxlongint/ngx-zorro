@@ -1,2 +1,2 @@
-export { NgxBlobInterceptor } from './blob.interceptor';
-export { NgxCacheInterceptor } from './cache.interceptor';
+export { NgxBlobInterceptorProvide } from './blob.interceptor';
+export { NgxCacheInterceptorProvide } from './cache.interceptor';
