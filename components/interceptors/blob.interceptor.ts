@@ -7,6 +7,7 @@ import {
     HttpEventType,
     HttpResponse,
     HttpErrorResponse,
+    HTTP_INTERCEPTORS,
 } from '@angular/common/http';
 import { Observable, Subscriber } from 'rxjs';
 import { catchError, switchMap } from 'rxjs/operators';
@@ -57,3 +58,8 @@ export class NgxBlobInterceptor implements HttpInterceptor {
         reader.readAsText(blob, 'utf-8');
     }
 }
+
+/**
+ * 文件下载拦截器注入内容
+ */
+export const NgxBlobInterceptorProvide = [{ provide: HTTP_INTERCEPTORS, useClass: NgxBlobInterceptor, multi: true }];
