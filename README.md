@@ -369,8 +369,8 @@ export class NgxZorroConfigService extends NgxConfigService {
 #### 如何使用
 
 ```typescript
-import { CacheInterceptor } from 'ngx-zorro/interceptors';
-providers: [CacheInterceptor],
+import { NgxCacheInterceptorProvide } from 'ngx-zorro/interceptors';
+providers: [NgxCacheInterceptorProvide],
 ```
 
 ```typescript
@@ -440,8 +440,8 @@ import { NgxDownFileService } from 'ngx-zorro/utils';
 constructor(private downFile: NgxDownFileService) {}
 
 // 必须配合 blob http 拦截器才能使用
-import { BlobInterceptor } from 'ngx-zorro/interceptors';
-providers: [...BlobInterceptor],
+import { NgxBlobInterceptorProvide } from 'ngx-zorro/interceptors';
+providers: [NgxBlobInterceptorProvide],
 ```
 
 #### 代码示例

@@ -369,8 +369,8 @@ export class NgxZorroConfigService extends NgxConfigService {
 #### 如何使用
 
 ```typescript
-import { CacheInterceptor } from 'ngx-zorro/interceptors';
-providers: [CacheInterceptor],
+import { NgxCacheInterceptorProvide } from 'ngx-zorro/interceptors';
+providers: [NgxCacheInterceptorProvide],
 ```
 
 ```typescript
@@ -381,7 +381,7 @@ this.http.get(...CacheTemplate`api/response.json`).subscribe();
 const headers = new HttpHeaders({ 'Cache-Map': 'Storage' });
 this.http.get(url, { headers }).subscribe();
 // 如果是非 get 请求则需要多加个参数
-const headers = new HttpHeaders({
+const headers = new HttpHeaders({ 
     'Cache-Map': 'Storage',
     'Cache-Map-Key': `可以区分请求内容的唯一标识`
 });
@@ -440,8 +440,8 @@ import { NgxDownFileService } from 'ngx-zorro/utils';
 constructor(private downFile: NgxDownFileService) {}
 
 // 必须配合 blob http 拦截器才能使用
-import { BlobInterceptor } from 'ngx-zorro/interceptors';
-providers: [...BlobInterceptor],
+import { NgxBlobInterceptorProvide } from 'ngx-zorro/interceptors';
+providers: [NgxBlobInterceptorProvide],
 ```
 
 #### 代码示例
