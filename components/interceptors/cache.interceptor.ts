@@ -26,6 +26,7 @@ export class NgxCacheInterceptor implements HttpInterceptor {
         if (cachedResponse) {
             return cachedResponse as Observable<HttpEvent<T>>;
         }
+        request = request.clone({ headers: request.headers.delete('Cache-Map-Key') });
         const response = next.handle(request).pipe(shareReplay(1));
         this.cache.set(key, response);
         return response;
