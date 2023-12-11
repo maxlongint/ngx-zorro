@@ -9,6 +9,7 @@ export class NgxCacheService {
     private cache: Map<string, Observable<HttpEvent<any>>> = new Map<string, Observable<HttpEvent<any>>>();
 
     get<T>(key: string): Observable<HttpEvent<T>> | undefined {
+        console.dir(this.cache);
         return this.cache.get(key) as Observable<HttpEvent<T>>;
     }
 
