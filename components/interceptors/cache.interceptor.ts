@@ -15,9 +15,9 @@ export class NgxCacheInterceptor implements HttpInterceptor {
         if (cacheMap !== 'Storage') {
             return next.handle(request);
         }
-        let key: string | null = request.url;
+        let key: string | null = this.getCodePointsFromString(request.url);
         if (request.method !== 'GET') {
-            key = request.headers.get('Cache-Map-Key');
+            key = this.getCodePointsFromString(request.headers.get('Cache-Map-Key') ?? '');
             if (!key) {
                 throw new Error('缓存post请求需要在header中传递Cache-Map-Key');
             }
@@ -29,6 +29,14 @@ export class NgxCacheInterceptor implements HttpInterceptor {
         const response = next.handle(request).pipe(shareReplay(1));
         this.cache.set(key, response);
         return response;
+    }
+
+    private getCodePointsFromString(key: string) {
+        const codePoints = [];
+        for (let i = 0; i < key.length; i++) {
+            codePoints.push(key.codePointAt(i));
+        }
+        return codePoints.join('');
     }
 }
 
