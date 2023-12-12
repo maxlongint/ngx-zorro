@@ -1,6 +1,6 @@
 {
     "name": "ngx-zorro",
-    "version": "12.2.22",
+    "version": "12.2.23",
     "author": "maxlongint",
     "repository": {
         "url": "https://github.com/maxlongint/ngx-zorro",
@@ -12,6 +12,9 @@
         "build": "ng build ngx-zorro",
         "publish": "npm publish ./publish",
         "watch": "ng build --watch --configuration development",
+        "patch": "npm version patch --no-git-tag-version && cd components && npm version patch --no-git-tag-version",
+        "minor": "npm version minor --no-git-tag-version && cd components && npm version minor --no-git-tag-version",
+        "major": "npm version major --no-git-tag-version && cd components && npm version major --no-git-tag-version",
         "test": "ng test"
     },
     "private": true,
