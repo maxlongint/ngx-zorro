@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import { HttpRequest, HttpHandler, HttpEvent, HttpInterceptor } from '@angular/common/http';
+import { HttpRequest, HttpHandler, HttpEvent, HttpInterceptor, HTTP_INTERCEPTORS } from '@angular/common/http';
 import { Observable } from 'rxjs';
 import { shareReplay } from 'rxjs/operators';
 import { NgxCacheService } from 'ngx-zorro/services';
@@ -24,3 +24,8 @@ export class NgxCacheInterceptor implements HttpInterceptor {
         return response;
     }
 }
+
+/**
+ * 缓存请求拦截器注入内容
+ */
+export const NgxCacheInterceptorProvide = [{ provide: HTTP_INTERCEPTORS, useClass: NgxCacheInterceptor, multi: true }];
