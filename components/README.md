@@ -367,6 +367,7 @@ export class NgxZorroConfigService extends NgxConfigService {
 ### HTTP 请求缓存拦截器 📍
 
 #### 如何使用
+只支持`get`请求
 
 ```typescript
 import { NgxCacheInterceptorProvide } from 'ngx-zorro/interceptors';
@@ -380,11 +381,6 @@ this.http.get(...CacheTemplate`api/response.json`).subscribe();
 // 其它方式
 const headers = new HttpHeaders({ 'Cache-Map': 'Storage' });
 this.http.get(url, { headers }).subscribe();
-// 如果是非 get 请求则需要多加个参数
-const headers = new HttpHeaders({ 
-    'Cache-Map': 'Storage',
-    'Cache-Map-Key': `可以区分请求内容的唯一标识`
-});
 ```
 
 #### 具有的能力
