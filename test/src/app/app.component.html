@@ -1,8 +1,14 @@
 <div class="container">
     <h1>测试</h1>
-
+    <button (click)="disabled = !disabled">只读/编辑</button>
     <div>
-        <ngx-dynamic-form #formEditor [fields]="fields" [data]="data" layout="vertical"></ngx-dynamic-form>
+        <ngx-dynamic-form
+            #formEditor
+            [fields]="fields"
+            [data]="data"
+            layout="vertical"
+            [disabled]="disabled"
+        ></ngx-dynamic-form>
     </div>
 
     <button nz-button nzType="primary" (click)="submit()">Submit</button>

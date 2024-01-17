@@ -62,6 +62,8 @@ export class AppComponent implements OnInit, AfterViewInit, AfterContentInit {
         name: '张三',
     };
 
+    disabled = false;
+
     @ViewChild('formEditor') formEditor!: NgxDynamicFormComponent;
 
     ngOnInit(): void {}

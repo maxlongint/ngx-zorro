@@ -50,6 +50,9 @@ export class NgxDynamicFormComponent implements OnInit, OnChanges {
         if (changes.data) {
             this.reset(this.data);
         }
+        if (changes.disabled) {
+            this.disabled ? this.formGroup.disable() : this.formGroup.enable();
+        }
     }
 
     /**
