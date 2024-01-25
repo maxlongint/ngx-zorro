@@ -1,12 +1,5 @@
 import { Component, ElementRef, Injector, Input, OnChanges, OnInit, SimpleChanges } from '@angular/core';
-import {
-    FORM_FIELD_CONFIG,
-    FORM_DATA,
-    FormFieldConfig,
-    FormFieldConfigs,
-    TriggerScriptFn,
-    VerifyScriptFn,
-} from './core/field';
+import { FORM_FIELD_CONFIG, FormFieldConfig, FormFieldConfigs, TriggerScriptFn, VerifyScriptFn } from './core/field';
 import { AbstractControl, FormControl, FormGroup, ValidationErrors, ValidatorFn, Validators } from '@angular/forms';
 import { NgxDynamicFormService } from './dynamic-form.service';
 
@@ -61,7 +54,6 @@ export class NgxDynamicFormComponent implements OnInit, OnChanges {
      */
     public reset(data?: Record<string, any>) {
         this.formGroup.reset(data ?? undefined);
-        this.injectFormData(data);
     }
 
     /**
@@ -70,7 +62,6 @@ export class NgxDynamicFormComponent implements OnInit, OnChanges {
      */
     public patchValue(data: Record<string, any>) {
         this.formGroup.patchValue(data);
-        this.injectFormData(data);
     }
 
     /**
@@ -114,10 +105,7 @@ export class NgxDynamicFormComponent implements OnInit, OnChanges {
     injectControlData(f: FormFieldConfig, data: Record<string, any> = {}) {
         // 创建动态注入器，并传递数据
         f.injector = Injector.create({
-            providers: [
-                { provide: FORM_FIELD_CONFIG, useValue: f },
-                { provide: FORM_DATA, useValue: data },
-            ],
+            providers: [{ provide: FORM_FIELD_CONFIG, useValue: f }],
             parent: this.injector,
         });
     }

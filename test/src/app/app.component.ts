@@ -34,28 +34,28 @@ export class AppComponent implements OnInit, AfterViewInit, AfterContentInit {
                 }
             },
         },
-        {
-            type: 'input',
-            label: '年龄',
-            key: 'age',
-            verifyScript: (control: AbstractControl, fields: FormFieldConfig<SelectProps>[]) => {
-                return control.value == '20' ? {} : { error: true, message: '年龄必须是20' };
-            },
-        },
-        // 再构造10个字段
-        ...Array.from({ length: 10 }).map((_, index) => {
-            return {
-                type: 'input',
-                label: `字段${index + 1}`,
-                key: `field${index + 1}`,
-            };
-        }),
-        {
-            type: 'input',
-            label: '性别',
-            key: 'sex',
-            required: true,
-        },
+        // {
+        //     type: 'input',
+        //     label: '年龄',
+        //     key: 'age',
+        //     verifyScript: (control: AbstractControl, fields: FormFieldConfig<SelectProps>[]) => {
+        //         return control.value == '20' ? {} : { error: true, message: '年龄必须是20' };
+        //     },
+        // },
+        // // 再构造10个字段
+        // ...Array.from({ length: 10 }).map((_, index) => {
+        //     return {
+        //         type: 'input',
+        //         label: `字段${index + 1}`,
+        //         key: `field${index + 1}`,
+        //     };
+        // }),
+        // {
+        //     type: 'input',
+        //     label: '性别',
+        //     key: 'sex',
+        //     required: true,
+        // },
     ];
 
     data = {

@@ -36,6 +36,7 @@ export class NgxSelectComponent extends FormControlType<FormFieldConfig<SelectPr
     }
 
     get value_cn() {
-        return this.data[`${this.key}_CN`];
+        // return this.data[`${this.key}_CN`];
+        return '';
     }
 }
