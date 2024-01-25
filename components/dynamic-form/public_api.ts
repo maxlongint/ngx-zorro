@@ -11,5 +11,6 @@ export {
     VerifyScriptFn,
     TriggerScript,
     TriggerScriptFn,
+    FORM_FIELD_CONFIG,
 } from './core/field';
 export { FormControlType } from './core/form-control-type';
