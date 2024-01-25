@@ -1,14 +1,15 @@
-import { Component, OnInit } from '@angular/core';
+import { AfterViewInit, Component, OnInit, ViewChild } from '@angular/core';
 import { FormFieldConfig, FormFieldConfigs } from 'ngx-zorro/dynamic-form/core/field';
 import { AbstractControl } from '@angular/forms';
 import { SelectProps } from './select.component';
+import { NgxDynamicFormComponent } from 'ngx-zorro/dynamic-form';
 
 @Component({
     selector: 'app-page1',
     templateUrl: './page1.component.html',
     styleUrls: ['./page1.component.scss'],
 })
-export class Page1Component implements OnInit {
+export class Page1Component implements OnInit, AfterViewInit {
     constructor() {}
 
     fields: FormFieldConfigs = [
@@ -52,5 +53,19 @@ export class Page1Component implements OnInit {
         sex_CN: '女',
     };
 
+    @ViewChild('formEditor') formEditor!: NgxDynamicFormComponent;
+
     ngOnInit(): void {}
+
+    ngAfterViewInit() {
+        this.formEditor.patchValue(this.data);
+
+        setTimeout(() => {
+            this.formEditor.patchValue({
+                name: '张三1',
+                sex: '1',
+                sex_CN: '男',
+            });
+        }, 2000);
+    }
 }

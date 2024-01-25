@@ -9,7 +9,9 @@
                 [nzValidateStatus]="f.formControl!"
                 [ngStyle]="f.inputStyle ?? null"
             >
-                <ng-container *ngComponentOutlet="f.component!; injector: f.injector!"></ng-container>
+                <ng-container
+                    *ngxComponentOutlet="f.component!; injector: f.injector!; inputs: { data }"
+                ></ng-container>
             </nz-form-control>
         </nz-form-item>
         <ng-template #defaultErrorTemplate>

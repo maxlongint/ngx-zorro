@@ -1,6 +1,7 @@
-import { Component } from '@angular/core';
+import { Component, Inject, OnInit, Optional } from '@angular/core';
 import { FormControlType } from 'ngx-zorro/dynamic-form/core/form-control-type';
-import { FormFieldConfig } from 'ngx-zorro/dynamic-form/core/field';
+import { FORM_FIELD_CONFIG, FormFieldConfig } from 'ngx-zorro/dynamic-form/core/field';
+import { HttpClient } from '@angular/common/http';
 
 export interface SelectProps {
     options?: { label: string; value: any }[];
@@ -19,7 +20,18 @@ export interface SelectProps {
     `,
     styles: [],
 })
-export class NgxSelectComponent extends FormControlType<FormFieldConfig<SelectProps>> {
+export class NgxSelectComponent extends FormControlType<FormFieldConfig<SelectProps>> implements OnInit {
+    constructor(
+        @Optional() @Inject(FORM_FIELD_CONFIG) protected fieldConfig: FormFieldConfig<SelectProps>,
+        private http: HttpClient,
+    ) {
+        super(fieldConfig);
+    }
+
+    ngOnInit() {
+        this.http.get('assets/response.json').subscribe(console.log);
+    }
+
     get options() {
         return this.props?.options ?? [];
     }
