@@ -6,6 +6,8 @@ import { FormControl } from '@angular/forms';
 export abstract class FormControlType<F extends FormFieldConfig = FormFieldConfig> {
     constructor(@Optional() @Inject(FORM_FIELD_CONFIG) protected fieldConfig: F) {}
 
+    @Input() content?: Record<string, any>;
+
     get field(): F {
         return this.fieldConfig;
     }
@@ -43,5 +45,9 @@ export abstract class FormControlType<F extends FormFieldConfig = FormFieldConfi
 
     get props(): F['props'] {
         return this.fieldConfig.props ?? {};
+    }
+
+    get data(): Record<string, any> {
+        return this.content?.data ?? {};
     }
 }

@@ -53,6 +53,7 @@ export class NgxDynamicFormComponent implements OnInit, OnChanges {
      * @param data
      */
     public reset(data?: Record<string, any>) {
+        this.data = undefined;
         this.formGroup.reset(data ?? undefined);
     }
 
@@ -61,6 +62,7 @@ export class NgxDynamicFormComponent implements OnInit, OnChanges {
      * @param data
      */
     public patchValue(data: Record<string, any>) {
+        this.data = data;
         this.formGroup.patchValue(data);
     }
 
