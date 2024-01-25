@@ -7,6 +7,7 @@ import { NzFormModule } from 'ng-zorro-antd/form';
 import { ReactiveFormsModule } from '@angular/forms';
 import { NgxControlTypeModule } from './control-type/control-type.module';
 import { NgxInputComponent } from './control-type/input.component';
+import { NgxComponentOutlet } from './ng_component_outlet';
 
 export function defaultConfig(): FormConfig {
     return {
@@ -15,7 +16,7 @@ export function defaultConfig(): FormConfig {
 }
 
 @NgModule({
-    declarations: [NgxDynamicFormComponent],
+    declarations: [NgxDynamicFormComponent, NgxComponentOutlet],
     imports: [CommonModule, NgxControlTypeModule, ReactiveFormsModule, NzFormModule],
     exports: [NgxDynamicFormComponent],
 })
