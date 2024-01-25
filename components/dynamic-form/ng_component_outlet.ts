@@ -95,37 +95,41 @@ export class NgxComponentOutlet implements OnChanges, OnDestroy {
     constructor(private _viewContainerRef: ViewContainerRef) {}
 
     ngOnChanges(changes: SimpleChanges) {
-        this._viewContainerRef.clear();
-        this._componentRef = null;
+        if (changes.ngxComponentOutlet) {
+            if (this.ngxComponentOutlet) {
+                this._viewContainerRef.clear();
+                this._componentRef = null;
+                const elInjector = this.ngxComponentOutletInjector || this._viewContainerRef.parentInjector;
 
-        if (this.ngxComponentOutlet) {
-            const elInjector = this.ngxComponentOutletInjector || this._viewContainerRef.parentInjector;
+                if (changes['ngxComponentOutletNgModuleFactory']) {
+                    if (this._moduleRef) this._moduleRef.destroy();
 
-            if (changes['ngxComponentOutletNgModuleFactory']) {
-                if (this._moduleRef) this._moduleRef.destroy();
-
-                if (this.ngxComponentOutletNgModuleFactory) {
-                    const parentModule = elInjector.get(NgModuleRef);
-                    this._moduleRef = this.ngxComponentOutletNgModuleFactory.create(parentModule.injector);
-                } else {
-                    this._moduleRef = null;
+                    if (this.ngxComponentOutletNgModuleFactory) {
+                        const parentModule = elInjector.get(NgModuleRef);
+                        this._moduleRef = this.ngxComponentOutletNgModuleFactory.create(parentModule.injector);
+                    } else {
+                        this._moduleRef = null;
+                    }
                 }
+
+                const componentFactoryResolver = this._moduleRef
+                    ? this._moduleRef.componentFactoryResolver
+                    : elInjector.get(ComponentFactoryResolver);
+
+                const componentFactory = componentFactoryResolver.resolveComponentFactory(this.ngxComponentOutlet);
+
+                this._componentRef = this._viewContainerRef.createComponent(
+                    componentFactory,
+                    this._viewContainerRef.length,
+                    elInjector,
+                    this.ngxComponentOutletContent,
+                );
+
+                this._componentRef.instance.content = this.ngxComponentOutletInputs;
             }
-
-            const componentFactoryResolver = this._moduleRef
-                ? this._moduleRef.componentFactoryResolver
-                : elInjector.get(ComponentFactoryResolver);
-
-            const componentFactory = componentFactoryResolver.resolveComponentFactory(this.ngxComponentOutlet);
-
-            this._componentRef = this._viewContainerRef.createComponent(
-                componentFactory,
-                this._viewContainerRef.length,
-                elInjector,
-                this.ngxComponentOutletContent,
-            );
-
-            this._componentRef.instance.content = this.ngxComponentOutletInputs;
+        }
+        if (changes.ngxComponentOutletInputs) {
+            this._componentRef!.instance.content = this.ngxComponentOutletInputs;
         }
     }
 

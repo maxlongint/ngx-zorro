@@ -58,7 +58,7 @@ export class Page1Component implements OnInit, AfterViewInit {
     ngOnInit(): void {}
 
     ngAfterViewInit() {
-        // this.formEditor.patchValue(this.data);
+        this.formEditor.patchValue(this.data);
 
         setTimeout(() => {
             this.formEditor.patchValue({
