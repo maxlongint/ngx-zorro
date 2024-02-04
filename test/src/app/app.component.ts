@@ -5,6 +5,7 @@ import { FormFieldConfig, FormFieldConfigs } from 'ngx-zorro/dynamic-form/core/f
 import { NgxDynamicFormComponent } from 'ngx-zorro/dynamic-form';
 import { AbstractControl } from '@angular/forms';
 import { SelectProps } from './page1/select.component';
+import { ViewRefComponent } from './view-ref/view-ref.component';
 
 @Component({
     selector: 'app-root',
@@ -16,6 +17,8 @@ export class AppComponent implements OnInit, AfterViewInit, AfterContentInit {
         private http: HttpClient,
         private loading: NgxLoadingService,
     ) {}
+
+    viewRefComponent = ViewRefComponent;
 
     visible = false;
     dialogVisible = false;
