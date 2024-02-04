@@ -1,10 +1,23 @@
 import { HttpClient, HttpHeaders } from '@angular/common/http';
-import { Component, OnInit, AfterContentInit, AfterViewInit, ViewChild } from '@angular/core';
+import {
+    Component,
+    OnInit,
+    AfterContentInit,
+    AfterViewInit,
+    ViewChild,
+    Type,
+    TemplateRef,
+    ViewContainerRef,
+    ViewRef,
+    ComponentFactory,
+    ComponentFactoryResolver,
+    ComponentRef,
+    ChangeDetectorRef,
+} from '@angular/core';
 import { NgxLoadingService } from 'ngx-zorro/loading/loading.service';
 import { FormFieldConfig, FormFieldConfigs } from 'ngx-zorro/dynamic-form/core/field';
 import { NgxDynamicFormComponent } from 'ngx-zorro/dynamic-form';
 import { AbstractControl } from '@angular/forms';
-import { SelectProps } from './page1/select.component';
 import { ViewRefComponent } from './view-ref/view-ref.component';
 
 @Component({
@@ -16,9 +29,9 @@ export class AppComponent implements OnInit, AfterViewInit, AfterContentInit {
     constructor(
         private http: HttpClient,
         private loading: NgxLoadingService,
+        private componentFactoryResolver: ComponentFactoryResolver,
+        private cdr: ChangeDetectorRef,
     ) {}
-
-    viewRefComponent = ViewRefComponent;
 
     visible = false;
     dialogVisible = false;
@@ -85,8 +98,35 @@ export class AppComponent implements OnInit, AfterViewInit, AfterContentInit {
         }, 3000);
     }
 
+    currentViewRef?: ViewRef;
+    _dialogTemplate?: ViewContainerRef;
+    @ViewChild('dialogTemplate', { read: ViewContainerRef })
+    set dialogTemplate(view: ViewContainerRef) {
+        if (view) {
+            this._dialogTemplate = view;
+            if (this.currentViewRef) {
+                view.insert(this.currentViewRef);
+                return;
+            } else {
+                const componentFactory: ComponentFactory<ViewRefComponent> =
+                    this.componentFactoryResolver.resolveComponentFactory(ViewRefComponent);
+                const componentRef: ComponentRef<any> = view.createComponent(componentFactory);
+                this.cdr.detectChanges();
+            }
+        }
+    }
+    get dialogTemplate() {
+        return this._dialogTemplate!;
+    }
+
     onDialog() {
         this.dialogVisible = true;
+    }
+
+    onVisibleChange(visible: boolean) {
+        if (!this.dialogVisible) {
+            this.currentViewRef = this.dialogTemplate.detach()!;
+        }
     }
 
     submit() {

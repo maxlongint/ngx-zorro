@@ -23,8 +23,8 @@
     <router-outlet></router-outlet>
 </div>
 
-<ngx-dialog [title]="title" [(visible)]="dialogVisible" [fullButton]="false">
+<ngx-dialog [title]="title" [(visible)]="dialogVisible" (visibleChange)="onVisibleChange($event)" [fullButton]="false">
     <ng-container *ngxDialogContent>
-        <app-view-ref></app-view-ref>
+        <ng-template #dialogTemplate></ng-template>
     </ng-container>
 </ngx-dialog>
