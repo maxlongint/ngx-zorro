@@ -26,6 +26,7 @@ import { RouterModule, Routes } from '@angular/router';
 import { NgxNumberComponent } from './number.component';
 import { NzInputNumberModule } from 'ng-zorro-antd/input-number';
 import { NgxCacheInterceptorProvide } from 'ngx-zorro/interceptors';
+import { ViewRefComponent } from './view-ref/view-ref.component';
 
 const LANG_PROVIDES = [{ provide: NZ_I18N, useValue: zh_CN }];
 const routes: Routes = [
@@ -40,7 +41,7 @@ const routes: Routes = [
 ];
 
 @NgModule({
-    declarations: [AppComponent, NgxNumberComponent],
+    declarations: [AppComponent, NgxNumberComponent, ViewRefComponent],
     imports: [
         BrowserModule,
         BrowserAnimationsModule,
