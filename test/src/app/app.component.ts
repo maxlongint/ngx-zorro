@@ -98,6 +98,8 @@ export class AppComponent implements OnInit, AfterViewInit, AfterContentInit {
         }, 3000);
     }
 
+    viewRefComponent = ViewRefComponent;
+
     currentViewRef?: ViewRef;
     _dialogTemplate?: ViewContainerRef;
     @ViewChild('dialogTemplate', { read: ViewContainerRef })
