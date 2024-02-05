@@ -117,7 +117,7 @@ export class NgxDialogComponent implements OnInit, OnChanges, OnDestroy {
         @Inject(DOCUMENT) private document: Document,
         private ngZone: NgZone,
         private platform: Platform,
-        private overlayKeyboardDispatcher: OverlayKeyboardDispatcher
+        private overlayKeyboardDispatcher: OverlayKeyboardDispatcher,
     ) {}
 
     /**
@@ -157,8 +157,7 @@ export class NgxDialogComponent implements OnInit, OnChanges, OnDestroy {
     ngOnChanges(changes: SimpleChanges): void {
         const { visible } = changes;
         if (visible) {
-            const value = changes.visible.currentValue;
-            if (value) {
+            if (this.visible) {
                 this.open();
             } else {
                 this.close();
@@ -171,9 +170,9 @@ export class NgxDialogComponent implements OnInit, OnChanges, OnDestroy {
     }
 
     open() {
-        this.attachOverlay();
         this.visible = true;
         this.visibleChange.emit(true);
+        this.attachOverlay();
         this.overlayKeyboardDispatcher.add(this.overlayRef!);
         this.updateFullScreen(this.full);
         this.updateOverlayStyle();
@@ -181,6 +180,9 @@ export class NgxDialogComponent implements OnInit, OnChanges, OnDestroy {
     }
 
     close() {
+        if (!this.visible) {
+            return;
+        }
         this.visible = false;
         this.visibleChange.emit(false);
         this.updateOverlayStyle();
@@ -322,7 +324,7 @@ export class NgxDialogComponent implements OnInit, OnChanges, OnDestroy {
                 this.document,
                 this.ngZone,
                 viewportRuler,
-                dragDropRegistry
+                dragDropRegistry,
             );
             this.dragRef.disabled = true;
             this.dragRef.released.pipe(delay(1)).subscribe(({ source }) => {
