@@ -26,5 +26,7 @@
 <ngx-dialog [title]="title" [(visible)]="dialogVisible" (visibleChange)="onVisibleChange($event)" [fullButton]="false">
     <ng-container *ngxDialogContent>
         <ng-template #dialogTemplate></ng-template>
+
+        <button nz-button (click)="dialogVisible = false">关闭</button>
     </ng-container>
 </ngx-dialog>
