@@ -170,8 +170,10 @@ export class NgxDialogComponent implements OnInit, OnChanges, OnDestroy {
     }
 
     open() {
-        this.visible = true;
-        this.visibleChange.emit(true);
+        if (!this.visible) {
+            this.visible = true;
+            this.visibleChange.emit(true);
+        }
         this.attachOverlay();
         this.overlayKeyboardDispatcher.add(this.overlayRef!);
         this.updateFullScreen(this.full);
@@ -180,11 +182,10 @@ export class NgxDialogComponent implements OnInit, OnChanges, OnDestroy {
     }
 
     close() {
-        if (!this.visible) {
-            return;
+        if (this.visible) {
+            this.visible = false;
+            this.visibleChange.emit(false);
         }
-        this.visible = false;
-        this.visibleChange.emit(false);
         this.updateOverlayStyle();
         this.updateBodyOverflow();
         this.overlayKeyboardDispatcher.remove(this.overlayRef!);
