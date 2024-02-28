@@ -15,7 +15,6 @@ ngx-zorro 是一个`angular`的组件库，基于`ng-zorro-antd`开发的一些�
 
 ```
 npm i ngx-zorro --save
-yarn add ngx-zorro
 ```
 
 ## 组件库
