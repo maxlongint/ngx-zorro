@@ -6,6 +6,7 @@ import { NgxSelectComponent } from './select.component';
 import { NgxDynamicFormModule } from 'ngx-zorro/dynamic-form';
 import { NzSelectModule } from 'ng-zorro-antd/select';
 import { ReactiveFormsModule } from '@angular/forms';
+import { NzDrawerModule } from 'ng-zorro-antd/drawer';
 
 @NgModule({
     declarations: [Page1Component, NgxSelectComponent],
@@ -27,6 +28,7 @@ import { ReactiveFormsModule } from '@angular/forms';
                 },
             ],
         }),
+        NzDrawerModule,
     ],
 })
 export class Page1Module {}

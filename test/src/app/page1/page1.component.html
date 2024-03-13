@@ -1,2 +1,23 @@
 <p>page1 works!</p>
-<ngx-dynamic-form #formEditor [fields]="fields"></ngx-dynamic-form>
+
+<button (click)="formDialogIfy.open()">打开弹框表单</button>
+<!--<ng-container *ngIf="visible">-->
+<!--    <ngx-dynamic-form [fields]="fields"></ngx-dynamic-form>-->
+<!--</ng-container>-->
+
+<nz-drawer
+    [(nzVisible)]="formDialogIfy.visible"
+    [nzTitle]="formDialogIfy.title"
+    [nzWidth]="formDialogIfy.width"
+    (nzOnClose)="formDialogIfy.close()"
+>
+    <ng-container *nzDrawerContent>
+        <div class="layout-col">
+            <div class="layout-content p-4">
+                <div class="h-full overflow-y-scroll">
+                    <ngx-dynamic-form [fields]="fields"></ngx-dynamic-form>
+                </div>
+            </div>
+        </div>
+    </ng-container>
+</nz-drawer>

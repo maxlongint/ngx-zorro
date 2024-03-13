@@ -185,6 +185,9 @@ export class NgxDynamicFormComponent implements OnInit, OnChanges {
 
     // 监听一些属性的变化
     private listenFieldPropertyChanges(f: FormFieldConfig) {
+        if (Object.getOwnPropertyDescriptor(f, 'required')) {
+            return;
+        }
         Object.defineProperties(f, {
             required: {
                 set: (state: boolean) => {
