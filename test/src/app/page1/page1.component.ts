@@ -17,7 +17,19 @@ export class Page1Component implements OnInit, AfterViewInit {
             type: 'input',
             label: '姓名',
             key: 'name',
-            // required: true,
+            required: true,
+            labelStyle: {
+                width: '160px',
+            },
+            inputStyle: {
+                width: '200px',
+            },
+        },
+        {
+            type: 'input',
+            label: '姓名2',
+            key: 'name2',
+            required: true,
             labelStyle: {
                 width: '160px',
             },
@@ -47,6 +59,18 @@ export class Page1Component implements OnInit, AfterViewInit {
         },
     ];
 
+    formDialogIfy = {
+        visible: false,
+        width: 400,
+        title: '表单方案',
+        open: () => {
+            this.formDialogIfy.visible = true;
+        },
+        close: () => {
+            this.formDialogIfy.visible = false;
+        },
+    };
+
     data = {
         name: '张三',
         sex: '2',
@@ -55,17 +79,20 @@ export class Page1Component implements OnInit, AfterViewInit {
 
     @ViewChild('formEditor') formEditor!: NgxDynamicFormComponent;
 
+    visible = false;
+
     ngOnInit(): void {}
 
     ngAfterViewInit() {
-        this.formEditor.patchValue(this.data);
-
+        // this.formEditor.patchValue(this.data);
+        //
         setTimeout(() => {
-            this.formEditor.patchValue({
-                name: '张三1',
-                sex: '1',
-                sex_CN: '男',
-            });
+            this.visible = true;
+            // this.formEditor.patchValue({
+            //     name: '张三1',
+            //     sex: '1',
+            //     sex_CN: '男',
+            // });
         }, 2000);
     }
 }
