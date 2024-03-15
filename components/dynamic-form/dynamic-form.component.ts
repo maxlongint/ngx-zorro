@@ -39,9 +39,10 @@ export class NgxDynamicFormComponent implements OnInit, OnChanges {
     ngOnChanges(changes: SimpleChanges) {
         if (changes.fields) {
             this.createFormControl();
+            this.reset();
         }
         if (changes.data) {
-            this.reset(this.data);
+            this.reset();
         }
         if (changes.disabled) {
             this.disabled ? this.formGroup.disable() : this.formGroup.enable();
@@ -53,8 +54,8 @@ export class NgxDynamicFormComponent implements OnInit, OnChanges {
      * @param data
      */
     public reset(data?: Record<string, any>) {
-        this.data = undefined;
-        this.formGroup.reset(data ?? undefined);
+        this.data = data ?? this.data;
+        this.formGroup.reset(this.data);
     }
 
     /**
@@ -62,8 +63,8 @@ export class NgxDynamicFormComponent implements OnInit, OnChanges {
      * @param data
      */
     public patchValue(data: Record<string, any>) {
-        this.data = data;
-        this.formGroup.patchValue(data);
+        this.data = data ?? this.data;
+        this.formGroup.patchValue(this.data);
     }
 
     /**

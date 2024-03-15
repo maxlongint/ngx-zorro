@@ -38,18 +38,18 @@ export class AppComponent implements OnInit, AfterViewInit, AfterContentInit {
     title?: string;
 
     fields: FormFieldConfigs = [
-        {
-            type: 'input',
-            label: '姓名',
-            key: 'name',
-            // required: true,
-            triggerScript: (control: AbstractControl, fields: FormFieldConfig[]) => {
-                const age = fields.find(f => f.key === 'age');
-                if (age) {
-                    age.required = control.value === '22';
-                }
-            },
-        },
+        // {
+        //     type: 'input',
+        //     label: '姓名',
+        //     key: 'name',
+        //     // required: true,
+        //     triggerScript: (control: AbstractControl, fields: FormFieldConfig[]) => {
+        //         const age = fields.find(f => f.key === 'age');
+        //         if (age) {
+        //             age.required = control.value === '22';
+        //         }
+        //     },
+        // },
         // {
         //     type: 'input',
         //     label: '年龄',
@@ -84,11 +84,19 @@ export class AppComponent implements OnInit, AfterViewInit, AfterContentInit {
 
     ngOnInit(): void {}
 
-    ngAfterViewInit(): void {}
-
-    ngAfterContentInit(): void {
-        this.data = null as any;
+    ngAfterViewInit(): void {
+        setTimeout(() => {
+            this.fields = [
+                {
+                    type: 'input',
+                    label: '姓名',
+                    key: 'name',
+                },
+            ];
+        }, 1000);
     }
+
+    ngAfterContentInit(): void {}
 
     onLoading() {
         const loading = this.loading.open();
