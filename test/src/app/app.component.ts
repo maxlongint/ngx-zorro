@@ -91,6 +91,7 @@ export class AppComponent implements OnInit, AfterViewInit, AfterContentInit {
                     type: 'input',
                     label: '姓名',
                     key: 'name',
+                    required: true,
                 },
             ];
         }, 1000);
@@ -141,6 +142,8 @@ export class AppComponent implements OnInit, AfterViewInit, AfterContentInit {
 
     submit() {
         const data = this.formEditor.getRawValue(true);
-        console.dir(JSON.stringify(data, null, 4));
+        if (data) {
+            console.dir(JSON.stringify(data, null, 4));
+        }
     }
 }

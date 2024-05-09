@@ -72,7 +72,7 @@ export class NgxDynamicFormComponent implements OnInit, OnChanges {
      * @param errorLocation 是否定位到错误位置
      * @param arg element.scrollIntoView 定位参数
      */
-    public getRawValue(errorLocation = false, arg?: ScrollIntoViewOptions): Record<string, any> {
+    public getRawValue<T = Record<string, any>>(errorLocation = false, arg?: ScrollIntoViewOptions): false | T {
         const form = this.formGroup;
         const errList = [];
         for (const key in form.controls) {
@@ -88,7 +88,8 @@ export class NgxDynamicFormComponent implements OnInit, OnChanges {
                 const element = this.elementRef.nativeElement.querySelector(`[dynamic-key="${errList[0]}"]`);
                 element?.scrollIntoView(arg ?? { behavior: 'instant', block: 'nearest', inline: 'start' });
             }
-            throw new Error(`Form validation failed fields：${errList.join(',')}`);
+            console.error(`Form validation failed fields：${errList.join(',')}`);
+            return false;
         }
         return form.getRawValue();
     }
