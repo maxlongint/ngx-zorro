@@ -45,7 +45,7 @@ loading.close();
 
 | 参数      | 说明                   | 类型    | 默认值  |
 | --------- | ---------------------- | ------- | ------- |
-| [visible] | 是否显示(支持双向绑定) | boolean | false   |
+| [(visible)] | 是否显示(支持双向绑定) | boolean | false   |
 | [tip]     | 提示内容               | string  | 加载中… |
 | [inline]  | 是否行内模式           | boolean | false   |
 
